@@ -1,10 +1,17 @@
-
+import React from 'react';
+import { ConnectedRouter } from 'connected-react-router';
+import { history } from '../redux/configureStore';
 
 function App() {
+
   return (
-    <div className="App">
-      
-    </div>
+      <React.Fragment>
+        
+        <ConnectedRouter history={history}>
+          
+        </ConnectedRouter>
+        
+      </React.Fragment>
   );
 }
 
