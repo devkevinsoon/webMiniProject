@@ -2,10 +2,8 @@ import React, { useState } from "react"
 import styled from "styled-components"
 
 import { Link } from "react-router-dom";
-import { history } from "../redux/configureStore"
 import { Grid, Input, Button, Text } from "../elements/index";
 import { useDispatch } from "react-redux";
-import { actionCreators as userActions } from "../redux/modules/user";
 import flower from "../images/flower_pngtree.png"
 
 const Login = (props) => {
@@ -65,7 +63,7 @@ const Login = (props) => {
                     />
                     <Grid is_flex padding="0px 0px 20px 0px">
                         <Text size="12px">계정이 없으신가요?</Text>
-                        <Link to="/signup" style={{textDecoration : "none"}}> 
+                        <Link to="/signup" tabIndex="-1" style={{textDecoration : "none"}}> 
                             <Text size="12px" margin="0px 5px" color="#37474f" hover>회원가입</Text>
                         </Link>
                     </Grid>

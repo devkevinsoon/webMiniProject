@@ -10,7 +10,7 @@ import { actionCreator as checkActions } from "../redux/modules/checkDup";
 
 const Signup = (props) => {
     const dispatch = useDispatch();
-    
+
     const [ formInput, setFormInput ] = useState({});
     const { user_name, nickname, pwd, re_pwd } = formInput;
     
@@ -23,7 +23,7 @@ const Signup = (props) => {
         });
     };
 
-    // 이메일, 닉네임 중복검사
+    // 이메일, 닉네임 중복검사 및 양식 검사
     const username_check = useSelector(state => state.checkDup.username)
     const nickname_check = useSelector(state => state.checkDup.nickname)
 
@@ -35,7 +35,6 @@ const Signup = (props) => {
         dispatch(checkActions.checkNickNameDupApi(nickname))
     }
 
-    // 중복 검사도 넣어야함!
     const signupClick = () => {
 
         if(!user_name || !nickname || !pwd || !re_pwd ){
@@ -59,8 +58,7 @@ const Signup = (props) => {
             history.push('/login')
         }
     }
-    //
-          
+    
     return(
         <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
             <Container>
@@ -76,7 +74,7 @@ const Signup = (props) => {
                         />
                         <Button 
                             width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover
-                            _onClick={checkUserNameDup} text="Check"
+                            _onClick={checkUserNameDup} text="Check" name="btn" tabIndex="-1"
                         />
                     </Grid>
                     <Grid width="80%" margin="0px 0px 25px 0px" is_flex>
@@ -87,7 +85,7 @@ const Signup = (props) => {
                         />
                         <Button 
                             width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover
-                            _onClick={checkNickNameDup} text="Check"
+                            _onClick={checkNickNameDup} text="Check" name="btn" tabIndex="-1"
                         />
                     </Grid>
                     <Grid margin="0px 0px 25px 0px" is_flex>

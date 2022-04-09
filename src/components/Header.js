@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Logo, Button, Input } from "../elements/index.js";
+import { Logo, Button } from "../elements/index.js";
 import { getCookie } from "../shared/cookie";
+
+
 
 //import { actionCreators as userActions } from "../redux/modules/user";
 
@@ -12,6 +14,7 @@ const Header = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const token = getCookie("token");
+  
 
   return (
     <React.Fragment>
@@ -23,12 +26,12 @@ const Header = (props) => {
                 width="90px"
                 text="로그인"
                 _onClick={() => {
-                  //props.history.push("/login");
+                  props.history.push("/login");
                 }}
               />
               <Button
                 _onClick={() => {
-                  //props.history.push("/signup");
+                  // props.history.push("/detail");
                 }}
                 width="90px"
                 text="회원가입"

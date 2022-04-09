@@ -41,6 +41,7 @@ const GridBox = styled.div`
     padding: ${(props) => (props.padding ? `${props.padding}` : "")};
     margin: ${(props) => (props.margin ? `${props.margin}` : "")};
     background-color: ${(props) => (props.background ? `${props.background}` : "")};
+            border: 1px red solid;
 `;
 
 export default Grid;

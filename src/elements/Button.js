@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components"
 
 const Button = (props) => {
-    const { children, _onClick, padding, width, bg, color, size, margin, hover, disabled, text, is_float } = props;
+    const { children, _onClick, padding, width, bg, color, size, margin, hover, disabled, text, is_float, name } = props;
     
     const styles = {
         padding,
@@ -24,7 +24,13 @@ const Button = (props) => {
     }
 
     return(
-        <Btn {...styles} onClick={_onClick} disabled={disabled}>
+        <Btn 
+          {...styles}
+          tabIndex="-1"
+          name={name}
+          onClick={_onClick}
+          disabled={disabled} 
+        >
           {text}
         </Btn>
     )
@@ -43,6 +49,7 @@ Button.defaultProps = {
     disabled: false,
     is_abs: false,
     margin: false,
+    name: null,
     _onClick: () => {},
 }
 

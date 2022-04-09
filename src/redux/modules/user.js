@@ -24,6 +24,23 @@ const signUpApi = (user) => {
     }
 }
 
+const loginApi = (user) => {
+    return function (dispatch, getState, {history}){
+
+    }
+}
+
+const loginOutApi = (user) => {
+    return function (dispatch, getState, {history}){
+
+    }
+}
+
+const loginCheckApi = (user) => {
+    return function (dispatch, getState, {history}){
+
+    }
+}
 
 
 // reducer

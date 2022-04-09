@@ -22,7 +22,12 @@ const Input = (props) => {
 
     return(
         <React.Fragment>
-              <ElInput id={id} type= {type} placeholder={placeholder} onChange={_onChange}/>
+              <ElInput 
+                id={id}
+                type= {type}
+                placeholder={placeholder}
+                onChange={_onChange}
+              />
         </React.Fragment>
     )
 }
@@ -33,7 +38,7 @@ Input.defaultProps = {
     type: "text",
     value: '',
     multiLine: false,
-    id: null,
+    id: null, 
     _onChange: () => {},
 }
 

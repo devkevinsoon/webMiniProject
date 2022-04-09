@@ -15,7 +15,7 @@ const Text = (props) => {
     };
 
     return (
-        <P {...styles} style={{display: display}}>
+        <P {...styles} style={{display: display}} tabIndex="-1">
             {children}
         </P>
     );

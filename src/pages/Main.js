@@ -16,14 +16,15 @@ const Main = (props) => {
             <MainContainer>
                 {/* <ImgList {...props} /> */}
             </MainContainer>
+            
         </React.Fragment>
     );
 };
 
 const MainContainer = styled.div`
     height: 100vh;
-    width: 800vw;
-    margin 0 auto
+    width: 100vw;
+    margin: 0 auto;
 `;
 
 export default Main;
