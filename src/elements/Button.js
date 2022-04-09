@@ -77,4 +77,3 @@ const CircleBtn = styled.button`
 `;
 
 export default Button;
-

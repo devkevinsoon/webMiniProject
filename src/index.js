@@ -5,6 +5,7 @@ import App from './shared/App';
 import store from "./redux/configureStore"
 import { Provider } from 'react-redux';
 
+//react-dom v18 이후 방식 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
