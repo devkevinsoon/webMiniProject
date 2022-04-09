@@ -50,19 +50,21 @@ const Signup = (props) => {
                     <Text size="52px" fontFamily="'Kaushan Script', cursive">Signup</Text>
                 </Grid>
                 <Grid height="60%" is_flex column>
-                    <Grid margin="50px 0px 20px 0px" is_flex column>
+                    <Grid width="80%" margin="50px 0px 20px 0px" is_flex>
                         <Input
                             id="id"
                             placeholder="이메일을 입력해주세요."
                             _onChange={onChange}
                         />
+                        <Button width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover>Check</Button>
                     </Grid>
-                    <Grid margin="0px 0px 20px 0px" is_flex>
+                    <Grid width="80%" margin="0px 0px 20px 0px" is_flex>
                         <Input
                             id="nickname"
                             placeholder="닉네임을 입력해주세요."
                             _onChange={onChange}
                         />
+                        <Button width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover>Check</Button>
                     </Grid>
                     <Grid margin="0px 0px 20px 0px" is_flex>
                         <Input

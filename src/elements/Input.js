@@ -5,7 +5,7 @@ import { Grid } from "./index";
 
 const Input = (props) => {
     const { placeholder, label, type, _onChange, value, multiLine, id } = props;
-
+   
     if(multiLine){
         return (
           <Grid>
@@ -39,7 +39,7 @@ Input.defaultProps = {
 
 const ElTextarea = styled.textarea`
   border: 1px solid #212121;
-  width: 100%;
+  width: ${props => props.width};
   padding: 12px 4px;
   box-sizing: border-box;
   font-size: 18px;

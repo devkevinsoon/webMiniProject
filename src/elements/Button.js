@@ -34,6 +34,7 @@ Button.defaultProps = {
     color: "white",
     size: "16px",
     circle: false,
+    check: false,
     hover: false,
     disabled: false,
     _onClick: () => {},
