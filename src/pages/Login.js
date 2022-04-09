@@ -30,7 +30,7 @@ const Login = (props) => {
     };
     
     return(
-        <Grid width="100vw" height="100vh" is_flex>
+        <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
             <Container>
                 <Grid height="20%" is_flex>
                     <Text size="52px" fontFamily="'Kaushan Script', cursive">Login</Text>
@@ -77,7 +77,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     width: 400px;
-    height: 60%;
+    height: 70%;
     padding: 30px 0px 20px 0px;
     border: none;
     border-radius: 25px;

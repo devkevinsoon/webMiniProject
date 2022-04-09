@@ -9,7 +9,6 @@ import { history } from '../redux/configureStore';
 
 import Main from '../pages/Main';
 
-import { Route } from 'react-router-dom';
 import { Login, Signup } from '../pages/index';
 
 function App() {

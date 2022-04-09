@@ -30,7 +30,7 @@ Button.defaultProps = {
     padding: "10px",
     margin: "20px 0px",
     width: "80%",
-    bg: "#607d8b",
+    bg: "#f48fb1",
     color: "white",
     size: "16px",
     circle: false,
@@ -52,7 +52,7 @@ const Btn = styled.button`
     cursor: pointer;
     ${props => props.hover ? `&:hover {
         color: white;
-        background: #37474f;
+        background: #ff54b0;
     }` : ""}
 `;
 

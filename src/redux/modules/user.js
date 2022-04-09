@@ -4,9 +4,7 @@ import { setCookie, getCookie, deleteCookie } from "../../shared/cookie";
 
 // actions
 const SET_USER = "SET_USER";
-// const GET_USER = "GET_USER";
 const LOG_OUT = "LOG_OUT";
-const CHECK_DUP = "CHECK_DUP";
 
 // initialState
 const initialState = {
@@ -15,8 +13,9 @@ const initialState = {
 };
 
 // actionCreators
-const setUser = createAction(SET_USER, (user) => ({user})) 
-const logOut = createAction(LOG_OUT, () => {})
+const setUser = createAction(SET_USER, (user) => ({user}));
+const logOut = createAction(LOG_OUT, () => {});
+
 
 // middleWares
 const signUPApi = (user) => {

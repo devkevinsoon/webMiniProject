@@ -56,10 +56,11 @@ const Header = (props) => {
 };
 
 const HeaderContainer = styled.div`
+  position: fixed; // 고침
   display: flex;
   align-items: stretch;
-  justify-content: flex-start;
-  width: 80vw;
+  justify-content: center; // 고침
+  width: 100vw; // 고침
   height: 40px;
   margin: 30px auto 30px auto;
   button {

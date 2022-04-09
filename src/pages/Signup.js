@@ -6,13 +6,14 @@ import { Grid, Input, Button, Text } from "../elements/index";
 import { emailCheck, pwdCheck } from "../shared/common";
 import { actionCreators as userActions } from "../redux/modules/user"
 import { useDispatch, useSelector } from "react-redux";
+import { actionCreator as checkActions } from "../redux/modules/checkDup";
 
 const Signup = (props) => {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.user);
-    // console.log(user)
+    
     const [ formInput, setFormInput ] = useState({});
-
+    const { user_name, nickname, pwd, re_pwd } = formInput;
+    
     const onChange = (e) => {
         const id = e.target.id;
         const value = e.target.value;
@@ -22,14 +23,27 @@ const Signup = (props) => {
         });
     };
 
+    // 이메일, 닉네임 중복검사
+    const username_check = useSelector(state => state.checkDup.username)
+    const nickname_check = useSelector(state => state.checkDup.nickname)
+
+    const checkUserNameDup = () => {
+        dispatch(checkActions.checkUserNameDupApi(user_name))
+    }
+
+    const checkNickNameDup = () => {
+        dispatch(checkActions.checkNickNameDupApi(nickname))
+    }
+
+    console.log(nickname_check.is_check, nickname_check._nick_name !== nickname)
+
     // 중복 검사도 넣어야함!
     const signupClick = () => {
-        const { id, nickname, pwd, re_pwd } = formInput;
 
-        if(!id || !nickname || !pwd || !re_pwd ){
+        if(!user_name || !nickname || !pwd || !re_pwd ){
             alert("빈칸을 모두 채워주세요.");
             return;
-        } else if (!emailCheck(id)){
+        } else if (!emailCheck(user_name)){
             alert("이메일 형식이 아닙니다.");
             return;
         } else if (!pwdCheck(pwd)){
@@ -37,14 +51,20 @@ const Signup = (props) => {
             return;
         } else if (pwd !== re_pwd){
             alert("패스워드가 서로 같지 않습니다.")
+        } else if (!username_check.is_check || (username_check.email !== user_name)){
+            alert("이메일 중복체크를 해주세요.")
+        } else if (!nickname_check.is_check || (nickname_check.nick_name !== nickname)){
+            alert("닉네임 중복체크를 해주세요.")
         } else {
+            alert("성공")
             dispatch(userActions.setUser(formInput))
             history.push('/login')
         }
     }
+    //
           
     return(
-        <Grid width="100vw" height="100vh" is_flex>
+        <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
             <Container>
                 <Grid height="20%" is_flex>
                     <Text size="52px" fontFamily="'Kaushan Script', cursive">Signup</Text>
@@ -52,11 +72,16 @@ const Signup = (props) => {
                 <Grid height="60%" is_flex column>
                     <Grid width="80%" margin="50px 0px 20px 0px" is_flex>
                         <Input
-                            id="id"
+                            id="user_name"
                             placeholder="이메일을 입력해주세요."
                             _onChange={onChange}
                         />
-                        <Button width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover>Check</Button>
+                        <Button 
+                            width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover
+                            _onClick={checkUserNameDup}
+                        >
+                            Check
+                        </Button>
                     </Grid>
                     <Grid width="80%" margin="0px 0px 20px 0px" is_flex>
                         <Input
@@ -64,7 +89,12 @@ const Signup = (props) => {
                             placeholder="닉네임을 입력해주세요."
                             _onChange={onChange}
                         />
-                        <Button width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover>Check</Button>
+                        <Button 
+                            width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover
+                            _onClick={checkNickNameDup}
+                        >
+                            Check
+                        </Button>
                     </Grid>
                     <Grid margin="0px 0px 20px 0px" is_flex>
                         <Input
@@ -104,7 +134,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     width: 400px;
-    height: 60%;
+    height: 70%;
     padding: 30px 0px 20px 0px;
     border: none;
     border-radius: 25px;
