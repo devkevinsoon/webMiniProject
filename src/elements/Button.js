@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components"
 
 const Button = (props) => {
-    const { children, _onClick, padding, width, bg, color, size, margin, circle, hover, disabled } = props;
-
+    const { children, _onClick, padding, width, bg, color, size, margin, hover, disabled, text, is_float } = props;
+    
     const styles = {
         padding,
         margin,
@@ -14,22 +14,26 @@ const Button = (props) => {
         hover, 
     }
     
-    if(circle){
-        return(
-            <CircleBtn {...styles} onClick={_onClick} >{children}</CircleBtn>
-        )
+    if(is_float)
+    {
+        return (
+            <React.Fragment>
+              <FloatButton onClick={_onClick}>{text ? text : children}</FloatButton>
+            </React.Fragment>
+          );
     }
 
     return(
-        <Btn {...styles} onClick={_onClick} disabled={disabled}>{children}</Btn>
+        <Btn {...styles} onClick={_onClick} disabled={disabled}>
+          {text}
+        </Btn>
     )
 }
 
 Button.defaultProps = {
     children: null,
-    padding: "10px",
-    margin: "20px 0px",
-    width: "80%",
+    padding: false,
+    width: "100%",
     bg: "#f48fb1",
     color: "white",
     size: "16px",
@@ -37,8 +41,27 @@ Button.defaultProps = {
     check: false,
     hover: false,
     disabled: false,
+    is_abs: false,
+    margin: false,
     _onClick: () => {},
 }
+
+const FloatButton = styled.button`
+  width: 50px;
+  height: 50px;
+  background-color: #212121;
+  color: #ffffff;
+  box-sizing: border-box;
+  font-size: 36px;
+  font-weight: 800;
+  position: fixed;
+  bottom: 50px;
+  right: 16px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  border-radius: 50px;
+`;
 
 const Btn = styled.button`
     width: ${props => props.width};
@@ -48,7 +71,7 @@ const Btn = styled.button`
     color: ${props => props.color};
     font-size: ${props => props.size};
     border: none;
-    border-radius: 10px;
+    border-radius: 13px;
     cursor: pointer;
     ${props => props.hover ? `&:hover {
         color: white;
@@ -56,24 +79,6 @@ const Btn = styled.button`
     }` : ""}
 `;
 
-const CircleBtn = styled.button`
-    width: 50px;
-    height: 50px;
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    line-height: 50px;
-    border: none;
-    border-radius: 50px;
-    font-size: 70px;
-    background: #9e9e9e;
-    padding: 2px 0 0 0;
-    color: white;
-    cursor: pointer;
 
-    &:hover {
-        background: #424242;
-    }
-`;
 
 export default Button;

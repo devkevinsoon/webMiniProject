@@ -61,7 +61,7 @@ const ElInput = styled.input`
       color: #90a4ae;
     }
     &:hover, :focus{
-        border-bottom: 2px solid #212121;
+        border-bottom: 2px solid #f48fb1;
     }
 `;
 

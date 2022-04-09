@@ -6,9 +6,11 @@ import { history } from "../redux/configureStore"
 import { Grid, Input, Button, Text } from "../elements/index";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import flower from "../images/flower_pngtree.png"
 
 const Login = (props) => {
     const dispatch = useDispatch();
+    
     const [ formInput, setFormInput ] = useState({});
 
     const onChange = (e) => {
@@ -32,10 +34,11 @@ const Login = (props) => {
     return(
         <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
             <Container>
-                <Grid height="20%" is_flex>
-                    <Text size="52px" fontFamily="'Kaushan Script', cursive">Login</Text>
-                </Grid>
-                <Grid height="50%" column is_flex>
+                <Wrap>
+                    <Flower src={flower} />
+                    <Span>Login</Span>
+                </Wrap>
+                <Grid height="30%" column is_flex>
                     <Grid margin="40px 0px 30px 0px" is_flex>
                         <Input
                             id="id"
@@ -43,7 +46,7 @@ const Login = (props) => {
                             _onChange={onChange}
                         />
                     </Grid>
-                    <Grid margin="0px 0px 40px 0px" is_flex>
+                    <Grid margin="0px 0px 20px 0px" is_flex>
                         <Input
                             id="pwd"
                             placeholder="패스워드를 입력해주세요."
@@ -53,12 +56,14 @@ const Login = (props) => {
                 </Grid>
                 <Grid height="30%" column is_flex>
                     <Button 
+                        text="로그인"
+                        width="80%"
+                        padding="10px"
+                        margin="20px 0px"
                         hover
                         _onClick={loginClick}
-                    >
-                        로그인
-                    </Button>
-                    <Grid is_flex>
+                    />
+                    <Grid is_flex padding="0px 0px 20px 0px">
                         <Text size="12px">계정이 없으신가요?</Text>
                         <Link to="/signup" style={{textDecoration : "none"}}> 
                             <Text size="12px" margin="0px 5px" color="#37474f" hover>회원가입</Text>
@@ -84,5 +89,24 @@ const Container = styled.div`
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);
 `;
 
+const Wrap = styled.div`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45%;
+    padding-top: 20px;
+`
+
+const Flower = styled.img`
+    width: 70%;
+`
+
+const Span = styled.span`
+    position: absolute;
+    font-size: 54px;
+    font-family: 'Kaushan Script', cursive;
+    padding-bottom: 15px;
+`;
 
 export default Login;

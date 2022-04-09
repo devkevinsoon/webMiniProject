@@ -18,7 +18,7 @@ const logOut = createAction(LOG_OUT, () => {});
 
 
 // middleWares
-const signUPApi = (user) => {
+const signUpApi = (user) => {
     return function (dispatch, getState, {history}){
 
     }

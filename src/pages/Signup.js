@@ -35,8 +35,6 @@ const Signup = (props) => {
         dispatch(checkActions.checkNickNameDupApi(nickname))
     }
 
-    console.log(nickname_check.is_check, nickname_check._nick_name !== nickname)
-
     // 중복 검사도 넣어야함!
     const signupClick = () => {
 
@@ -52,9 +50,9 @@ const Signup = (props) => {
         } else if (pwd !== re_pwd){
             alert("패스워드가 서로 같지 않습니다.")
         } else if (!username_check.is_check || (username_check.email !== user_name)){
-            alert("이메일 중복체크를 해주세요.")
+            alert("이메일 중복확인을 해주세요.")
         } else if (!nickname_check.is_check || (nickname_check.nick_name !== nickname)){
-            alert("닉네임 중복체크를 해주세요.")
+            alert("닉네임 중복확인을 해주세요.")
         } else {
             alert("성공")
             dispatch(userActions.setUser(formInput))
@@ -70,7 +68,7 @@ const Signup = (props) => {
                     <Text size="52px" fontFamily="'Kaushan Script', cursive">Signup</Text>
                 </Grid>
                 <Grid height="60%" is_flex column>
-                    <Grid width="80%" margin="50px 0px 20px 0px" is_flex>
+                    <Grid width="80%" margin="50px 0px 25px 0px" is_flex>
                         <Input
                             id="user_name"
                             placeholder="이메일을 입력해주세요."
@@ -78,12 +76,10 @@ const Signup = (props) => {
                         />
                         <Button 
                             width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover
-                            _onClick={checkUserNameDup}
-                        >
-                            Check
-                        </Button>
+                            _onClick={checkUserNameDup} text="Check"
+                        />
                     </Grid>
-                    <Grid width="80%" margin="0px 0px 20px 0px" is_flex>
+                    <Grid width="80%" margin="0px 0px 25px 0px" is_flex>
                         <Input
                             id="nickname"
                             placeholder="닉네임을 입력해주세요."
@@ -91,12 +87,10 @@ const Signup = (props) => {
                         />
                         <Button 
                             width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover
-                            _onClick={checkNickNameDup}
-                        >
-                            Check
-                        </Button>
+                            _onClick={checkNickNameDup} text="Check"
+                        />
                     </Grid>
-                    <Grid margin="0px 0px 20px 0px" is_flex>
+                    <Grid margin="0px 0px 25px 0px" is_flex>
                         <Input
                             id="pwd"
                             type="password"
@@ -104,7 +98,7 @@ const Signup = (props) => {
                             _onChange={onChange}
                         />
                     </Grid>
-                    <Grid margin="0px 0px 50px 0px" is_flex>
+                    <Grid margin="0px 0px 20px 0px" is_flex>
                         <Input
                             id="re_pwd"
                             type="password"
@@ -114,14 +108,15 @@ const Signup = (props) => {
                     </Grid>
                 </Grid>
                 <Grid height="20%" is_flex>
-                    <Button 
+                    <Button
+                        width="80%"
+                        padding="10px"
+                        text="회원가입"
                         hover
                         _onClick={
                             signupClick
                         }
-                    >
-                        회원가입
-                    </Button>
+                    />
                 </Grid>
             </Container>
         </Grid>
@@ -135,7 +130,7 @@ const Container = styled.div`
     justify-content: center;
     width: 400px;
     height: 70%;
-    padding: 30px 0px 20px 0px;
+    padding: 40px 0px 30px 0px;
     border: none;
     border-radius: 25px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);
