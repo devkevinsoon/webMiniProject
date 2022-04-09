@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { Grid } from "./index";
 
 const Input = (props) => {
-    const { placeholder, label, type, _onChange, value, multiLine } = props;
+    const { placeholder, label, type, _onChange, value, multiLine, id } = props;
 
     if(multiLine){
         return (
@@ -22,7 +22,7 @@ const Input = (props) => {
 
     return(
         <React.Fragment>
-              <ElInput type= {type} placeholder={placeholder} onChange={_onChange}/>
+              <ElInput id={id} type= {type} placeholder={placeholder} onChange={_onChange}/>
         </React.Fragment>
     )
 }
@@ -33,6 +33,7 @@ Input.defaultProps = {
     type: "text",
     value: '',
     multiLine: false,
+    id: null,
     _onChange: () => {},
 }
 

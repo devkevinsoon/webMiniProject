@@ -1,41 +1,44 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 
+import { history } from "../redux/configureStore"
 import { Grid, Input, Button, Text } from "../elements/index";
+import { emailCheck, pwdCheck } from "../shared/common";
 
 const Signup = (props) => {
-    const [id, setId] = useState('');
-    const [pwd, setPwd] = useState('');
-    const [pwd_check, setPwdCheck] = useState('');
-    const [nickname, setNickName] = useState('');
+    const [ formInput, setFormInput ] = useState({});
 
-    // 이메일, 패스워드 정규표현식
-    const emailValueCheck = (asValue) => {
-        const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        return emailRegExp.test(asValue);
+    const onChange = (e) => {
+        const id = e.target.id;
+        console.log(e.target.id)
+        const value = e.target.value;
+        setFormInput({
+            ...formInput,
+            [id]: value,
+        });
     };
-        
-    const pwdValueCheck = (asValue) => {
-        const pwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        return pwdRegExp.test(asValue);
-    };
-    
-    const emailValueCheckBool = emailValueCheck(id);
-    const pwdValueCheckBool = pwdValueCheck(pwd);
-    const nicknameValueCheckBool = Boolean(nickname)
-    const pwdValueDoubleCheckBool = Boolean(pwd_check)
 
-    // if(!emailValueCheck){
-    //     document.querySelector(".login_input")
-    // }
-    
-    const isValid = emailValueCheckBool && pwdValueCheckBool && pwdValueDoubleCheckBool && nicknameValueCheckBool;
-    console.log(emailValueCheckBool, pwdValueCheckBool, isValid, pwd)
-    
-    useEffect(() => {
-        console.log(document.querySelector(".name"))
-    })
-    
+    // 중복 검사도 넣어야함!
+    const signupClick = () => {
+        const { id, nickname, pwd, re_pwd } = formInput;
+
+        if(!id || !nickname || !pwd || !re_pwd ){
+            alert("빈칸을 모두 채워주세요.");
+            return;
+        } else if (!emailCheck(id)){
+            alert("이메일 형식이 아닙니다.");
+            return;
+        } else if (!pwdCheck(pwd)){
+            alert("패스워드는 숫자와 특수문자를 포함한 최소 8자 이상입니다.");
+            return;
+        } else if (pwd !== re_pwd){
+            alert("패스워드가 서로 같지 않습니다.")
+        } else {
+            // 디스패치
+            history.push('/login')
+        }
+    }
+          
     return(
         <Grid width="100vw" height="100vh" is_flex>
             <Container>
@@ -43,21 +46,46 @@ const Signup = (props) => {
                     <Text size="52px" fontFamily="'Kaushan Script', cursive">Signup</Text>
                 </Grid>
                 <Grid height="60%" is_flex column>
-                    <Grid margin="50px 0px 20px 0px" is_flex>
-                        <Input _onChange={(e) => {setId(e.target.value)}} value={id} placeholder="이메일을 입력해주세요."/>
+                    <Grid margin="50px 0px 20px 0px" is_flex column>
+                        <Input
+                            id="id"
+                            placeholder="이메일을 입력해주세요."
+                            _onChange={onChange}
+                        />
                     </Grid>
                     <Grid margin="0px 0px 20px 0px" is_flex>
-                        <Input _onChange={(e) => {setNickName(e.target.value)}} value={nickname} placeholder="닉네임을 입력해주세요."/>
+                        <Input
+                            id="nickname"
+                            placeholder="닉네임을 입력해주세요."
+                            _onChange={onChange}
+                        />
                     </Grid>
                     <Grid margin="0px 0px 20px 0px" is_flex>
-                        <Input _onChange={(e) => {setPwd(e.target.value)}} value={pwd} placeholder="패스워드를 입력해주세요."/>
+                        <Input
+                            id="pwd"
+                            type="password"
+                            placeholder="패스워드를 입력해주세요."
+                            _onChange={onChange}
+                        />
                     </Grid>
                     <Grid margin="0px 0px 50px 0px" is_flex>
-                        <Input _onChange={(e) => {setPwdCheck(e.target.value)}} value={pwd_check} placeholder="패스워드를 다시 입력해주세요."/>
+                        <Input
+                            id="re_pwd"
+                            type="password"
+                            placeholder="패스워드를 다시 한 번 입력해주세요."
+                            _onChange={onChange}
+                        />
                     </Grid>
                 </Grid>
                 <Grid height="20%" is_flex>
-                    <Button width="80%" color="white" size="16px" margin="20px 0px" bg="#607d8b" disabled={!isValid} hover>회원가입</Button>
+                    <Button 
+                        hover
+                        _onClick={
+                            signupClick
+                        }
+                    >
+                        회원가입
+                    </Button>
                 </Grid>
             </Container>
         </Grid>

@@ -27,16 +27,16 @@ const Button = (props) => {
 
 Button.defaultProps = {
     children: null,
-    _onClick: () => {},
     padding: "10px",
-    margin: false,
-    width: "auto",
-    bg: false,
-    color: "",
-    size: "14px",
+    margin: "20px 0px",
+    width: "80%",
+    bg: "#607d8b",
+    color: "white",
+    size: "16px",
     circle: false,
     hover: false,
     disabled: false,
+    _onClick: () => {},
 }
 
 const Btn = styled.button`
