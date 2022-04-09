@@ -1,75 +1,79 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components"
 
 const Button = (props) => {
-  const { text, _onClick, is_abs, margin, width, padding, liked, children } = props;
+    const { children, _onClick, padding, width, bg, color, size, margin, circle, hover, disabled } = props;
 
-  if (is_abs) {
-    return (
-      <React.Fragment>
-        <LikeButton onClick={_onClick} value={liked}>
-          {children}
-        </LikeButton>
-      </React.Fragment>
-    );
-  }
+    const styles = {
+        padding,
+        margin,
+        width,
+        bg,
+        color,
+        size,
+        hover, 
+    }
+    
+    if(circle){
+        return(
+            <CircleBtn {...styles} onClick={_onClick} >{children}</CircleBtn>
+        )
+    }
 
-  const styles = {
-    margin: margin,
-    width: width,
-    padding: padding,
-  };
-
-  return (
-    <React.Fragment>
-      <ElButton {...styles} onClick={_onClick}>
-        {text}
-      </ElButton>
-    </React.Fragment>
-  );
-};
+    return(
+        <Btn {...styles} onClick={_onClick} disabled={disabled}>{children}</Btn>
+    )
+}
 
 Button.defaultProps = {
-  text: false,
-  _onClick: () => {},
-  is_abs: false,
-  margin: false,
-  width: "100%",
-  padding: "0px 0px",
-};
+    children: null,
+    padding: "10px",
+    margin: "20px 0px",
+    width: "80%",
+    bg: "#607d8b",
+    color: "white",
+    size: "16px",
+    circle: false,
+    check: false,
+    hover: false,
+    disabled: false,
+    _onClick: () => {},
+}
 
-const ElButton = styled.button`
-  width: ${(props) => props.width};
-  color: #000;
-  padding: 0px 0px;
-  box-sizing: border-box;
-  border: solid 1px #ccc;
-  padding: ${(props) => props.padding};
-  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
-  /* background-color:#fff; */
-  transition: all 0.3s;
+const Btn = styled.button`
+    width: ${props => props.width};
+    padding: ${props => props.padding};
+    margin: ${props => props.margin};
+    background: ${props => props.bg};
+    color: ${props => props.color};
+    font-size: ${props => props.size};
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    ${props => props.hover ? `&:hover {
+        color: white;
+        background: #37474f;
+    }` : ""}
 `;
 
-const LikeButton = styled.button`
-  opacity: 0;
-  width: 65px;
-  height: 50px;
-  color: #ffffff;
-  box-sizing: border-box;
-  /* font-size: 36px; */
-  font-weight: 800;
-  position: absolute;
-  bottom: 48%;
-  right: 42%;
-  text-align: center;
-  vertical-align: middle;
-  border: none;
-  border-radius: 50px;
-  background-color: transparent;
-  svg {
-    width: 80px;
-    height: 80px;
-  }
+const CircleBtn = styled.button`
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    line-height: 50px;
+    border: none;
+    border-radius: 50px;
+    font-size: 70px;
+    background: #9e9e9e;
+    padding: 2px 0 0 0;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+        background: #424242;
+    }
 `;
 
 export default Button;

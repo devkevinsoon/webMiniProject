@@ -1,8 +1,7 @@
+import Grid from "./Grid";
+import Input from "./Input";
+import Button from "./Button";
+import Text from "./Text";
 import Logo from './Logo';
-import Button from './Button';
 
-
-export { 
-    Logo, 
-    Button, 
-};
+export { Grid, Input, Button, Text, Logo }
