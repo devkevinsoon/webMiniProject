@@ -4,13 +4,17 @@ import styled from "styled-components"
 import { history } from "../redux/configureStore"
 import { Grid, Input, Button, Text } from "../elements/index";
 import { emailCheck, pwdCheck } from "../shared/common";
+import { actionCreators as userActions } from "../redux/modules/user"
+import { useDispatch, useSelector } from "react-redux";
 
 const Signup = (props) => {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
+    // console.log(user)
     const [ formInput, setFormInput ] = useState({});
 
     const onChange = (e) => {
         const id = e.target.id;
-        console.log(e.target.id)
         const value = e.target.value;
         setFormInput({
             ...formInput,
@@ -34,7 +38,7 @@ const Signup = (props) => {
         } else if (pwd !== re_pwd){
             alert("패스워드가 서로 같지 않습니다.")
         } else {
-            // 디스패치
+            dispatch(userActions.setUser(formInput))
             history.push('/login')
         }
     }

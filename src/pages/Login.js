@@ -4,8 +4,11 @@ import styled from "styled-components"
 import { Link } from "react-router-dom";
 import { history } from "../redux/configureStore"
 import { Grid, Input, Button, Text } from "../elements/index";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const Login = (props) => {
+    const dispatch = useDispatch();
     const [ formInput, setFormInput ] = useState({});
 
     const onChange = (e) => {
