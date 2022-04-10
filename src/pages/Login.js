@@ -23,6 +23,7 @@ const Login = (props) => {
 
     const loginClick = () => {
         const { id, pwd } = formInput;
+        
         if(!id || !pwd){
             alert("빈칸을 모두 채워주세요.");
             return;
@@ -66,7 +67,7 @@ const Login = (props) => {
                     <Grid is_flex padding="0px 0px 20px 0px">
                         <Text size="12px" width="auto">계정이 없으신가요?</Text>
                         <Link to="/signup" tabIndex="-1" style={{textDecoration : "none"}}> 
-                            <Text size="12px" margin="0px 5px" color="#37474f" hover>회원가입</Text>
+                            <Text size="12px" margin="0px 5px" color="#f06292" hover>회원가입</Text>
                         </Link>
                     </Grid>
                 </Grid>

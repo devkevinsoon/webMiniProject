@@ -7,18 +7,19 @@ const GET_POST_EACH = "GET_POST_EACH";
 const initialState = {
     list: {
         postId: 1,
-        content: "initialState",
-        modifiedAt: "",
+        content: "반갑습니다.",
+        modifiedAt: "2022-04-10",
         likeCount: 1,
         imageUrl:"",
         userId : 1,
-        nickname: "동현",
+        nickname: "작성자",
         comments: [
-        {
-            commentId: 1,
-            comment: "나도 반가워요",
-            modifiedAt: ""
-        },
+            {
+                nickname: "닉네임",
+                commentId: 1,
+                comment: "저도 반가워요:)",
+                modifiedAt: "2022-04-10"
+            },
         ]
     }
 }

@@ -2,12 +2,18 @@ import styled from 'styled-components';
 import React from "react";
 
 const Image = (props) => {
-    const { src, size } = props;
+    const { src, size, shape } = props;
 
     const styles = {
         src,
         size,
     };
+
+    if(shape === "circle"){
+        return (
+            <ImageCircle {...styles}></ImageCircle>
+        )
+    }
 
     return (
         <AspectOutter>
@@ -19,7 +25,19 @@ const Image = (props) => {
 Image.defaultProps = {
   src: "http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
   size: 36,
+  shape: false,
 };
+
+const ImageCircle = styled.div`
+    --size: ${(props) => props.size}px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: var(--size);
+
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    margin: 4px;
+`;
 
 const AspectOutter = styled.div`
     width: 100%;

@@ -62,7 +62,7 @@ const P = styled.p`
     props.hover 
         ? `&:hover {
         font-weight: 600;
-        color: #f48fb1;
+        color: #c21f5b;
         cursor: pointer}` 
         : ""};
 `;
