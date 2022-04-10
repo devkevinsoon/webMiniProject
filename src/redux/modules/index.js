@@ -1,4 +1,5 @@
 import User from "./user"
 import CheckDup from "./checkDup"
+import Post from "./post"
 
-export { User, CheckDup }
+export { User, CheckDup, Post }

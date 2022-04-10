@@ -33,7 +33,9 @@ const AspectInner = styled.div`
     overflow: hidden;
     background-image: url("${(props) => props.src}");
     background-position: center;
-    background-size: cover;
+    background-color: #f8f8f8;
+    background-repeat: no-repeat;
+    background-size: contain;
 `;
 
 export default Image;

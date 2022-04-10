@@ -4,7 +4,20 @@ import styled from "styled-components"
 import { Grid } from "./index";
 
 const Input = (props) => {
-    const { placeholder, label, type, _onChange, value, multiLine, id } = props;
+    const { 
+      placeholder, 
+      label, 
+      type, 
+      _onChange, 
+      value, 
+      multiLine, 
+      id,
+      width, 
+    } = props;
+
+    const style = {
+      width,
+    }
    
     if(multiLine){
         return (
@@ -23,6 +36,7 @@ const Input = (props) => {
     return(
         <React.Fragment>
               <ElInput 
+                {...style}
                 id={id}
                 type= {type}
                 placeholder={placeholder}
@@ -39,6 +53,7 @@ Input.defaultProps = {
     value: '',
     multiLine: false,
     id: null, 
+    width: "100%",
     _onChange: () => {},
 }
 
@@ -55,9 +70,9 @@ const ElTextarea = styled.textarea`
 
 const ElInput = styled.input`
     border: none;
-    border-bottom: 1px solid #212121;
+    border-bottom: 2px solid lightgray;
+    width: ${props => props.width};
     outline: none;
-    width: 80%;
     padding: 8px 4px;
     font-size: 18px;
     &::placeholder{

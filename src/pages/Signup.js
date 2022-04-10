@@ -63,7 +63,7 @@ const Signup = (props) => {
         <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
             <Container>
                 <Grid height="20%" is_flex>
-                    <Text size="52px" fontFamily="'Kaushan Script', cursive">Signup</Text>
+                    <Text size="52px" fontFamily="'Kaushan Script', cursive" textAlign="center">Signup</Text>
                 </Grid>
                 <Grid height="60%" is_flex column>
                     <Grid width="80%" margin="50px 0px 25px 0px" is_flex>
@@ -91,6 +91,7 @@ const Signup = (props) => {
                     <Grid margin="0px 0px 25px 0px" is_flex>
                         <Input
                             id="pwd"
+                            width="80%"
                             type="password"
                             placeholder="패스워드를 입력해주세요."
                             _onChange={onChange}
@@ -99,6 +100,7 @@ const Signup = (props) => {
                     <Grid margin="0px 0px 20px 0px" is_flex>
                         <Input
                             id="re_pwd"
+                            width="80%"
                             type="password"
                             placeholder="패스워드를 다시 한 번 입력해주세요."
                             _onChange={onChange}

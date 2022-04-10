@@ -40,6 +40,7 @@ const Login = (props) => {
                     <Grid margin="40px 0px 30px 0px" is_flex>
                         <Input
                             id="id"
+                            width="80%"
                             placeholder="이메일을 입력해주세요."
                             _onChange={onChange}
                         />
@@ -47,6 +48,7 @@ const Login = (props) => {
                     <Grid margin="0px 0px 20px 0px" is_flex>
                         <Input
                             id="pwd"
+                            width="80%"
                             placeholder="패스워드를 입력해주세요."
                             _onChange={onChange}
                         />
@@ -62,7 +64,7 @@ const Login = (props) => {
                         _onClick={loginClick}
                     />
                     <Grid is_flex padding="0px 0px 20px 0px">
-                        <Text size="12px">계정이 없으신가요?</Text>
+                        <Text size="12px" width="auto">계정이 없으신가요?</Text>
                         <Link to="/signup" tabIndex="-1" style={{textDecoration : "none"}}> 
                             <Text size="12px" margin="0px 5px" color="#37474f" hover>회원가입</Text>
                         </Link>
