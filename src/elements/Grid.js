@@ -2,7 +2,20 @@ import React from "react";
 import styled from "styled-components";
 
 const Grid = (props) => {
-    const { children, is_flex, column, width, height, padding, margin, background } = props;
+    const {
+        children, 
+        is_flex, 
+        column, 
+        width, 
+        height, 
+        padding, 
+        margin, 
+        background,
+        borderB,
+        justify,
+        minWidth,
+    } = props;
+    
     const style = {
         column, 
         is_flex, 
@@ -10,7 +23,10 @@ const Grid = (props) => {
         height, 
         padding, 
         margin, 
-        background
+        background,
+        borderB,
+        justify,
+        minWidth,
     };
   
     return (
@@ -28,6 +44,9 @@ Grid.defaultProps = {
     padding: false,
     margin: false,
     background: false,
+    borderB: false,
+    justify: false,
+    minWidth: false,
 };
 
 const GridBox = styled.div`
@@ -35,12 +54,16 @@ const GridBox = styled.div`
         (props.is_flex
         ? `display: flex; align-items: center; justify-content: center;`
         : "")};
+    justify-content: ${(props) => (props.justify ? "space-between" : "")};
     flex-direction: ${(props) => (props.column ? "column" : "row")};
     width: ${(props) => (props.width)};
     height: ${(props) => (props.height)};
     padding: ${(props) => (props.padding ? `${props.padding}` : "")};
     margin: ${(props) => (props.margin ? `${props.margin}` : "")};
     background-color: ${(props) => (props.background ? `${props.background}` : "")};
+    ${(props) => (props.borderB ? `border-bottom: ${props.borderB};` : "")}
+    ${(props) => (props.minWidth ? `min-width: ${props.minWidth};` : "")}
+    /* border: 1px red solid; */
 `;
 
 export default Grid;

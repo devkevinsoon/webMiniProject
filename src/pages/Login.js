@@ -2,13 +2,14 @@ import React, { useState } from "react"
 import styled from "styled-components"
 
 import { Link } from "react-router-dom";
-import { history } from "../redux/configureStore"
 import { Grid, Input, Button, Text } from "../elements/index";
 import { useDispatch } from "react-redux";
+import flower from "../images/flower_pngtree.png";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 const Login = (props) => {
     const dispatch = useDispatch();
+    
     const [ formInput, setFormInput ] = useState({});
 
     const onChange = (e) => {
@@ -27,25 +28,29 @@ const Login = (props) => {
             alert("빈칸을 모두 채워주세요.");
             return;
         }
+        dispatch(userActions.loginApi(formInput));
     };
     
     return(
-        <Grid width="100vw" height="100vh" is_flex>
+        <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
             <Container>
-                <Grid height="20%" is_flex>
-                    <Text size="52px" fontFamily="'Kaushan Script', cursive">Login</Text>
-                </Grid>
-                <Grid height="50%" column is_flex>
+                <Wrap>
+                    <Flower src={flower} />
+                    <Span>Login</Span>
+                </Wrap>
+                <Grid height="30%" column is_flex>
                     <Grid margin="40px 0px 30px 0px" is_flex>
                         <Input
-                            id="id"
+                            id="user_name"
+                            width="80%"
                             placeholder="이메일을 입력해주세요."
                             _onChange={onChange}
                         />
                     </Grid>
-                    <Grid margin="0px 0px 40px 0px" is_flex>
+                    <Grid margin="0px 0px 20px 0px" is_flex>
                         <Input
                             id="pwd"
+                            width="80%"
                             placeholder="패스워드를 입력해주세요."
                             _onChange={onChange}
                         />
@@ -53,15 +58,17 @@ const Login = (props) => {
                 </Grid>
                 <Grid height="30%" column is_flex>
                     <Button 
+                        text="로그인"
+                        width="80%"
+                        padding="10px"
+                        margin="20px 0px"
                         hover
                         _onClick={loginClick}
-                    >
-                        로그인
-                    </Button>
-                    <Grid is_flex>
-                        <Text size="12px">계정이 없으신가요?</Text>
-                        <Link to="/signup" style={{textDecoration : "none"}}> 
-                            <Text size="12px" margin="0px 5px" color="#37474f" hover>회원가입</Text>
+                    />
+                    <Grid is_flex padding="0px 0px 20px 0px">
+                        <Text size="12px" width="auto">계정이 없으신가요?</Text>
+                        <Link to="/signup" tabIndex="-1" style={{textDecoration : "none"}}> 
+                            <Text size="12px" margin="0px 5px" color="#f06292" hover>회원가입</Text>
                         </Link>
                     </Grid>
                 </Grid>
@@ -77,12 +84,31 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     width: 400px;
-    height: 60%;
+    height: 70%;
     padding: 30px 0px 20px 0px;
     border: none;
     border-radius: 25px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);
 `;
 
+const Wrap = styled.div`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45%;
+    padding-top: 20px;
+`
+
+const Flower = styled.img`
+    width: 70%;
+`
+
+const Span = styled.span`
+    position: absolute;
+    font-size: 54px;
+    font-family: 'Kaushan Script', cursive;
+    padding-bottom: 15px;
+`;
 
 export default Login;
