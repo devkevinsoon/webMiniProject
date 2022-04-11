@@ -1,7 +1,7 @@
 import Header from './Header';
-//import ImgList from './ImgList';
+//import ImageList from './ImageList';
 
 export {
     Header,
-    // ImgList,
+    //ImageList,
 };

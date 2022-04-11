@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-
-import { Logo, Button } from "../elements/index.js";
+import { Logo, Button, Input, Grid } from "../elements/index.js";
 import { getCookie } from "../shared/cookie";
-
-
 
 //import { actionCreators as userActions } from "../redux/modules/user";
 
@@ -16,47 +13,90 @@ const Header = (props) => {
   const token = getCookie("token");
   
 
+  const is_login = useSelector((state) => state.user.is_login);
+
+  if (is_login) {
+    <React.Fragment>
+      <Button
+        width="90px"
+        text="프로필"
+        // _onClick={goProfile}
+      />
+      <Button
+        width="90px"
+        text="로그아웃"
+        // _onClick={() => {
+        //   dispatch(userActions.logOutAction({}));
+        // }}
+      />
+    </React.Fragment>;
+  }
   return (
     <React.Fragment>
       <HeaderContainer>
         <Logo {...props} />
-        {!token ? (
-          <React.Fragment>
-              <Button
-                width="90px"
-                text="로그인"
-                _onClick={() => {
-                  props.history.push("/login");
-                }}
-              />
-              <Button
-                _onClick={() => {
-                  props.history.push("/signup");
-                }}
-                width="90px"
-                text="회원가입"
-              />
-            </React.Fragment>
-            ) : (
-            <React.Fragment>
-              <Button
-                width="90px"
-                text="프로필"
-                // _onClick={goProfile}
-              />
-              <Button
-                width="90px"
-                text="로그아웃"
-                // _onClick={() => {
-                //   dispatch(userActions.logOutAction({}));
-                // }}
-              />
-            </React.Fragment>
-            )}
+        <React.Fragment>
+            <Button
+              width="90px"
+              text="로그인"
+              _onClick={() => {
+                props.history.push("/Login");
+              }}
+            />
+            <Button
+              _onClick={() => {
+                //props.history.push("/signup");
+              }}
+              width="90px"
+              text="회원가입"
+            />
+        </React.Fragment>
       </HeaderContainer>
     </React.Fragment>
   );
 };
+
+//   return (
+//     <React.Fragment>
+//       <HeaderContainer>
+//         <Logo {...props} />
+//         {!token ? (
+//           <React.Fragment>
+//               <Button
+//                 width="90px"
+//                 text="로그인"
+//                 _onClick={() => {
+//                   props.history.push("/Login");
+//                 }}
+//               />
+//               <Button
+//                 _onClick={() => {
+//                   //props.history.push("/signup");
+//                 }}
+//                 width="90px"
+//                 text="회원가입"
+//               />
+//             </React.Fragment>
+//             ) : (
+//             <React.Fragment>
+//               <Button
+//                 width="90px"
+//                 text="프로필"
+//                 // _onClick={goProfile}
+//               />
+//               <Button
+//                 width="90px"
+//                 text="로그아웃"
+//                 // _onClick={() => {
+//                 //   dispatch(userActions.logOutAction({}));
+//                 // }}
+//               />
+//             </React.Fragment>
+//             )}
+//       </HeaderContainer>
+//     </React.Fragment>
+//   );
+// };
 
 const HeaderContainer = styled.div`
   position: fixed; // 고침

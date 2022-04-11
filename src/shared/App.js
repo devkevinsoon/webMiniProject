@@ -1,30 +1,67 @@
-import React from 'react';
+import React from "react";
 
-import { Route } from 'react-router-dom';
+import { Route } from "react-router-dom";
 
-import { Header } from '../components/index';
+import { Header } from "../components/index";
+import Permit from "./Permit";
+import { Grid, Button } from "../elements";
 
-import { ConnectedRouter } from 'connected-react-router';
-import { history } from '../redux/configureStore';
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "../redux/configureStore";
 
-import { Login, Signup, Main, Detail } from '../pages/index';
+import { Login, Signup, Main, Detail, PostWrite } from '../pages/index';
 import Test from '../pages/Test';
 
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { TiPlus } from "react-icons/ti";
 
+// components
+// test
 function App() {
-
   return (
-      <React.Fragment>
+    <React.Fragment>
+      <Grid>
         <ConnectedRouter history={history}>
           <Route path="/" component={Header} />
           <Route path="/" exact component={Main} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
+          <Route path="/write" exact component={PostWrite} />
           <Route path="/test" exact component={Test} />
           <Route path="/detail" exact component={Detail} />
         </ConnectedRouter>
-      </React.Fragment>
+      </Grid>
+      <Grid>
+        <Button is_float text="+" _onClick={() => {history.push('/write');}}></Button>
+      </Grid>
+    </React.Fragment>
   );
 }
 
+const Plus = styled(TiPlus)`
+font-size: 28px;
+`;
+
+
+// const AddBtn = styled(Link)`
+//    ${RoundBtn};
+//    position: fixed;
+//    bottom: 10px;
+//    right: 10px;
+//    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+//      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+//    ${({ theme }) => theme.device.tablet} {
+//      bottom: 20px;
+//      right: 20px;
+//    }
+//    ${Plus} {
+//      transition: transform 300ms ease-in-out;
+//    }
+//    &:hover {
+//      ${Plus} {
+//        transform: rotate(90deg);
+//      }
+//    }
+//  `;
 export default App;
