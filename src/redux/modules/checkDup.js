@@ -2,8 +2,6 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
 
-import { emailCheck } from "../../shared/common";
-
 // action
 const CHECK_DUP = "CHECK_DUP";
 
