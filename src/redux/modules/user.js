@@ -21,19 +21,20 @@ const logOut = createAction(LOG_OUT, () => {});
 // middleWares
 const signUpApi = (user) => {
     return async function (dispatch, getState, {history}){
+        console.log(user)
         try {
-            const join = await axios.post('',{
+            const join = await axios.post("http://54.180.96.119/api/signup",{
                 username: user.user_name,
                 nickname: user.nickname,
                 password: user.pwd,
             });
             console.log(join)
-            if(join.data.return){
-                alert(`${user.nickname}님 회원가입을 환영합니다.`);
-                history.replace('/login')
-            } else {
-                alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-            };
+            // if(join.data.return){
+            //     alert(`${user.nickname}님 회원가입을 환영합니다.`);
+            //     history.replace('/login')
+            // } else {
+            //     alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+            // };
         } catch(err){
             alert('회원가입에 실패했습니다. 다시 시도해주세요.');
             console.log(err)

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Button } from "../elements";
 import { history } from "../redux/configureStore"; 
 
-import Post from "../components/Post";
+
 import { useSelector  } from "react-redux";
 
 
