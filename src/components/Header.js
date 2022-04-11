@@ -31,7 +31,7 @@ const Header = (props) => {
               />
               <Button
                 _onClick={() => {
-                  // props.history.push("/detail");
+                  props.history.push("/signup");
                 }}
                 width="90px"
                 text="회원가입"
