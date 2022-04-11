@@ -6,6 +6,16 @@ const Button = (props) => {
 
     const { children, _onClick, padding, width, bg, color, size, margin, circle, hover, disabled, text, is_float, name } = props;
 
+    const styles = {
+      padding,
+      margin,
+      width,
+      bg,
+      color,
+      size,
+      hover, 
+    }
+
     if (is_float) {
         return (
           <React.Fragment>
@@ -13,25 +23,6 @@ const Button = (props) => {
           </React.Fragment>
         );
       }
-
-    const styles = {
-        padding,
-        margin,
-        width,
-        bg,
-        color,
-        size,
-        hover, 
-    }
-
-    if(is_float)
-    {
-        return (
-            <React.Fragment>
-              <FloatButton onClick={_onClick}>{text ? text : children}</FloatButton>
-            </React.Fragment>
-          );
-    }
 
     return(
         <Btn 
@@ -96,7 +87,7 @@ const Btn = styled.button`
   background: ${props => props.bg};
   color: ${props => props.color};
   font-size: ${props => props.size};
-  border: none;
+  /* border: none; */
   border-radius: 13px;
   cursor: pointer;
   ${props => props.hover ? `&:hover {
