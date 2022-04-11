@@ -29,12 +29,12 @@ const signUpApi = (user) => {
                 password: user.pwd,
             });
             console.log(join)
-            // if(join.data.return){
-            //     alert(`${user.nickname}님 회원가입을 환영합니다.`);
-            //     history.replace('/login')
-            // } else {
-            //     alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-            // };
+            if(join.data === "회원가입이 완료되었습니다."){
+                alert(`${user.nickname}님 ${join.data}`);
+                history.replace('/login')
+            } else {
+                alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+            };
         } catch(err){
             alert('회원가입에 실패했습니다. 다시 시도해주세요.');
             console.log(err)
@@ -44,14 +44,15 @@ const signUpApi = (user) => {
 
 const loginApi = (user) => {
     return async function (dispatch, getState, {history}){
+        console.log(user)
         try {
-            const login = await axios.post('',{
+            const login = await axios.post('http://54.180.96.119/user/login',{
                 username: user.user_name,
                 password: user.pwd,
             });
             console.log(login);
-            if(login.data.return){
-                alert(`안녕하세요. ${user.username}님!`);
+            if(!login.data){
+                alert(`안녕하세요. ${user.user_name}님!`);
                 history.replace('/');
                 // 토큰 받아서 넣어줘야 한다.
                 // localStorage.setItem('token',login.data.token);

@@ -14,6 +14,7 @@ import { Login, Signup, Main, Detail, PostWrite } from '../pages/index';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
+import Test from "../pages/Test";
 
 // components
 // test
@@ -28,6 +29,7 @@ function App() {
           <Route path="/signup" exact component={Signup} />
           <Route path="/write" exact component={PostWrite} />
           <Route path="/detail" exact component={Detail} />
+          <Route path="/test" exact component={Test} />
         </ConnectedRouter>
       </Grid>
       <Grid>

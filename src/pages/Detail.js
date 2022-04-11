@@ -40,7 +40,7 @@ const Detail = (props) => {
                     <Grid margin="0 0 20px 0">
                         <Text>{each_post.content}</Text>
                     </Grid>
-                    <Image src={each_post.imageUrl} />
+                    <Image src={each_post.imageUrl}  type="rectangle"/>
                 </Grid>
             </Wrap>
             <Grid width="40%" minWidth="540px" padding="20px 5px 0 5px" is_flex justify>

@@ -23,8 +23,10 @@ const Login = (props) => {
     };
 
     const loginClick = () => {
-        const { id, pwd } = formInput;
-        if(!id || !pwd){
+        const { user_name, pwd } = formInput;
+        // console.log(user_name, pwd)
+
+        if(!user_name || !pwd){
             alert("빈칸을 모두 채워주세요.");
             return;
         }
