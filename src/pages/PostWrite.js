@@ -52,7 +52,7 @@ PostWrite.defatulProps = {
 const WriteStyle = styled.div`
   max-width: 600px;
   margin: 0 auto ;
-  padding: 100px;
+  padding: 40px;
   
   input: focus{outline: none;}
   
@@ -104,7 +104,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 400px;
-  height: 60%;
+  height: 40%;
   padding: 20px 0px 20px 0px;
   border: none;
   border-radius: 15px;
