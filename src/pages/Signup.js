@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import { history } from "../redux/configureStore"
 import { Grid, Input, Button, Text } from "../elements/index";
-import { emailCheck, pwdCheck } from "../shared/common";
+import { pwdCheck } from "../shared/common";
 import { actionCreators as userActions } from "../redux/modules/user"
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreator as checkActions } from "../redux/modules/checkDup";
@@ -40,13 +40,11 @@ const Signup = (props) => {
         if(!user_name || !nickname || !pwd || !re_pwd ){
             alert("빈칸을 모두 채워주세요.");
             return;
-        } else if (!emailCheck(user_name)){
-            alert("이메일 형식이 아닙니다.");
-            return;
         } else if (!pwdCheck(pwd)){
             alert("패스워드는 숫자와 특수문자를 포함한 최소 8자 이상입니다.");
             return;
-        } else if (pwd !== re_pwd){
+        } 
+        else if (pwd !== re_pwd){
             alert("패스워드가 서로 같지 않습니다.")
         } else if (!username_check.is_check || (username_check.email !== user_name)){
             alert("이메일 중복확인을 해주세요.")

@@ -1,6 +1,8 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
-import { RESP } from "../../shared/json";
+import axios from "axios";
+
+import { emailCheck } from "../../shared/common";
 
 // action
 const CHECK_DUP = "CHECK_DUP";
@@ -22,35 +24,63 @@ const initialState = {
 
 // middleWares
 const checkUserNameDupApi = (user_name) => {
-    return function (dispatch, getState, {histoty}){
-        const resp = RESP.return;
-        console.log(resp)
+    return async function (dispatch, getState, {histoty}){
+        try {
+            const checkUserName = await axios.get("url",{
+                username: user_name,
+            });
+            console.log(checkUserName);
+            if(!emailCheck(user_name)){
+                alert("이메일 형식이 올바르지 않습니다.");
+                return;
+            };
+            if(checkUserName.data.return){
+                alert("사용 가능한 이메일입니다!");
+            } else {
+                alert("이미 사용되고 있는 이메일입니다.");
+                return;
+            };
+            const check_info = {
+                username: {
+                    email: user_name,
+                    is_check: checkUserName.data.return,
+                }
+            };
+            dispatch(checkDup(check_info));
+        } catch(err){
+            console.log(err);
+            alert("이메일 중복확인에 실패했습니다.")
+        };
+    };
+};
 
-        const check_info = {
-            username: {
-                email: user_name,
-                is_check: resp,
-            }
-        }
-        dispatch(checkDup(check_info))
-    }
-}
-
-const checkNickNameDupApi = (nickname) => {
-    return function (dispatch, getState, {histoty}){
-        const resp = RESP.return;
-        console.log(resp)
-
-        const check_info = {
-            nickname: {
-                nick_name: nickname,
-                is_check: resp,
-            }
-        }
-        dispatch(checkDup(check_info))
-    }
-}
-
+const checkNickNameDupApi = (_nickname) => {
+    return async function (dispatch, getState, {histoty}){
+        try {
+            const checkUserNickName = await axios.get("url",{
+                nickname: _nickname,
+            });
+            console.log(checkUserNickName);
+        
+            if(checkUserNickName.data.return){
+                alert("사용 가능한 닉네임입니다!");
+            } else {
+                alert("이미 사용되고 있는 닉네임입니다.");
+                return;
+            };
+            const check_info = {
+                username: {
+                    nick_name: _nickname,
+                    is_check: checkUserNickName.data.return,
+                }
+            };
+            dispatch(checkDup(check_info));
+        } catch(err){
+            console.log(err);
+            alert("닉네임 중복확인에 실패했습니다.")
+        };
+    };
+};
 
 // reducer
 export default handleActions(
@@ -65,7 +95,6 @@ export default handleActions(
 );
 
 const actionCreator = {
-    checkDup,
     checkUserNameDupApi,
     checkNickNameDupApi,
 }
