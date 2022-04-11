@@ -45,7 +45,7 @@ const loginApi = (user) => {
     return async function (dispatch, getState, {history}){
         try {
             const login = await axios.post('',{
-                username: user.username,
+                username: user.user_name,
                 password: user.pwd,
             });
             console.log(login);
@@ -56,9 +56,8 @@ const loginApi = (user) => {
                 // localStorage.setItem('token',login.data.token);
                 // dispatch(setUser({
                 // nickname: login.data.nickname,
-                // email: email,
-                // userIcon: login.data.userIcon,
-                // uid: login.data.userId
+                // username: user.user_name,
+                // userId: login.data.userId
             } else {
                 alert('이메일과 패스워드를 다시 확인해주세요.');
             };

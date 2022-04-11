@@ -2,7 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import { RESP } from "../../shared/json";
 
-const GET_POST_EACH = "GET_POST_EACH";
+const GET_ONE_POST = "GET_ONE_POST";
 
 const initialState = {
     list: {
@@ -24,12 +24,12 @@ const initialState = {
     }
 }
 
-const getPostEach = createAction(GET_POST_EACH, (post) => ({post}));
+const getOnePost = createAction(GET_ONE_POST, (post) => ({post}));
 
-const getPostEachApi = (postId) => {
+const getOnePostApi = (postId) => {
     return function (dispatch, getState, {history}){
         const resp = RESP.post;
-        dispatch(getPostEach(resp));
+        dispatch(getOnePost(resp));
         history.push('/detail')
     };
 };
@@ -37,7 +37,7 @@ const getPostEachApi = (postId) => {
 
 export default handleActions(
     {
-        [GET_POST_EACH]: (state, action) => 
+        [GET_ONE_POST]: (state, action) => 
             produce(state, (draft) => {
                 draft.list = action.payload.post;
         }),
@@ -46,7 +46,7 @@ export default handleActions(
 );
 
 const actionCreators = {
-    getPostEachApi,
+    getOnePostApi,
 };
 
 export { actionCreators };

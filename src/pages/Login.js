@@ -41,7 +41,7 @@ const Login = (props) => {
                 <Grid height="30%" column is_flex>
                     <Grid margin="40px 0px 30px 0px" is_flex>
                         <Input
-                            id="id"
+                            id="user_name"
                             width="80%"
                             placeholder="이메일을 입력해주세요."
                             _onChange={onChange}

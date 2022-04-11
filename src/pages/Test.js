@@ -11,7 +11,7 @@ const Test = (props) => {
 
     
     const postRef = () => {
-        dispatch(postActions.getPostEachApi({postId: "123"}));
+        dispatch(postActions.getOnePostApi({postId: "123"}));
       
     }
 

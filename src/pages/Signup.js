@@ -52,7 +52,7 @@ const Signup = (props) => {
             alert("닉네임 중복확인을 해주세요.")
         } else {
             alert("성공")
-            dispatch(userActions.setUser(formInput))
+            dispatch(userActions.signUpApi(formInput))
             history.push('/login')
         }
     }
