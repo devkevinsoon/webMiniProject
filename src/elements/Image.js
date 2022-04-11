@@ -10,22 +10,31 @@ const Image = (props) => {
     };
 
     if(shape === "circle"){
+
         return (
             <ImageCircle {...styles}></ImageCircle>
         )
     }
 
+    if(shape === "rectangle"){
+        return (
+            <AspectOutter>
+                <AspectInner {...styles}></AspectInner>
+            </AspectOutter>
+        )
+    }
+
     return (
-        <AspectOutter>
-            <AspectInner {...styles}></AspectInner>
-        </AspectOutter>
-    );
-};
+        <React.Fragment>
+
+        </React.Fragment>
+    )
+}
 
 Image.defaultProps = {
-  src: "http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
-  size: 36,
-  shape: false,
+    shape: "circle",
+    src: "../../public/img/03.png",
+    size: 36,
 };
 
 const ImageCircle = styled.div`
@@ -41,19 +50,26 @@ const ImageCircle = styled.div`
 
 const AspectOutter = styled.div`
     width: 100%;
-    min-width: 500px;
+    min-width: 250px;
 `;
 
 const AspectInner = styled.div`
     position: relative;
-    // 비율 정할 수 있어!
-    padding-top: calc(100% /4 * 3);
+    padding-top: 75%;
     overflow: hidden;
     background-image: url("${(props) => props.src}");
-    background-position: center;
-    background-color: #f8f8f8;
-    background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
+`;
+
+const ImageCircle = styled.div`
+    --size : ${(props) => props.size}px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: var(--size);
+
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    margin: 4px;
 `;
 
 export default Image;
