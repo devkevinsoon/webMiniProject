@@ -13,7 +13,7 @@ const Text = (props) => {
         fontFamily, 
         hover, 
         padding, 
-        width 
+        width, 
     } = props;
 
     const styles = {
