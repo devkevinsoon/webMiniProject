@@ -23,6 +23,7 @@ const Main = (props) => {
                     return <Post key={p.id}{...p} />
                 })} */}
             </MainContainer>
+            
         </React.Fragment>
     );
 };
@@ -30,7 +31,7 @@ const Main = (props) => {
 const MainContainer = styled.div`
     height: auto;
     width: 80vw;
-    margin 0 auto
+    margin: 0 auto;
 `;
 
 export default Main;

@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-
-
 import { Logo, Button, Input, Grid } from "../elements/index.js";
 import { getCookie } from "../shared/cookie";
 
@@ -13,6 +11,7 @@ const Header = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const token = getCookie("token");
+  
 
   const is_login = useSelector((state) => state.user.is_login);
 
@@ -56,6 +55,7 @@ const Header = (props) => {
     </React.Fragment>
   );
 };
+
 //   return (
 //     <React.Fragment>
 //       <HeaderContainer>
@@ -99,10 +99,11 @@ const Header = (props) => {
 // };
 
 const HeaderContainer = styled.div`
+  position: fixed; // 고침
   display: flex;
   align-items: stretch;
-  justify-content: flex-start;
-  width: 80vw;
+  justify-content: center; // 고침
+  width: 100vw; // 고침
   height: 40px;
   margin: 30px auto 30px auto;
   button {

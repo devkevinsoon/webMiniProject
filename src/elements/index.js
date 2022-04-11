@@ -5,4 +5,4 @@ import Text from "./Text";
 import Logo from './Logo';
 import Image from './Image';
 
-export { Grid, Input, Button, Text, Logo, Image}
+export { Grid, Input, Button, Text, Logo, Image };

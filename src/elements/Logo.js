@@ -12,14 +12,13 @@ const Logo = (props) => {
 }
 
 const LogoContainer = styled.div`
-width: 80vw;
-text-align: left;
-cursor: pointer;
-font-family: "Lobster", cursive;
-font-family: "Permanent Marker", cursive;
-font-size: 30px;
-color: #ff54b0;
-}
+    width: 80vw;
+    text-align: left;
+    cursor: pointer;
+    font-family: "Lobster", cursive;
+    font-family: "Permanent Marker", cursive;
+    font-size: 30px;
+    color: #ff54b0;
 `;
 
 export default Logo;

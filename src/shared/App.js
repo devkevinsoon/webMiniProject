@@ -9,15 +9,13 @@ import { Grid, Button } from "../elements";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
 
-
-import Main from "../pages/Main";
-
-import { Login, Signup, PostWrite } from "../pages/index";
-
+import { Login, Signup, Main, Detail, PostWrite } from '../pages/index';
+import Test from '../pages/Test';
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
+
 // components
 // test
 function App() {
@@ -30,6 +28,8 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/write" exact component={PostWrite} />
+          <Route path="/test" exact component={Test} />
+          <Route path="/detail" exact component={Detail} />
         </ConnectedRouter>
       </Grid>
       <Grid>
