@@ -46,14 +46,18 @@ const Signup = (props) => {
         } 
         else if (pwd !== re_pwd){
             alert("패스워드가 서로 같지 않습니다.")
-        } else if (!username_check.is_check || (username_check.email !== user_name)){
-            alert("이메일 중복확인을 해주세요.")
-        } else if (!nickname_check.is_check || (nickname_check.nick_name !== nickname)){
-            alert("닉네임 중복확인을 해주세요.")
-        } else {
+        } 
+
+        // else if (!username_check.is_check || (username_check.email !== user_name)){
+        //     alert("이메일 중복확인을 해주세요.")
+        // } else if (!nickname_check.is_check || (nickname_check.nick_name !== nickname)){
+        //     alert("닉네임 중복확인을 해주세요.")
+        // } 
+
+        else {
             alert("성공")
             dispatch(userActions.signUpApi(formInput))
-            history.push('/login')
+            // history.push('/login')
         }
     }
     
