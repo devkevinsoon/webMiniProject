@@ -4,7 +4,7 @@ import { css } from "styled-components";
 
 const Button = (props) => {
 
-    const { children, _onClick, padding, width, bg, color, size, margin, circle, hover, disabled, text, is_float } = props;
+    const { children, _onClick, padding, width, bg, color, size, margin, circle, hover, disabled, text, is_float, name } = props;
 
     if (is_float) {
         return (
