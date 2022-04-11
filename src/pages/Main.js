@@ -1,12 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-
-import { ImgList } from "../components/index";
+import { Button } from "../elements";
 import { history } from "../redux/configureStore"; 
-import { getCookie } from "../shared/cookie";
+
+import Post from "../components/Post";
+import { useSelector  } from "react-redux";
+
 
 const Main = (props) => {
-    // 로그인 안한 유저는 로그인 페이지로 이동 - token사용
+    const post_list =useSelector((state) => state.post_list);
+
+    console.log("post_list : ", post_list);
     // if(!getCookie("token")){
     //     history.replace("login");
     // }
@@ -14,7 +18,10 @@ const Main = (props) => {
     return (
         <React.Fragment>
             <MainContainer>
-                {/* <ImgList {...props} /> */}
+                test
+                {/* {post_list.map((p, idx) => {
+                    return <Post key={p.id}{...p} />
+                })} */}
             </MainContainer>
             
         </React.Fragment>
@@ -22,8 +29,8 @@ const Main = (props) => {
 };
 
 const MainContainer = styled.div`
-    height: 100vh;
-    width: 100vw;
+    height: auto;
+    width: 80vw;
     margin: 0 auto;
 `;
 
