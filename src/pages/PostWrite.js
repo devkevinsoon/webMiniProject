@@ -17,7 +17,7 @@ const PostWrite = (props) => {
       <WriteStyle>
       <Grid width="100%" height="100%" is_flex>
         <Container>
-            <Text margin="10px" size="25px" bold="1" fontFamily="'Kaushan Script', cursive">
+            <Text margin="10px" size="25px" bold="1" fontFamily="'Kaushan Script', cursive" textAlign="center">
               Image Upload              
             </Text>
           <Grid padding="16px">
@@ -82,7 +82,6 @@ const WriteStyle = styled.div`
 const InputTagStyle = styled.div`
   display: inline-block;
   min-width: 300px;
-  padding: ;
   input {
       width: 100%;
       padding: 6px 10px;

@@ -18,11 +18,13 @@ const Header = (props) => {
   if (is_login) {
     <React.Fragment>
       <Button
+        bg="red"
         width="90px"
         text="프로필"
         // _onClick={goProfile}
       />
       <Button
+        
         width="90px"
         text="로그아웃"
         // _onClick={() => {
@@ -37,6 +39,7 @@ const Header = (props) => {
         <Logo {...props} />
         <React.Fragment>
             <Button
+              bg="#efefef"
               width="90px"
               text="로그인"
               _onClick={() => {
@@ -47,6 +50,7 @@ const Header = (props) => {
               _onClick={() => {
                 //props.history.push("/signup");
               }}
+              bg="#efefef"
               width="90px"
               text="회원가입"
             />
@@ -99,7 +103,7 @@ const Header = (props) => {
 // };
 
 const HeaderContainer = styled.div`
-  position: fixed; // 고침
+  position: relative; // 고침
   display: flex;
   align-items: stretch;
   justify-content: center; // 고침
