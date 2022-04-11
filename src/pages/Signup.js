@@ -1,7 +1,6 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
-import { history } from "../redux/configureStore"
 import { Grid, Input, Button, Text } from "../elements/index";
 import { pwdCheck } from "../shared/common";
 import { actionCreators as userActions } from "../redux/modules/user"
@@ -22,6 +21,14 @@ const Signup = (props) => {
             [id]: value,
         });
     };
+
+    useEffect(() => {
+        if(user_name && nickname && pwd && re_pwd){
+            document.getElementsByName("signUpBtn")[0].style.background ="#ff54b0";
+        } else {
+            document.getElementsByName("signUpBtn")[0].style.background ="#f48fb1";
+        }
+    }, [user_name, nickname, pwd, re_pwd]);
 
     // 이메일, 닉네임 중복검사 및 양식 검사
     const username_check = useSelector(state => state.checkDup.username)
@@ -55,9 +62,7 @@ const Signup = (props) => {
         // } 
 
         else {
-            alert("성공")
             dispatch(userActions.signUpApi(formInput))
-            // history.push('/login')
         }
     }
     
@@ -75,7 +80,7 @@ const Signup = (props) => {
                             _onChange={onChange}
                         />
                         <Button 
-                            width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover
+                            width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" border= "none" hover 
                             _onClick={checkUserNameDup} text="Check" name="btn" tabIndex="-1"
                         />
                     </Grid>
@@ -86,7 +91,7 @@ const Signup = (props) => {
                             _onChange={onChange}
                         />
                         <Button 
-                            width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" hover
+                            width="20%" padding="5px" margin="0px 0px 0px 5px" size="14px" border= "none" hover
                             _onClick={checkNickNameDup} text="Check" name="btn" tabIndex="-1"
                         />
                     </Grid>
@@ -112,9 +117,10 @@ const Signup = (props) => {
                 <Grid height="20%" is_flex>
                     <Button
                         width="80%"
+                        border= "none"
+                        name="signUpBtn"
                         padding="10px"
                         text="회원가입"
-                        hover
                         _onClick={
                             signupClick
                         }
