@@ -26,7 +26,7 @@ const initialState = {
 const checkUserNameDupApi = (user_name) => {
     return async function (dispatch, getState, {histoty}){
         try {
-            const checkUserName = await axios.get("url",{
+            const checkUserName = await axios.post("url",{
                 username: user_name,
             });
             console.log(checkUserName);
@@ -57,7 +57,7 @@ const checkUserNameDupApi = (user_name) => {
 const checkNickNameDupApi = (_nickname) => {
     return async function (dispatch, getState, {histoty}){
         try {
-            const checkUserNickName = await axios.get("url",{
+            const checkUserNickName = await axios.post("url",{
                 nickname: _nickname,
             });
             console.log(checkUserNickName);

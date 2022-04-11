@@ -4,7 +4,8 @@ import styled from "styled-components"
 import { Link } from "react-router-dom";
 import { Grid, Input, Button, Text } from "../elements/index";
 import { useDispatch } from "react-redux";
-import flower from "../images/flower_pngtree.png"
+import flower from "../images/flower_pngtree.png";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const Login = (props) => {
     const dispatch = useDispatch();
@@ -23,11 +24,11 @@ const Login = (props) => {
 
     const loginClick = () => {
         const { id, pwd } = formInput;
-        
         if(!id || !pwd){
             alert("빈칸을 모두 채워주세요.");
             return;
         }
+        dispatch(userActions.loginApi(formInput));
     };
     
     return(

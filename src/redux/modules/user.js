@@ -69,7 +69,7 @@ const loginApi = (user) => {
     }
 }
 
-const loginOutApi = (user) => {
+const logOutApi = (user) => {
     return function (dispatch, getState, {history}){
 
     }
@@ -104,6 +104,8 @@ export default handleActions(
 const actionCreators = {
     setUser,
     logOut,
+    signUpApi,
+    loginApi,
 };
 
 export { actionCreators };
