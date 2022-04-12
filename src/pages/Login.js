@@ -15,7 +15,6 @@ const Login = (props) => {
     
     const onChange = (e) => {
         const id = e.target.id;
-        console.log(e.target.id)
         const value = e.target.value;
         setFormInput({
             ...formInput,
@@ -59,6 +58,7 @@ const Login = (props) => {
                         <Input
                             id="pwd"
                             width="80%"
+                            type="password"
                             placeholder="패스워드를 입력해주세요."
                             _onChange={onChange}
                         />

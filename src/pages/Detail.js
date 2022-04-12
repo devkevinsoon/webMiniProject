@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 import { Button, Grid, Image, Input, Text } from "../elements";
-
-import Comment from "../components/comment";
+import Comment from "../components/Comment"
 import { dateView } from "../shared/time";
 
 const Detail = (props) => {

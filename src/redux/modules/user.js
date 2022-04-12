@@ -37,7 +37,7 @@ const signUpApi = (user) => {
             };
         } catch(err){
             alert('회원가입에 실패했습니다. 다시 시도해주세요.');
-            console.log(err)
+            console.log('에러발생', err)
         }
     }
 }
@@ -54,29 +54,49 @@ const loginApi = (user) => {
             if(!login.data){
                 alert(`안녕하세요. ${user.user_name}님!`);
                 history.replace('/');
-                // 토큰 받아서 넣어줘야 한다.
-                // localStorage.setItem('token',login.data.token);
-                // dispatch(setUser({
-                // nickname: login.data.nickname,
-                // username: user.user_name,
-                // userId: login.data.userId
+                sessionStorage.setItem('token',login.headers.authorization);
+                dispatch(
+                    setUser({
+                        nickname: "",
+                        username: user.user_name,
+                        userId: "",
+                    })
+                );
             } else {
                 alert('이메일과 패스워드를 다시 확인해주세요.');
             };
         } catch(err) {
-            window.alert('아이디와 비밀번호를 다시 확인해주세요.');
-            console.log(err);
+            window.alert('이메일과 패스워드를 다시 확인해주세요.');
+            console.log('에러발생', err);
         }
     }
 }
 
-const logOutApi = (user) => {
-    return function (dispatch, getState, {history}){
+const loginCheckApi = () => {
+    return async function(dispatch, getState, {history}){
+        try{
+            const check = await axios.get('http://54.180.96.119/api/login',{
+                headers: {
+                    Authorization: localStorage.getItem('token')
+                },
+            })
 
+            // if(check.data.ok === true){
+            //     dispatch(setUser({
+            //         nickname: check.data.nickname,
+            //         email: check.data.email,
+            //         userIcon: check.data.userIcon,
+            //         uid: check.data.userId
+            //     }))
+            // } else{
+            //     dispatch(outUser());
+            // }
+        }catch(err){
+            console.log('에러발생', err);
+        };
     }
 }
-
-const loginCheckApi = (user) => {
+const logOutApi = (user) => {
     return function (dispatch, getState, {history}){
 
     }
@@ -107,6 +127,7 @@ const actionCreators = {
     logOut,
     signUpApi,
     loginApi,
+    loginCheckApi,
 };
 
 export { actionCreators };

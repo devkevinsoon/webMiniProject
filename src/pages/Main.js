@@ -10,7 +10,7 @@ import { useSelector  } from "react-redux";
 const Main = (props) => {
     const post_list =useSelector((state) => state.post_list);
 
-    console.log("post_list : ", post_list);
+    // console.log("post_list : ", post_list);
     // if(!getCookie("token")){
     //     history.replace("login");
     // }

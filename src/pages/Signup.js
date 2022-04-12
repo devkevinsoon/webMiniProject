@@ -197,7 +197,7 @@ const Container = styled.div`
     justify-content: center;
     width: 420px;
     height: 70%;
-    padding: 20px 0px 30px 0px;
+    padding: 30px 0px 30px 0px;
     border: none;
     border-radius: 25px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);
