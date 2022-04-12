@@ -25,12 +25,7 @@ const PostList = (props) => {
     return (
         <React.Fragment>
           <WrapPost>
-            <WrapPost>
             <Post/>
-            <Post/>
-            <Post/>
-            <Post/>
-            </WrapPost>
           </WrapPost>
         </React.Fragment>
     )
@@ -56,7 +51,7 @@ const PostList = (props) => {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   background-color: "#ddafff";
   margin: 20px 20px;
   gap: 50px;

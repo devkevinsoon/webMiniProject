@@ -14,107 +14,115 @@ import { history } from "../redux/configureStore";
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import moment from "moment";
+import styled from "styled-components";
+import ImageWrap from '../components/ImageWrap';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-    minWidth: 345,
-    maxHeight: 500,
-    backgroundColor: grey[100],
-   // margin: "10px 25px 50px",
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%",
-  },
-  avatar: {
-    backgroundColor: grey[300],
-    width: theme.spacing(7),
-    height: theme.spacing(6),
-    fontSize: 18,
-    fontWeight: 700,
-  },
-  height: {
-    height: 100,
-    margin: 5,
-  },
-}));
+import Pic1 from "../images/01.jpg";
+import Pic2 from "../images/02.jpg";
+import Pic3 from "../images/03.jpg";
+import Pic4 from "../images/04.jpg";
+import Pic5 from "../images/05.jpg";
+import Pic6 from "../images/06.jpg";
+import Pic7 from "../images/07.jpg";
+
 
 const Post = React.memo((props) => {
   const dispatch = useDispatch();
-  const classes = useStyles();
+  //const classes = useStyles();
 
   return (
-      <Card className={classes.root} margin="">
-        <CardHeader
-          avatar={
-            <Avatar
-              aria-label="recipe"
-              variant="circular"
-              className={classes.avatar}
-            >
-              {props.user_info.user_profile.Image}
-            </Avatar>
-          }
-          title={
-            <Text margin="0px 10px 0px 3px" size="17px" bold>
-              {props.user_info.nickname}
-            </Text>
-          }
-        />
-        <CardMedia className={classes.media} image={props.image_url} />
-        <CardContent>
-          <Typography
-            variant="body1"
-            color="textSecondary"
-            component="div"
-            overflow="scroll"
-            className={classes.height}
-          >
-            {props.contents}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <Text margin="0px 10px 0px 3px" font-size="24px" bold>
-            댓글 {props.comment_cnt}개
-          </Text>
+    <Wrap>
+      <Figure>
+        <Img src={Pic1}/>
+        <Figcaption>
+          Cinderella wearing European fashion of the mid-1860’s
+        </Figcaption>
+      </Figure>
 
-          <Text margin="0px" bold>
-            좋아요 {props.like_cnt}개
-          </Text>
+      <Figure>
+        <Img src={Pic2} />
+        <Figcaption>Rapunzel, clothed in 1820’s period fashion</Figcaption>
+      </Figure>
 
-          <Button
-            _onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              //dispatch(postActions.toggleLikeDB(props.id));
-            }}
-            is_like={props.is_like}
-          ></Button>
-        </CardActions>
-      </Card>
+      <Figure>
+        <Img src={Pic3} />
+        <Figcaption>Belle, based on 1770’s French court fashion</Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic4} />
+        <Figcaption>Mulan, based on the Ming Dynasty period</Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic5} />
+        <Figcaption>Mulan, based on the Ming Dynasty period</Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic6} />
+        <Figcaption>Mulan, based on the Ming Dynasty period</Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic7} />
+        <Figcaption>Mulan, based on the Ming Dynasty period</Figcaption>
+      </Figure>
+
+
+    </Wrap>
   );
 });
 
 
+// display: flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: center;
+  // background-color: "#ddafff";
+  // margin: 20px 20px;
+  // gap: 50px;
 
-// Post.defaultProps = {
-//   nickname: "shane",
+const Wrap = styled.div`
+  column-width: 320px;
+  column-gap: 15px;
+  width: 900%;
+  max-width: 1100px;
+  margin: 50px auto ;
+`;
 
-//   skill: "React",
-//   comment_cnt: 10,
-//   like_cnt: 0,
-//   is_like: false,
-//   contents: "안녕하세요~~!",
-// };
+const Figure = styled.div`
+  display: inline-block;
+  border:1px solid rgba(0,0,0,0.2);
+  margin:0;
+  margin-bottom: 15px;
+  padding:10px;
+  box-shadow: 2px 5px 5px rgba(0,0,0,0.5);
+  filter: grayscale(0.8); 
+  &:hover { filter: none; }
+`;
+
+const Img = styled.img`
+  width: 100%
+`;
+
+const Figcaption = styled.div`
+  font-size: .9rem;
+  color: #444;
+  line-height: 1.5;
+`;
+
+
+
+
 
 Post.defaultProps = {
   user_info: {
     nickname: "Spring",
-    user_profile: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu1h9GZH18sUSO-8P_coFOJehZ1KkPo-CUJ2816jM_kaQoascDIj3vWzaBt2wx3X1Wwz8&usqp=CAU",
   },
   image_url:
-    "https://c.pxhere.com/photos/cd/46/santorini_oia_greece_aegean_architecture_landscape_tourism_white-947315.jpg!d",
+    // "https://c.pxhere.com/photos/cd/46/santorini_oia_greece_aegean_architecture_landscape_tourism_white-947315.jpg!d",
+    "https://pbs.twimg.com/media/DennlYdV4AAkkQo?format=jpg&name=medium",
   contents: "반갑습니다",
   comment_cnt: 10,
   modifiedAt: moment().format("YYYY-MM-DD hh:mm:ss"),

@@ -6,9 +6,9 @@ import { history } from "../redux/configureStore";
 import { useSelector } from "react-redux";
 import PostList from "./PostList";
 
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 
+import Bg from "../images/bg.jpg";
 
 const Main = (props) => {
   const post_list = useSelector((state) => state.post_list);
@@ -20,9 +20,8 @@ const Main = (props) => {
 
   return (
     <React.Fragment>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <MainContainer>
+      <Container maxWidth="lg" >
+        <MainContainer >
           <PostList />
         </MainContainer>
       </Container>
@@ -34,6 +33,12 @@ const MainContainer = styled.div`
   padding: 20px 0;
   display: flex;
   flex-direction: column;
+  
+`;
+
+const sectionStyle = styled.div`
+  
+  backgroundImage:"url("+{Bg}+ ")";
 `;
 
 export default Main;
