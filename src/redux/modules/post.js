@@ -41,7 +41,16 @@ const initialState = {
           },
       ]
   }
-}
+};
+
+
+const getOnePostApi = (postId) => {
+  return function (dispatch, getState, {history}){
+      const resp = RESP.post;
+      dispatch(getOnePost(resp));
+      history.push('/detail')
+  };
+};
 
 // reducer
 export default handleActions(
@@ -80,7 +89,8 @@ const actionCreators = {
   setPost,
   addPost,
   editPost,
-  getOnePost,
+  deletePost,
+  getOnePostApi,
 };
 
 export { actionCreators };

@@ -1,0 +1,16 @@
+{
+    "comment": [
+        {
+        "commentId": 1,
+        "nickname": "dsdsa",
+        "comment": "나도 반가워요",
+        "modifiedAt": "2022-03-01 12:00:12"
+        },
+        {
+        "commentId": 2,
+        "nickname": "마바사아",
+        "comment": "거짓말이에요",
+        "modifiedAt": "2022-03-10 12:00:12"
+        }  
+    ]
+}

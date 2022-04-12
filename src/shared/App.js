@@ -1,44 +1,47 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import styled from "styled-components";
 import { Route } from "react-router-dom";
-
-import { Header } from "../components/index";
-import Permit from "./Permit";
-import { Grid, Button } from "../elements";
-
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
-
-import { Login, Signup, Main, Detail, PostWrite } from '../pages/index';
-
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
+import { useDispatch, useSelector } from "react-redux";
 
-// components
-// test
+import { Header } from "../components/index";
+import { Grid, Button } from "../elements";
+import { Login, Signup, Main, Detail, PostWrite } from '../pages/index';
+import { actionCreators as userActions } from "../redux/modules/user";
+import Test from "../pages/Test";
+
+
 function App() {
-  return (
-    <React.Fragment>
-      <Grid>
-        <ConnectedRouter history={history}>
-          <Route path="/" component={Header} />
-          <Route path="/" exact component={Main} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/signup" exact component={Signup} />
-          <Route path="/write" exact component={PostWrite} />
-          <Route path="/detail" exact component={Detail} />
-        </ConnectedRouter>
-      </Grid>
-      <Grid>
-        <Button is_float text="+" _onClick={() => {history.push('/write');}}></Button>
-      </Grid>
-    </React.Fragment>
-  );
+    // const dispatch = useDispatch();
+    // const is_login = useSelector(state => state.user.is_login);
+    // const token = localStorage.getItem("token");
+
+    
+    
+    // console.log(is_login, token)
+    
+    return (
+        <React.Fragment>
+            <Grid>
+                <ConnectedRouter history={history}>
+                <Route path="/" component={Header} />
+                <Route path="/" exact component={Main} />
+                <Route path="/login" exact component={Login} />
+                <Route path="/signup" exact component={Signup} />
+                <Route path="/write" exact component={PostWrite} />
+                <Route path="/detail" exact component={Detail} />
+                <Route path="/test" exact component={Test} />
+                </ConnectedRouter>
+            </Grid>
+                <Button is_float text="+" _onClick={() => {history.push('/write');}} />
+        </React.Fragment>
+    );
 }
 
 const Plus = styled(TiPlus)`
-font-size: 28px;
+    font-size: 28px;
 `;
 
 
