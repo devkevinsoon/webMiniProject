@@ -1,115 +1,140 @@
 import React from "react";
-// import Grid from "../elements/Grid";
-// import Image from "../elements/Image";
-// import Text from "../elements/Text";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import { yellow, grey } from "@material-ui/core/colors";
 
 import { Grid, Image, Text, Button } from "../elements";
 import { history } from "../redux/configureStore";
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
+import moment from "moment";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 345,
+    minWidth: 345,
+    maxHeight: 500,
+    backgroundColor: grey[100],
+   // margin: "10px 25px 50px",
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%",
+  },
+  avatar: {
+    backgroundColor: grey[300],
+    width: theme.spacing(7),
+    height: theme.spacing(6),
+    fontSize: 18,
+    fontWeight: 700,
+  },
+  height: {
+    height: 100,
+    margin: 5,
+  },
+}));
 
-const Post = (props) => {
+const Post = React.memo((props) => {
   const dispatch = useDispatch();
-
-  // 게시글 삭제하기 
-  const deletePost = () =>{
-    dispatch(postActions.deletePostFB(props.id));
-  };
+  const classes = useStyles();
 
   return (
-    <React.Fragment>
-      <Grid>
-        <Grid is_flex padding="16px">
-          <Grid is_flex width="auto">
-            <Image shape="circle" src={props.src} />
-            <Text bold="1">{props.user_info.user_name}</Text>
-          </Grid>
-          <Grid is_flex width="auto">
-            <Text bold="1">{props.insert_dt}</Text>
-            {props.is_me && (
-              <Button
-                width="auto"
-                padding="4px"
-                margin="4px"
-                _onClick={() => {
-                  history.push(`/write/${props.id}`);
-                }}
-              >
-                수정
-              </Button>
-            )}
-            {props.is_me && (
-              <Button
-                width="auto"
-                padding="4px"
-                margin="0px 5px"
-                _onClick={deletePost}
-              >
-                삭제
-              </Button>
-            )}
-          </Grid>
-        </Grid>
-        <Grid padding="16px">
-          <Text bold="1">{props.contents}</Text>
-        </Grid>
-        <Grid>
-          <Image shape="rectangle" src={props.image_url} />
-        </Grid>
-        <Grid padding="16px">
-          <Text margin="0px" bold="1">
+      <Card className={classes.root} margin="">
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label="recipe"
+              variant="circular"
+              className={classes.avatar}
+            >
+              {props.user_info.user_profile.Image}
+            </Avatar>
+          }
+          title={
+            <Text margin="0px 10px 0px 3px" size="17px" bold>
+              {props.user_info.nickname}
+            </Text>
+          }
+        />
+        <CardMedia className={classes.media} image={props.image_url} />
+        <CardContent>
+          <Typography
+            variant="body1"
+            color="textSecondary"
+            component="div"
+            overflow="scroll"
+            className={classes.height}
+          >
+            {props.contents}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <Text margin="0px 10px 0px 3px" font-size="24px" bold>
             댓글 {props.comment_cnt}개
           </Text>
-        </Grid>
-        {/* 레이아웃이 right 일때 게시글 형태 */}
-        {/* {props.layout === "right" && (
-          <Grid is_flex padding="16px 0px">
-            <Grid padding="16px">
-              <Text textAlign bold>
-                {props.contents}
-              </Text>
-            </Grid>
-            <Image shape="rectangle" src={props.image_url} />
-          </Grid>
-        )} */}
-        {/* 레이아웃이 left 일때 게시글 형태 */}
-        {/* {props.layout === "left" && (
-          <Grid is_flex padding="16px 0px">
-            <Image shape="rectangle" src={props.image_url} />
-            <Grid padding="16px">
-              <Text textAlign bold>
-                {props.contents}
-              </Text>
-            </Grid>
-          </Grid>
-        )} */}
-        {/* 레이아웃이 bottom 일때 게시글 형태 */}
-        {/* {props.layout === "bottom" && (
-          <Grid padding="16px 0px">
-            <Grid padding="5px 16px">
-              <Text bold>{props.contents}</Text>
-            </Grid>
-            <Image shape="rectangle" src={props.image_url} />
-          </Grid>
-        )} */}
-      </Grid>
-    </React.Fragment>
+
+          <Text margin="0px" bold>
+            좋아요 {props.like_cnt}개
+          </Text>
+
+          <Button
+            _onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              //dispatch(postActions.toggleLikeDB(props.id));
+            }}
+            is_like={props.is_like}
+          ></Button>
+        </CardActions>
+      </Card>
   );
-};
+});
+
+
+
+// Post.defaultProps = {
+//   nickname: "shane",
+
+//   skill: "React",
+//   comment_cnt: 10,
+//   like_cnt: 0,
+//   is_like: false,
+//   contents: "안녕하세요~~!",
+// };
 
 Post.defaultProps = {
   user_info: {
-    user_name: "Anonymous",
-    user_profile:
-      "http://image.dongascience.com/Photo/2015/11/14478135982143[1].png",
+    nickname: "Spring",
+    user_profile: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu1h9GZH18sUSO-8P_coFOJehZ1KkPo-CUJ2816jM_kaQoascDIj3vWzaBt2wx3X1Wwz8&usqp=CAU",
   },
   image_url:
-    "http://image.dongascience.com/Photo/2015/11/14478135982143[1].png",
-  contents: "Anonymous group ",
+    "https://c.pxhere.com/photos/cd/46/santorini_oia_greece_aegean_architecture_landscape_tourism_white-947315.jpg!d",
+  contents: "반갑습니다",
   comment_cnt: 10,
-  insert_dt: "2022-04-02 02:00:00",
-  is_me: false,
+  modifiedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
 };
+
+// postId: 1,
+//       content: "반갑습니다.",
+//       modifiedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+//       likeCount: 1,
+//       imageUrl:"",
+//       userId : 1,
+//       nickname: "작성자",
+//       comments: [
+//           {
+//               nickname: "닉네임",
+//               commentId: 1,
+//               comment: "저도 반가워요:)",
+//               modifiedAt: "2022-04-10"
+//           },
+//       ]
+
 
 export default Post;

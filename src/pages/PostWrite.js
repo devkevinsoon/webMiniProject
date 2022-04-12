@@ -8,10 +8,21 @@ import Upload from "../shared/Upload";
 import { Grid, Text, Button, Image, Input } from "../elements";
 import ImageWrap from '../components/ImageWrap';
 
+import { history } from '../redux/configureStore';
+import { actionCreators as postActions } from '../redux/modules/post';
+import moment from "moment";
+
+
+
+
 const PostWrite = (props) => {
+  
+  const dispatch = useDispatch();
+  // 업로드 된 이미지 불러오기
+  const uploadImage = useSelector(state => state.image);
+  const user_info = useSelector(state => state.user);
 
-  const uploadImage = useSelector(state => state.Image);
-
+    
   return (
     <React.Fragment>
       <WriteStyle>
@@ -29,7 +40,14 @@ const PostWrite = (props) => {
                 placeholder="게시글 작성"
                 type="text" />
             </InputTagStyle>
-            <Button text="Post" margin="25px 0px -30px 0px"></Button>
+            <Button 
+              text="Post" 
+              margin="25px 0px -30px 0px"  
+              onClick={() =>{
+                //createPost();
+              }}
+            >
+            </Button>
           </Grid>
           
         </Container>
@@ -41,12 +59,10 @@ const PostWrite = (props) => {
 
 
 PostWrite.defatulProps = {
-  article_id: '',
-  writer_id: '',
-  writer_nickname: 'spring',
+  postId: '',
+  nickname: 'spring',
   image_url: '',
-  tags: [],
-  postWrite_date: 'YYYY-MM-DD hh:mm:ss',
+  modifiedAt : moment().format("YYYY-MM-DD hh:mm:ss"),
 };
 
 const WriteStyle = styled.div`

@@ -1,37 +1,39 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "../elements";
-import { history } from "../redux/configureStore"; 
+import { history } from "../redux/configureStore";
 
+import { useSelector } from "react-redux";
+import PostList from "./PostList";
 
-import { useSelector  } from "react-redux";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
 
 
 const Main = (props) => {
-    const post_list =useSelector((state) => state.post_list);
+  const post_list = useSelector((state) => state.post_list);
 
-    console.log("post_list : ", post_list);
-    // if(!getCookie("token")){
-    //     history.replace("login");
-    // }
+  console.log("post_list : ", post_list);
+  // if(!getCookie("token")){
+  //     history.replace("login");
+  // }
 
-    return (
-        <React.Fragment>
-            <MainContainer>
-                test
-                {/* {post_list.map((p, idx) => {
-                    return <Post key={p.id}{...p} />
-                })} */}
-            </MainContainer>
-            
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <MainContainer>
+          <PostList />
+        </MainContainer>
+      </Container>
+    </React.Fragment>
+  );
 };
 
 const MainContainer = styled.div`
-    height: auto;
-    width: 80vw;
-    margin: 0 auto;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 export default Main;

@@ -25,7 +25,7 @@ const Upload = () => {
 
     const uploadFB = () => {
       let image = fileInput.current.file[0];
-      dispatchEvent(imageActions.uploadImageApi(image));
+      dispatch(imageActions.uploadImageApi(image));
     }
     
     return (
