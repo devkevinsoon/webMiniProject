@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Button } from "../elements";
-import { history } from "../redux/configureStore"; 
-
+import { history } from "../redux/configureStore";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { useDispatch, useSelector  } from "react-redux";
+import PostList from "./PostList";
+import Container from "@material-ui/core/Container";
+import Bg from "../images/bg.jpg";
 
 const Main = (props) => {
-    const dispatch = useDispatch();
-    const token = localStorage.getItem("token");
-    useEffect(() => {
+  const post_list = useSelector((state) => state.post_list);
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
+  
+  useEffect(() => {
         if(!token){
             console.log("없어")
             return;
@@ -17,31 +21,26 @@ const Main = (props) => {
             dispatch(userActions.loginCheckApi());
         };
     },[]);
-
-    const post_list =useSelector((state) => state.post_list);
-
-    // console.log("post_list : ", post_list);
-    // if(!getCookie("token")){
-    //     history.replace("login");
-    // }
-
-    return (
-        <React.Fragment>
-            <MainContainer>
-                test
-                {/* {post_list.map((p, idx) => {
-                    return <Post key={p.id}{...p} />
-                })} */}
-            </MainContainer>
-            
-        </React.Fragment>
-    );
+  
+  return (
+    <React.Fragment>
+      <Container maxWidth="lg" >
+        <MainContainer >
+          <PostList />
+        </MainContainer>
+      </Container>
+    </React.Fragment>
+  );
 };
 
 const MainContainer = styled.div`
-    height: auto;
-    width: 80vw;
-    margin: 0 auto;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+`;
+
+const sectionStyle = styled.div`
+  backgroundImage:"url("+{Bg}+ ")";
 `;
 
 export default Main;

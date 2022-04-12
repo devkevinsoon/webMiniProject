@@ -1,115 +1,148 @@
 import React from "react";
-// import Grid from "../elements/Grid";
-// import Image from "../elements/Image";
-// import Text from "../elements/Text";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import { yellow, grey } from "@material-ui/core/colors";
 
 import { Grid, Image, Text, Button } from "../elements";
 import { history } from "../redux/configureStore";
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
+import moment from "moment";
+import styled from "styled-components";
+import ImageWrap from '../components/ImageWrap';
+
+import Pic1 from "../images/01.jpg";
+import Pic2 from "../images/02.jpg";
+import Pic3 from "../images/03.jpg";
+import Pic4 from "../images/04.jpg";
+import Pic5 from "../images/05.jpg";
+import Pic6 from "../images/06.jpg";
+import Pic7 from "../images/07.jpg";
 
 
-const Post = (props) => {
+const Post = React.memo((props) => {
   const dispatch = useDispatch();
-
-  // 게시글 삭제하기 
-  const deletePost = () =>{
-    dispatch(postActions.deletePostFB(props.id));
-  };
+  //const classes = useStyles();
 
   return (
-    <React.Fragment>
-      <Grid>
-        <Grid is_flex padding="16px">
-          <Grid is_flex width="auto">
-            <Image shape="circle" src={props.src} />
-            <Text bold="1">{props.user_info.user_name}</Text>
-          </Grid>
-          <Grid is_flex width="auto">
-            <Text bold="1">{props.insert_dt}</Text>
-            {props.is_me && (
-              <Button
-                width="auto"
-                padding="4px"
-                margin="4px"
-                _onClick={() => {
-                  history.push(`/write/${props.id}`);
-                }}
-              >
-                수정
-              </Button>
-            )}
-            {props.is_me && (
-              <Button
-                width="auto"
-                padding="4px"
-                margin="0px 5px"
-                _onClick={deletePost}
-              >
-                삭제
-              </Button>
-            )}
-          </Grid>
-        </Grid>
-        <Grid padding="16px">
-          <Text bold="1">{props.contents}</Text>
-        </Grid>
-        <Grid>
-          <Image shape="rectangle" src={props.image_url} />
-        </Grid>
-        <Grid padding="16px">
-          <Text margin="0px" bold="1">
-            댓글 {props.comment_cnt}개
-          </Text>
-        </Grid>
-        {/* 레이아웃이 right 일때 게시글 형태 */}
-        {/* {props.layout === "right" && (
-          <Grid is_flex padding="16px 0px">
-            <Grid padding="16px">
-              <Text textAlign bold>
-                {props.contents}
-              </Text>
-            </Grid>
-            <Image shape="rectangle" src={props.image_url} />
-          </Grid>
-        )} */}
-        {/* 레이아웃이 left 일때 게시글 형태 */}
-        {/* {props.layout === "left" && (
-          <Grid is_flex padding="16px 0px">
-            <Image shape="rectangle" src={props.image_url} />
-            <Grid padding="16px">
-              <Text textAlign bold>
-                {props.contents}
-              </Text>
-            </Grid>
-          </Grid>
-        )} */}
-        {/* 레이아웃이 bottom 일때 게시글 형태 */}
-        {/* {props.layout === "bottom" && (
-          <Grid padding="16px 0px">
-            <Grid padding="5px 16px">
-              <Text bold>{props.contents}</Text>
-            </Grid>
-            <Image shape="rectangle" src={props.image_url} />
-          </Grid>
-        )} */}
-      </Grid>
-    </React.Fragment>
+    <Wrap>
+      <Figure>
+        <Img src={Pic1}/>
+        <Figcaption>
+          Cinderella wearing European fashion of the mid-1860’s
+        </Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic2} />
+        <Figcaption>Rapunzel, clothed in 1820’s period fashion</Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic3} />
+        <Figcaption>Belle, based on 1770’s French court fashion</Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic4} />
+        <Figcaption>Mulan, based on the Ming Dynasty period</Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic5} />
+        <Figcaption>Mulan, based on the Ming Dynasty period</Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic6} />
+        <Figcaption>Mulan, based on the Ming Dynasty period</Figcaption>
+      </Figure>
+
+      <Figure>
+        <Img src={Pic7} />
+        <Figcaption>Mulan, based on the Ming Dynasty period</Figcaption>
+      </Figure>
+
+
+    </Wrap>
   );
-};
+});
+
+
+// display: flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: center;
+  // background-color: "#ddafff";
+  // margin: 20px 20px;
+  // gap: 50px;
+
+const Wrap = styled.div`
+  column-width: 320px;
+  column-gap: 15px;
+  width: 900%;
+  max-width: 1100px;
+  margin: 50px auto ;
+`;
+
+const Figure = styled.div`
+  display: inline-block;
+  border:1px solid rgba(0,0,0,0.2);
+  margin:0;
+  margin-bottom: 15px;
+  padding:10px;
+  box-shadow: 2px 5px 5px rgba(0,0,0,0.5);
+  filter: grayscale(0.8); 
+  &:hover { filter: none; }
+`;
+
+const Img = styled.img`
+  width: 100%
+`;
+
+const Figcaption = styled.div`
+  font-size: .9rem;
+  color: #444;
+  line-height: 1.5;
+`;
+
+
+
+
 
 Post.defaultProps = {
   user_info: {
-    user_name: "Anonymous",
-    user_profile:
-      "http://image.dongascience.com/Photo/2015/11/14478135982143[1].png",
+    nickname: "Spring",
   },
   image_url:
-    "http://image.dongascience.com/Photo/2015/11/14478135982143[1].png",
-  contents: "Anonymous group ",
+    // "https://c.pxhere.com/photos/cd/46/santorini_oia_greece_aegean_architecture_landscape_tourism_white-947315.jpg!d",
+    "https://pbs.twimg.com/media/DennlYdV4AAkkQo?format=jpg&name=medium",
+  contents: "반갑습니다",
   comment_cnt: 10,
-  insert_dt: "2022-04-02 02:00:00",
-  is_me: false,
+  modifiedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
 };
+
+// postId: 1,
+//       content: "반갑습니다.",
+//       modifiedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+//       likeCount: 1,
+//       imageUrl:"",
+//       userId : 1,
+//       nickname: "작성자",
+//       comments: [
+//           {
+//               nickname: "닉네임",
+//               commentId: 1,
+//               comment: "저도 반가워요:)",
+//               modifiedAt: "2022-04-10"
+//           },
+//       ]
+
 
 export default Post;
