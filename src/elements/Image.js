@@ -2,7 +2,7 @@ import styled from  'styled-components';
 import React from 'react';
 
 const Image = (props) => {
-    const {shape, src, size } = props;
+    const { shape, src, size } = props;
 
     const styles = {
         src: src,
@@ -10,24 +10,16 @@ const Image = (props) => {
     }
 
     if(shape === "circle") {
-      return (
+        return (
           <ImageCircle {...styles}></ImageCircle>
         )
-    }
-
-    if(shape === "rectangle"){
+    } else {
         return (
             <AspectOutter>
                 <AspectInner {...styles}></AspectInner>
             </AspectOutter>
-        )
-    }
-
-    return (
-        <React.Fragment>
-
-        </React.Fragment>
-    )
+        ) 
+    }  
 }
 
 Image.defaultProps = {
@@ -38,7 +30,7 @@ Image.defaultProps = {
 
 const AspectOutter = styled.div`
     width: 100%;
-    min-width: 250px;
+    max-width: 700px;
 `;
 
 const AspectInner = styled.div`
@@ -46,8 +38,10 @@ const AspectInner = styled.div`
     padding-top: 75%;
     overflow: hidden;
     background-image: url("${(props) => props.src}");
-    background-size: cover;
+    background-size: 100%;
     background-color: #f8f8f8;
+    background-position: contain;
+    background-repeat: no-repeat;
     background-position: center;
 `;
 

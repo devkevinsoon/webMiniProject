@@ -17,19 +17,23 @@ const Header = (props) => {
 	if(is_login){
 		return(
 			<React.Fragment>
-				<Button
-					bg="red"
-					width="90px"
-					text="프로필"
-				// _onClick={goProfile}
-				/>
-				<Button
-					width="90px"
-					text="로그아웃"
-					_onClick={() => {
-					  dispatch(userActions.logOutApi());
-					}}
-				/>
+				<HeaderContainer>
+					<Logo {...props} />
+					{/* <Button
+						bg="red"
+						width="90px"
+						text="프로필"
+					// _onClick={goProfile}
+					/> */}
+					<Button
+						bg="#efefef"
+						width="90px"
+						text="로그아웃"
+						_onClick={() => {
+						dispatch(userActions.logOutApi());
+						}}
+					/>
+				</HeaderContainer>
 			</React.Fragment>
 		)
 	}
@@ -104,11 +108,12 @@ const Header = (props) => {
 // };
 
 const HeaderContainer = styled.div`
-  position: relative; // 고침
+  position: relative; 
   display: flex;
   align-items: stretch;
-  justify-content: center; // 고침
-  width: 100vw; // 고침
+  justify-content: center; 
+  background-color: white;
+  width: 100vw; 
   height: 40px;
   margin: 30px auto 30px auto;
   button {

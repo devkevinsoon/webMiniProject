@@ -35,16 +35,19 @@ const Detail = (props) => {
                         <Text color="gray" width="auto">{dateView(each_post.modifiedAt)}</Text>
                     </Grid>
                 </Grid>
-                <Grid padding="20px 20px">
+                <Grid padding="20px 0px" borderB="1px solid #eee">
                     <Grid margin="0 0 20px 0">
                         <Text>{each_post.content}</Text>
                     </Grid>
-                    <Image src={each_post.imageUrl}  type="rectangle"/>
+                    <Image src={each_post.imageUrl}  shape="rectangle"/>
+                </Grid>
+                <Grid padding="0px 20px" borderB="1px solid #eee">
+                    sdsd
                 </Grid>
             </Wrap>
             <Grid width="40%" minWidth="540px" padding="20px 5px 0 5px" is_flex justify>
                 <Input width="85%" placeholder="댓글을 입력해주세요." />
-                <Button width="10%" padding="5px 0" text="입력" hover></Button>
+                <Button width="10%" padding="5px 0" text="입력" border="none" hover></Button>
             </Grid>
             <Grid width="40%" minWidth="540px" padding="20px 0 0 0" is_flex column> 
                 {each_post.comments.map((v, i) => 
@@ -69,6 +72,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* background-color: #f5f5f5; */
 `;
 
 const Wrap = styled.div`
@@ -76,7 +80,8 @@ const Wrap = styled.div`
     min-width: 540px;
     display: flex;
     flex-direction: column;
-    box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.1), 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #eee;
+    /* box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.1), 0px 0px 5px rgba(0, 0, 0, 0.2); */
 `;
 
 const EditBtn = styled.button`
