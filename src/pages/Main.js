@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Button } from "../elements";
 import { history } from "../redux/configureStore"; 
 
-
-import { useSelector  } from "react-redux";
-
+import { actionCreators as userActions } from "../redux/modules/user";
+import { useDispatch, useSelector  } from "react-redux";
 
 const Main = (props) => {
+    const dispatch = useDispatch();
+    const token = localStorage.getItem("token");
+    useEffect(() => {
+        if(!token){
+            console.log("없어")
+            return;
+        } else {
+            dispatch(userActions.loginCheckApi());
+        };
+    },[]);
+
     const post_list =useSelector((state) => state.post_list);
 
     // console.log("post_list : ", post_list);

@@ -44,7 +44,6 @@ const signUpApi = (user) => {
 
 const loginApi = (user) => {
     return async function (dispatch, getState, {history}){
-        console.log(user)
         try {
             const login = await axios.post('http://54.180.96.119/user/login',{
                 username: user.user_name,
@@ -52,9 +51,9 @@ const loginApi = (user) => {
             });
             console.log(login);
             if(!login.data){
-                alert(`안녕하세요. ${user.user_name}님!`);
-                history.replace('/');
-                sessionStorage.setItem('token',login.headers.authorization);
+                alert(`로그인 성공`);
+                const token = login.headers.authorization.split('BEARER ');
+                localStorage.setItem('token', token[1]);
                 dispatch(
                     setUser({
                         nickname: "",
@@ -62,10 +61,11 @@ const loginApi = (user) => {
                         userId: "",
                     })
                 );
+                history.replace('/');
             } else {
                 alert('이메일과 패스워드를 다시 확인해주세요.');
             };
-        } catch(err) {
+        }catch(err) {
             window.alert('이메일과 패스워드를 다시 확인해주세요.');
             console.log('에러발생', err);
         }
@@ -74,31 +74,31 @@ const loginApi = (user) => {
 
 const loginCheckApi = () => {
     return async function(dispatch, getState, {history}){
-        try{
-            const check = await axios.get('http://54.180.96.119/api/login',{
+        try {
+            const check = await axios.post('http://54.180.96.119/api/login',{},{
                 headers: {
-                    Authorization: localStorage.getItem('token')
-                },
-            })
-
-            // if(check.data.ok === true){
-            //     dispatch(setUser({
-            //         nickname: check.data.nickname,
-            //         email: check.data.email,
-            //         userIcon: check.data.userIcon,
-            //         uid: check.data.userId
-            //     }))
-            // } else{
-            //     dispatch(outUser());
-            // }
-        }catch(err){
+                    Authorization: `BEARER ${localStorage.getItem('token')}`
+                }
+            });     
+            dispatch(
+                setUser({
+                    nickname: check.data.nickname,
+                    username: check.data.username,
+                    userId: check.data.userId,
+                })
+            );
+        } catch(err) {
             console.log('에러발생', err);
+            alert("로그인 여부 확인에 문제가 생겼습니다.");
         };
     }
 }
-const logOutApi = (user) => {
-    return function (dispatch, getState, {history}){
 
+const logOutApi = () => {
+    return function (dispatch, getState, {history}){
+        localStorage.removeItem("token");
+        history.replace('/');
+        dispatch(logOut())
     }
 }
 
@@ -123,11 +123,10 @@ export default handleActions(
 );
 
 const actionCreators = {
-    setUser,
-    logOut,
     signUpApi,
     loginApi,
     loginCheckApi,
+    logOutApi,
 };
 
 export { actionCreators };

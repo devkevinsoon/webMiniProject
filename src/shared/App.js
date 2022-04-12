@@ -1,27 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
 import { TiPlus } from "react-icons/ti";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Header } from "../components/index";
 import { Grid, Button } from "../elements";
 import { Login, Signup, Main, Detail, PostWrite } from '../pages/index';
-
+import { actionCreators as userActions } from "../redux/modules/user";
 import Test from "../pages/Test";
-import { useDispatch, useSelector } from "react-redux";
+
 
 function App() {
-    const dispatch = useDispatch();
-    const user_list = useSelector(state => state.user.is_login);
-    const token = sessionStorage.getItem("token");
-    console.log( user_list, token)
-    
-    React.useEffect(() => {
-        // if()
-    })
+    // const dispatch = useDispatch();
+    // const is_login = useSelector(state => state.user.is_login);
+    // const token = localStorage.getItem("token");
 
+    
+    
+    // console.log(is_login, token)
+    
     return (
         <React.Fragment>
             <Grid>
