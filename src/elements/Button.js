@@ -80,7 +80,7 @@ const FloatButton = styled.button`
   font-weight: 800;
   position: fixed;
   bottom: 50px;
-  right: 16px;
+  right: 120px;
   text-align: center;
   vertical-align: middle;
   border: solid 1px #ccc;
@@ -90,7 +90,7 @@ const FloatButton = styled.button`
       border-color: #f69c9c;
       box-shadow: 1px 1px 4px 0px #f4d5d5;
     }
-   transition: all 0.3s;
+  transition: all 0.3s;
 `;
 
 const Btn = styled.button`

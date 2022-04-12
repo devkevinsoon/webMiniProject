@@ -15,6 +15,7 @@ const Grid = (props) => {
         justify,
         minWidth,
         position,
+        zIndex,
     } = props;
     
     const style = {
@@ -29,6 +30,7 @@ const Grid = (props) => {
         justify,
         minWidth,
         position,
+        zIndex,
     };
   
     return (
@@ -50,6 +52,7 @@ Grid.defaultProps = {
     justify: false,
     minWidth: false,
     position: "static",
+    zIndex: false,
 };
 
 const GridBox = styled.div`
@@ -65,6 +68,7 @@ const GridBox = styled.div`
     margin: ${(props) => (props.margin ? `${props.margin}` : "")};
     background-color: ${(props) => (props.background ? `${props.background}` : "")};
     position: ${(props) => (props.position)};
+    z-index: ${(props) => (props.zIndex)};
     ${(props) => (props.borderB ? `border-bottom: ${props.borderB};` : "")}
     ${(props) => (props.minWidth ? `min-width: ${props.minWidth};` : "")}
 `;
