@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import axios from "axios";
 
 import { Grid, Input, Button, Text } from "../elements/index";
 import { emailCheck, pwdCheck } from "../shared/common";
 import { actionCreators as userActions } from "../redux/modules/user"
 import { useDispatch } from "react-redux";
-import { actionCreator as checkActions } from "../redux/modules/checkDup";
-import axios from "axios";
+
 
 const Signup = (props) => {
     const dispatch = useDispatch();

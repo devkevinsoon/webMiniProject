@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
-import { setCookie, getCookie, deleteCookie } from "../../shared/cookie";
+import { setCookie, deleteCookie } from "../../shared/cookie";
 
 // actions
 const SET_USER = "SET_USER";
