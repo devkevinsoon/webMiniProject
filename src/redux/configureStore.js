@@ -2,15 +2,13 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
-import { User, CheckDup, Post } from "./modules";
+import { User, Post } from "./modules";
 import Image from "./modules/image";
-
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
     user: User,
-    checkDup: CheckDup,
     post: Post,
     image: Image,
     router: connectRouter(history),

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
 import { Link } from "react-router-dom";
@@ -11,10 +11,10 @@ const Login = (props) => {
     const dispatch = useDispatch();
     
     const [ formInput, setFormInput ] = useState({});
-
+    const { user_name, pwd } = formInput;
+    
     const onChange = (e) => {
         const id = e.target.id;
-        console.log(e.target.id)
         const value = e.target.value;
         setFormInput({
             ...formInput,
@@ -23,13 +23,20 @@ const Login = (props) => {
     };
 
     const loginClick = () => {
-        const { id, pwd } = formInput;
-        if(!id || !pwd){
+        if(!user_name || !pwd){
             alert("빈칸을 모두 채워주세요.");
             return;
         }
         dispatch(userActions.loginApi(formInput));
     };
+
+    useEffect(() => {
+        if(user_name && pwd){
+            document.getElementsByName("loginBtn")[0].style.background ="#ff54b0";
+        } else {
+            document.getElementsByName("loginBtn")[0].style.background ="#f48fb1";
+        }
+    }, [user_name, pwd]);
     
     return(
         <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
@@ -51,6 +58,7 @@ const Login = (props) => {
                         <Input
                             id="pwd"
                             width="80%"
+                            type="password"
                             placeholder="패스워드를 입력해주세요."
                             _onChange={onChange}
                         />
@@ -59,10 +67,11 @@ const Login = (props) => {
                 <Grid height="30%" column is_flex>
                     <Button 
                         text="로그인"
+                        name="loginBtn"
                         width="80%"
+                        border= "none"
                         padding="10px"
                         margin="20px 0px"
-                        hover
                         _onClick={loginClick}
                     />
                     <Grid is_flex padding="0px 0px 20px 0px">
@@ -83,7 +92,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 400px;
+    width: 420px;
     height: 70%;
     padding: 30px 0px 20px 0px;
     border: none;

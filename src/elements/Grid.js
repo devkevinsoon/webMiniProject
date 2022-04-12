@@ -14,6 +14,7 @@ const Grid = (props) => {
         borderB,
         justify,
         minWidth,
+        position,
     } = props;
     
     const style = {
@@ -27,6 +28,7 @@ const Grid = (props) => {
         borderB,
         justify,
         minWidth,
+        position,
     };
   
     return (
@@ -47,6 +49,7 @@ Grid.defaultProps = {
     borderB: false,
     justify: false,
     minWidth: false,
+    position: "static",
 };
 
 const GridBox = styled.div`
@@ -61,9 +64,9 @@ const GridBox = styled.div`
     padding: ${(props) => (props.padding ? `${props.padding}` : "")};
     margin: ${(props) => (props.margin ? `${props.margin}` : "")};
     background-color: ${(props) => (props.background ? `${props.background}` : "")};
+    position: ${(props) => (props.position)};
     ${(props) => (props.borderB ? `border-bottom: ${props.borderB};` : "")}
     ${(props) => (props.minWidth ? `min-width: ${props.minWidth};` : "")}
-    /* border: 1px red solid; */
 `;
 
 export default Grid;

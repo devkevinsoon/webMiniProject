@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 import { Button, Grid, Image, Input, Text } from "../elements";
-
-import Comment from "../components/comment";
+import Comment from "../components/Comment"
 import { dateView } from "../shared/time";
 
 const Detail = (props) => {
@@ -40,7 +39,7 @@ const Detail = (props) => {
                     <Grid margin="0 0 20px 0">
                         <Text>{each_post.content}</Text>
                     </Grid>
-                    <Image src={each_post.imageUrl} />
+                    <Image src={each_post.imageUrl}  type="rectangle"/>
                 </Grid>
             </Wrap>
             <Grid width="40%" minWidth="540px" padding="20px 5px 0 5px" is_flex justify>

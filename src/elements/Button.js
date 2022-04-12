@@ -3,37 +3,53 @@ import styled from "styled-components"
 
 const Button = (props) => {
 
-    const { children, _onClick, padding, width, bg, color, size, margin, circle, hover, disabled, text, is_float, name } = props;
+  const { 
+    children, 
+    _onClick, 
+    padding, 
+    width, 
+    bg, 
+    color, 
+    size, 
+    margin,
+    hover, 
+    disabled, 
+    text, 
+    is_float, 
+    name,
+    border,
+  } = props;
 
-    const styles = {
-      padding,
-      margin,
-      width,
-      bg,
-      color,
-      size,
-      hover, 
-    }
+  const styles = {
+    padding,
+    margin,
+    width,
+    bg,
+    color,
+    size,
+    hover,
+    border,
+  }
 
-    if (is_float) {
-        return (
-          <React.Fragment>
-            <FloatButton onClick={_onClick}>{text ? text : children}</FloatButton>
-          </React.Fragment>
-        );
-      }
+  if (is_float) {
+    return (
+      <React.Fragment>
+        <FloatButton onClick={_onClick}>{text ? text : children}</FloatButton>
+      </React.Fragment>
+    );
+  }
 
-    return(
-        <Btn 
-          {...styles}
-          tabIndex="-1"
-          name={name}
-          onClick={_onClick}
-          disabled={disabled} 
-        >
-          {text}
-        </Btn>
-    )
+  return(
+      <Btn 
+        {...styles}
+        tabIndex="-1"
+        name={name}
+        onClick={_onClick}
+        disabled={disabled} 
+      >
+        {text}
+      </Btn>
+  )
 }
 
 Button.defaultProps = {
@@ -51,6 +67,7 @@ Button.defaultProps = {
     is_abs: false,
     margin: false,
     name: null,
+    border: "solid 1px #ccc",
     _onClick: () => {},
 }
 
@@ -78,15 +95,14 @@ const FloatButton = styled.button`
 
 const Btn = styled.button`
   box-sizing: border-box;
-  border: solid 1px #ccc;
   transition: all 0.3s;
+  border: ${props => props.border};
   width: ${props => props.width};
   padding: ${props => props.padding};
   margin: ${props => props.margin};
   background: ${props => props.bg};
   color: ${props => props.color};
   font-size: ${props => props.size};
-  /* border: none; */
   border-radius: 13px;
   cursor: pointer;
   ${props => props.hover ? `&:hover {

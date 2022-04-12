@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
-import { setCookie, getCookie, deleteCookie } from "../../shared/cookie";
+import { setCookie, deleteCookie } from "../../shared/cookie";
 
 // actions
 const SET_USER = "SET_USER";
@@ -29,15 +29,15 @@ const signUpApi = (user) => {
                 password: user.pwd,
             });
             console.log(join)
-            // if(join.data.return){
-            //     alert(`${user.nickname}님 회원가입을 환영합니다.`);
-            //     history.replace('/login')
-            // } else {
-            //     alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-            // };
+            if(join.data === "회원가입이 완료되었습니다."){
+                alert(`${user.nickname}님 ${join.data}`);
+                history.replace('/login')
+            } else {
+                alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+            };
         } catch(err){
             alert('회원가입에 실패했습니다. 다시 시도해주세요.');
-            console.log(err)
+            console.log('에러발생', err)
         }
     }
 }
@@ -45,39 +45,60 @@ const signUpApi = (user) => {
 const loginApi = (user) => {
     return async function (dispatch, getState, {history}){
         try {
-            const login = await axios.post('',{
+            const login = await axios.post('http://54.180.96.119/user/login',{
                 username: user.user_name,
                 password: user.pwd,
             });
             console.log(login);
-            if(login.data.return){
-                alert(`안녕하세요. ${user.username}님!`);
+            if(!login.data){
+                alert(`로그인 성공`);
+                const token = login.headers.authorization.split('BEARER ');
+                localStorage.setItem('token', token[1]);
+                dispatch(
+                    setUser({
+                        nickname: "",
+                        username: user.user_name,
+                        userId: "",
+                    })
+                );
                 history.replace('/');
-                // 토큰 받아서 넣어줘야 한다.
-                // localStorage.setItem('token',login.data.token);
-                // dispatch(setUser({
-                // nickname: login.data.nickname,
-                // username: user.user_name,
-                // userId: login.data.userId
             } else {
                 alert('이메일과 패스워드를 다시 확인해주세요.');
             };
-        } catch(err) {
-            window.alert('아이디와 비밀번호를 다시 확인해주세요.');
-            console.log(err);
+        }catch(err) {
+            window.alert('이메일과 패스워드를 다시 확인해주세요.');
+            console.log('에러발생', err);
         }
     }
 }
 
-const logOutApi = (user) => {
-    return function (dispatch, getState, {history}){
-
+const loginCheckApi = () => {
+    return async function(dispatch, getState, {history}){
+        try {
+            const check = await axios.post('http://54.180.96.119/api/login',{},{
+                headers: {
+                    Authorization: `BEARER ${localStorage.getItem('token')}`
+                }
+            });     
+            dispatch(
+                setUser({
+                    nickname: check.data.nickname,
+                    username: check.data.username,
+                    userId: check.data.userId,
+                })
+            );
+        } catch(err) {
+            console.log('에러발생', err);
+            alert("로그인 여부 확인에 문제가 생겼습니다.");
+        };
     }
 }
 
-const loginCheckApi = (user) => {
+const logOutApi = () => {
     return function (dispatch, getState, {history}){
-
+        localStorage.removeItem("token");
+        history.replace('/');
+        dispatch(logOut())
     }
 }
 
@@ -102,10 +123,10 @@ export default handleActions(
 );
 
 const actionCreators = {
-    setUser,
-    logOut,
     signUpApi,
     loginApi,
+    loginCheckApi,
+    logOutApi,
 };
 
 export { actionCreators };
