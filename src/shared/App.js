@@ -2,26 +2,24 @@ import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
-import { TiPlus } from "react-icons/ti";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Header } from "../components/index";
 import { Grid, Button } from "../elements";
 import { Login, Signup, Main, Detail, PostWrite } from '../pages/index';
 import { actionCreators as userActions } from "../redux/modules/user";
 import Test from "../pages/Test";
 
+
 function App() {
     const dispatch = useDispatch();
-    const is_login = useSelector(state => state.user.is_login);
-    const token = localStorage.getItem("token");
+    const is_local = localStorage.getItem("token") ? true : false;
     useEffect(() => {
-        if(!token){
-            console.log("없어")
-            return;
-        } else {
+        if(is_local){
             dispatch(userActions.loginCheckApi());
         };
     },[]);
+    
+    
     return (
         <React.Fragment>
             <Grid>
@@ -39,5 +37,4 @@ function App() {
         </React.Fragment>
     );
 }
-
 export default App;
