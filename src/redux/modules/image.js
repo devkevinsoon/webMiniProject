@@ -67,7 +67,8 @@ export default handleActions(
 
     [SET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
-        draft.preview = action.payload.preview;
+        draft.preview = action.payload.preview.result;
+        draft.targetfile = action.payload.preview.targetFile; 
       }),
 
     // [DELETE_PREVIEW]: (state, action) =>

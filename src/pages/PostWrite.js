@@ -22,52 +22,45 @@ const PostWrite = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image.preview);
   const post_list = useSelector((state) => state.post.list);
+  const postImage = useSelector((state) => state.image.targetfile);
+  const user = useSelector((state) => state?.user?.user?.nickname);
 
+  const content = React.useRef();
+
+  console.log(preview);
   // props에서 history 가지고 오기
   const { history } = props;
   console.log(is_login);
 
-  // 로그인 하지 않았다면 로그인하러 가기 버튼 보여주기
-  if (!is_login) {
-    alert("로그인이 필요합니다.");
-    history.replace("/login");
-  }
 
-  // 게시글 작성 페이지에서 텍스트 내용 저장하기
-  const [content, setContent] = React.useState("");
 
   const fileInput = React.useRef();
   //const is_uploading = useSelector((state) => state.image.uploading);
   
-  let formData = new FormData();
+  let targetFile;
   
   const selectFile = (e) => {
     const reader = new FileReader();
     const file = fileInput.current.files[0];
+    targetFile = e.target.files[0]
 
-    // key : value
-    formData.append("file", e.target.files[0]);
-    
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       console.log(reader.result);
       // preview 동작 메소드
-      dispatch(imageActions.setPreview(reader.result));
+      dispatch(imageActions.setPreview({result: reader.result, targetFile:targetFile}));
     };
   };
   
-  // e 이벤트 받아서 setContents 해주기
-  const ChangeConstent = (e) => {
-    setContent(e.target.value);
-    
-    console.log(e.target.value);
-  };
+ 
   //console.log(contents);
   
-  // 게시글 작성버튼과 연동 할때 사용함
+  // 게시글 작성버튼과 연동 할때 사용함 
+  
   const addPost = () => {
-    dispatch(postActions.addPostAx(content));
-  };
+      const file = document.getElementById("uploadImage").files[0];
+      dispatch(postActions.addPostAx(content, file, user));
+    };
 
   return (
     <React.Fragment>
@@ -85,23 +78,22 @@ const PostWrite = (props) => {
             </Text>
             <Grid padding="16px">
               <ImageWrap>
-                <form id="formElem" enctype="multipart.form-data">
                   <input
                     id="uploadImage"
                     type="file"
                     onChange={selectFile}
                     ref={fileInput}
                   />
-                </form>
               </ImageWrap>
 
-              <ImageWrap imageUrl={uploadImage?.preview} />
+              <img src={preview} style={{width:"200px"}}></img>
+
               <InputTagStyle>
                 <input
                   label="게시글 내용"
                   placeholder="게시글 작성"
                   type="text"
-                  onChange={ChangeConstent}
+                  ref={content}
                 />
               </InputTagStyle>
               <Button
@@ -207,5 +199,8 @@ const ImageWrap = styled.div`
     }
   }
 `;
+
+
+
 
 export default PostWrite;
