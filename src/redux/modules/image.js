@@ -50,29 +50,6 @@ const uploadImageApi = (image) => {
   };
 };
 
-// function uploadImageFB(image) {
-//   return function (dispatch, getState, {history}) {
-    
-//     dispatch(uploading(true));
-    
-//     console.log(`images/${new Date().getTime()}_${image.name}`);
-//     //const _upload = storage.ref(`images/${image.name}`).put(image);
-
-//     // 업로드하기
-//     // _upload.then((snapshot) => {
-//     //   console.log(snapshot);
-
-//     //   // 업로드한 파일의 다운로드 경로를 가져오기
-//     //   snapshot.ref.getDownloadURL().then((url) => {
-//     //     console.log(url);
-//     //     dispatch(uploadImage(url));
-//     //   });
-//     // }).catch(err => {
-//     //     dispatch(uploading(false));
-//     // });
-//   };
-// }
-
 
 // reducer
 export default handleActions(
@@ -90,7 +67,8 @@ export default handleActions(
 
     [SET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
-        draft.preview = action.payload.preview;
+        draft.preview = action.payload.preview.result;
+        draft.targetfile = action.payload.preview.targetFile; 
       }),
 
     // [DELETE_PREVIEW]: (state, action) =>
