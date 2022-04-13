@@ -30,7 +30,7 @@ Image.defaultProps = {
 
 const AspectOutter = styled.div`
     width: 100%;
-    max-width: 700px;
+    /* max-width: 700px; */
 `;
 
 const AspectInner = styled.div`

@@ -99,7 +99,7 @@ const PostWrite = (props) => {
               <Button
                 text="Post"
                 margin="25px 0px -30px 0px"
-                _onClick={addPost}
+                onClick={addPost}
               ></Button>
             </Grid>
           </Container>

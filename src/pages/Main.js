@@ -15,7 +15,6 @@ const Main = (props) => {
     dispatch(postActions.getPostAx(user));
   }, [user]);
   
-  
   return (
     <React.Fragment>
       <Container maxWidth="lg" >
@@ -29,7 +28,6 @@ const Main = (props) => {
   );
 };
 
-
 const Wrap = styled.div`
   column-width: 320px;
   column-gap: 15px;
@@ -37,4 +35,6 @@ const Wrap = styled.div`
   max-width: 1100px;
   margin: 50px auto ;
 `;
+
 export default Main;
+

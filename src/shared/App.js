@@ -18,8 +18,7 @@ function App() {
             dispatch(userActions.loginCheckApi());
         };
     },[]);
-    
-    
+
     return (
         <React.Fragment>
             <Grid>
@@ -37,4 +36,6 @@ function App() {
         </React.Fragment>
     );
 }
+
 export default App;
+

@@ -39,14 +39,14 @@ const Login = (props) => {
     }, [user_name, pwd]);
     
     return(
-        <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
+        <Grid width="100vw" height="(100vh-100px)" padding="100px 0 30px 0" is_flex>
             <Container>
                 <Wrap>
                     <Flower src={flower} />
                     <Span>Login</Span>
                 </Wrap>
                 <Grid height="30%" column is_flex>
-                    <Grid margin="40px 0px 30px 0px" is_flex>
+                    <Grid margin="20px 0px 30px 0px" is_flex>
                         <Input
                             id="user_name"
                             width="80%"
@@ -94,7 +94,7 @@ const Container = styled.div`
     justify-content: center;
     width: 420px;
     height: 70%;
-    padding: 30px 0px 20px 0px;
+    padding: 0px 0px 30px 0px;
     border: none;
     border-radius: 25px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -114,6 +114,7 @@ const Flower = styled.img`
 `
 
 const Span = styled.span`
+    user-select: none;
     position: absolute;
     font-size: 54px;
     font-family: 'Kaushan Script', cursive;
