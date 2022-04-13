@@ -21,7 +21,6 @@ const logOut = createAction(LOG_OUT, () => {});
 // middleWares
 const signUpApi = (user) => {
     return async function (dispatch, getState, {history}){
-        console.log(user)
         try {
             const join = await axios.post("http://54.180.96.119/api/signup",{
                 username: user.user_name,

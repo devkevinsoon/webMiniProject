@@ -24,7 +24,7 @@ const Heart = (props) => {
         // if(is_login) 
         setHeartClick(!heartClick);
     }
-   
+    
     return (
         <Grid position="relative">
             {heartClick ? 

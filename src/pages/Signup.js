@@ -106,14 +106,14 @@ const Signup = (props) => {
     }
     
     return(
-        <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
+        <Grid width="100vw" height="(100vh-100px)" padding="100px 0 30px 0" is_flex>
             <Container>
-                <Grid height="20%" is_flex>
+                <Grid height="20%" padding="65px 0 50px 0" is_flex>
                     <Text size="52px" fontFamily="'Kaushan Script', cursive" textAlign="center">Signup</Text>
                 </Grid>
-                <Grid height="60%" is_flex column>
+                <Grid height="60%" padding="15px 0 30px 0" is_flex column>
                     <Grid is_flex column position="relative">
-                        <Grid width="80%" margin="50px 0px 30px 0px" is_flex>
+                        <Grid width="80%" padding="0 0 30px 0" is_flex>
                             <Input
                                 id="user_name"
                                 placeholder="이메일을 입력해주세요."
@@ -128,7 +128,7 @@ const Signup = (props) => {
                         { user_name && emailCheck(user_name) && <Span color="blue">올바른 이메일 형식입니다.</Span>}
                     </Grid>
                     <Grid is_flex column position="relative">
-                        <Grid width="80%" margin="0px 0px 30px 0px" is_flex>
+                        <Grid width="80%" padding="0 0 30px 0" is_flex>
                             <Input
                                 id="nickname"
                                 placeholder="닉네임을 입력해주세요."
@@ -143,7 +143,7 @@ const Signup = (props) => {
                         { nickname && (nickname.length >= 2) && <Span color="blue">올바른 닉네임 형식입니다.</Span>}
                     </Grid>
                     <Grid is_flex column position="relative">
-                        <Grid margin="0px 0px 30px 0px" is_flex>
+                        <Grid padding="0 0 30px 0" is_flex>
                             <Input
                                 id="pwd"
                                 width="80%"
@@ -156,7 +156,7 @@ const Signup = (props) => {
                         { pwd && pwdCheck(pwd) && <Span color="blue">올바른 패스워드 형식입니다.</Span>}
                     </Grid>
                     <Grid is_flex column position="relative">
-                        <Grid margin="0px 0px 30px 0px" is_flex>
+                        <Grid padding="0 0 40px 0" is_flex>
                             <Input
                                 id="re_pwd"
                                 width="80%"
@@ -173,7 +173,7 @@ const Signup = (props) => {
                         }
                     </Grid>
                 </Grid>
-                <Grid height="20%" is_flex>
+                <Grid height="20%" padding="0 0 17px 0" is_flex>
                     <Button
                         width="80%"
                         border= "none"
@@ -190,18 +190,22 @@ const Signup = (props) => {
     )
 }
 
+
+
 const Container = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 420px;
     height: 70%;
-    padding: 30px 0px 30px 0px;
+    padding: 0px 0px 30px 0px;
     border: none;
     border-radius: 25px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);
 `;
+
 
 const Span = styled.span`
     font-size: 12px;

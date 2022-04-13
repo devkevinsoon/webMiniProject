@@ -89,13 +89,13 @@ const PostWrite = (props) => {
                   label="게시글 내용"
                   placeholder="게시글 작성"
                   type="text"
-                  _onChange={ChangeConstents}
+                  onChange={ChangeConstents}
                 />
               </InputTagStyle>
               <Button
                 text="Post"
                 margin="25px 0px -30px 0px"
-                _onClick={addPost}
+                onClick={addPost}
               ></Button>
             </Grid>
           </Container>

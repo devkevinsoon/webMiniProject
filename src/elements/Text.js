@@ -50,6 +50,7 @@ Text.defaultProps = {
 };
 
 const P = styled.p`
+  user-select: none;
   text-align: ${(props) => (props.textAlign)};
   color: ${(props) => (props.color)};
   padding: ${(props) => (props.padding)};
