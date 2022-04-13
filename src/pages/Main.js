@@ -1,46 +1,43 @@
 import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import  {  actionCreators as postActions } from "../redux/modules/post"
+
 import styled from "styled-components";
-import { Button } from "../elements";
-import { history } from "../redux/configureStore";
-import { actionCreators as userActions } from "../redux/modules/user";
-import { useDispatch, useSelector  } from "react-redux";
 import PostList from "./PostList";
 import Container from "@material-ui/core/Container";
-import Bg from "../images/bg.jpg";
 
 const Main = (props) => {
-  const post_list = useSelector((state) => state.post_list);
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
-  
-  useEffect(() => {
-        if(!token){
-            console.log("없어")
-            return;
-        } else {
-            dispatch(userActions.loginCheckApi());
-        };
-    },[]);
-  
+  const postList = useSelector((state) => state.post.list)
+  // console.log("post_list : ", post_list);
+
   return (
     <React.Fragment>
       <Container maxWidth="lg" >
-        <MainContainer >
-          <PostList />
-        </MainContainer>
+        <Wrap >
+          {postList.map((p, idx) => {
+            //console.log("p  : ", p);
+            return <PostList key={idx} {...p}/>    // postId가 아직 없어서 index로 key 값으로 함 
+          })}
+        </Wrap>
       </Container>
     </React.Fragment>
   );
 };
 
-const MainContainer = styled.div`
-  padding: 20px 0;
-  display: flex;
-  flex-direction: column;
+const Wrap = styled.div`
+  column-width: 320px;
+  column-gap: 15px;
+  width: 900%;
+  max-width: 1100px;
+  margin: 50px auto ;
 `;
 
-const sectionStyle = styled.div`
-  backgroundImage:"url("+{Bg}+ ")";
-`;
+// const MainContainer = styled.div`
+//   padding: 20px 0;
+//   display: flex;
+//   flex-direction: column;
+// `;
 
 export default Main;
