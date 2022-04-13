@@ -14,39 +14,48 @@ const PostList = (props) => {
     const post_list = useSelector((state) => state.post.list);
     const is_loading = useSelector((state) => state.post.is_loading);
 
-    // React.useEffect(() => {
-    //   if (getCookie("is_login") == "true") {
-    //     dispatch(userActions.loginDB());
-    //   }
-  
-    //   dispatch(PostActions.getPostDB());
-    // }, []);
-  
+    
+    // props 값을 잘 가지고 오는지 확인 
+    // const {content, imageUrl} = props;
+    // console.log("content : ", content);
+    // console.log("imageUrl : ", imageUrl);
+
     return (
-        <React.Fragment>
-          <WrapPost>
-            <Post/>
-          </WrapPost>
-        </React.Fragment>
-    )
+      <React.Fragment>
+        {/* <WrapPost>
+            <Post content={props.content} imageUrl={props.imageUrl}/>
+          </WrapPost> */}
+        
+        <Figure>
+          <Img src={props.imageUrl} />
+          <Figcaption>{props.content}</Figcaption>
+        </Figure>
+      </React.Fragment>
+    );
 }
 
 
+const Figure = styled.div`
+  display: inline-block;
+  border:1px solid rgba(0,0,0,0.2);
+  margin:0;
+  margin-bottom: 15px;
+  padding:10px;
+  box-shadow: 2px 5px 5px rgba(0,0,0,0.5);
+  filter: grayscale(0.8); 
+  &:hover { filter: none; }
+`;
 
-// Post.defaultProps = {
-//     user_info: {
-//       nickname: "Spring",
-//     //   user_profile:
-//     //     "http://image.dongascience.com/Photo/2015/11/14478135982143[1].png",
-//     },
-//     image_url:
-//       "https://c.pxhere.com/photos/cd/46/santorini_oia_greece_aegean_architecture_landscape_tourism_white-947315.jpg!d",
-//     contents: "반갑습니다",
-//     comment_cnt: 10,
-//     modifiedAt : moment().format("YYYY-MM-DD hh:mm:ss"),
-//   };
-  
-  
+const Img = styled.img`
+  width: 100%
+`;
+
+const Figcaption = styled.div`
+  font-size: .9rem;
+  color: #444;
+  line-height: 1.5;
+`;
+
   const WrapPost = styled.div`
   display: flex;
   flex-direction: row;

@@ -3,16 +3,16 @@ import styled from "styled-components";
 
 const DEFAULT_IMG =
   "https://pbs.twimg.com/media/DennlYdV4AAkkQo?format=jpg&name=medium";
-const ImageWrap = ({ image_url }) => {
+const ImageWrap = ({ imageUrl }) => {
   // console.log(image_url);
   return (
-    <ImgStyle>
-      <img src={image_url ? image_url : DEFAULT_IMG} alt="이미지" />
-    </ImgStyle>
+    <ImageStyle>
+      <img src={imageUrl ? imageUrl : DEFAULT_IMG} alt="이미지" />
+    </ImageStyle>
   );
 };
 
-const ImgStyle = styled.div`
+const ImageStyle = styled.div`
   display: flex;
   width: 100%;
   min-height: 300px;
