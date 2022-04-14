@@ -19,7 +19,8 @@ const SET_LIKE = "SET_LIKE";
 // action creators
 const getPost = createAction(GET_POST, (postList) => ({ postList }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}));
+// const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}));
+const editPost = createAction(EDIT_POST, (post_id, content) => ({post_id, content}));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 const setComment = createAction(SET_COMMENT, (post_id, comment) => ({post_id, comment}));
 const deleteComment = createAction(DELETE_COMMENT, (post_id, commentId) => ({post_id, commentId}));
@@ -69,7 +70,7 @@ const getPostAx = (userId) => {
   };
 };
 
-// middleWares
+// middleWares - post 추가하기 
 const addPostAx = (content, file, nickname) => {
   const formData = new FormData();
   formData.append("content", content);
@@ -90,7 +91,27 @@ const addPostAx = (content, file, nickname) => {
   };
 };
 
-// Middleware - post 추가하기
+// middleWares - post 수정하기 
+const editPostAx = (content, postId) => {
+  console.log("content, postID : ",content, postId);
+
+  return async function (dispatch, getState, { history }){
+    try {
+      await axios.post(`http://54.180.96.119/api/posts/${postId}`,{
+        headers: {
+          Authorization: `BEARER ${localStorage.getItem("token")}`,
+        },
+      });
+      history.replace("/");
+    } catch (err) {
+      alert("게시글 수정에 실패하였습니다.");
+      console.log("fail : ", err);
+    }
+  };
+};
+
+
+// Middleware 
 const getOnePostApi = (postId) => {
 	return async function (dispatch, getState, {history}){
 		// const resp = RESP.post;
@@ -186,11 +207,6 @@ export default handleActions(
     produce(state, (draft) => {
       draft.list = draft.list.filter((p) => p.id !== action.payload.post_id);
     }),
-  [GET_ONE_POST]: (state, action) =>
-        produce(state, (draft) => {
-            draft.list = action.payload.post;
-    }),
-	
 	[SET_COMMENT]: (state, action) => 
 		produce(state, (draft) => {
 			// 상세페이지에서는 포스트가 하나인데 인덱스를 찾을 필요가 있을까?

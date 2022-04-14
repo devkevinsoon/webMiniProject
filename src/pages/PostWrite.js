@@ -2,8 +2,6 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import Upload from "../shared/Upload";
-
 // component & element
 import { Grid, Text, Button, Image, Input } from "../elements";
 //import ImageWrap from "../components/ImageWrap";
@@ -16,27 +14,23 @@ import moment from "moment";
 
 const PostWrite = (props) => {
   const dispatch = useDispatch();
-  // 업로드 된 이미지 불러오기
-  const uploadImage = useSelector((state) => state.image);
   // 로그인 후에만 /write에 접근하기위한 로그인 체크
   const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image.preview);
-  const post_list = useSelector((state) => state.post.list);
-  const postImage = useSelector((state) => state.image.targetfile);
   const user = useSelector((state) => state?.user?.user?.nickname);
 
-  const content = React.useRef();
+  const postId = props.user.user.postId;
+  console.log("postId : ",postId);
+  
 
-  console.log(preview);
+  const is_edit = user ? true : false;
   // props에서 history 가지고 오기
   const { history } = props;
-  console.log(is_login);
-
-
-
-  const fileInput = React.useRef();
-  //const is_uploading = useSelector((state) => state.image.uploading);
   
+  const fileInput = React.useRef();
+  
+  // 게시글 작성 페이지에서 텍스트 내용 저장하기 
+  const [content, setContent] = React.useState("");
   let targetFile;
   
   const selectFile = (e) => {
@@ -51,16 +45,19 @@ const PostWrite = (props) => {
       dispatch(imageActions.setPreview({result: reader.result, targetFile:targetFile}));
     };
   };
-  
- 
-  //console.log(contents);
-  
-  // 게시글 작성버튼과 연동 할때 사용함 
+  // e 이벤트 받아서 setContents 해주기 
+  const ChangeConstent = (e) => {
+    setContent(e.target.value);
+  }
   
   const addPost = () => {
       const file = document.getElementById("uploadImage").files[0];
-      dispatch(postActions.addPostAx(content, file, user));
+      dispatch(postActions.addPostApi(content, file, user));
     };
+
+  const editPost = () => {
+    dispatch(postActions.editPostApi({content: content},postId));
+  }
 
   return (
     <React.Fragment>
@@ -86,21 +83,34 @@ const PostWrite = (props) => {
                   />
               </ImageWrap>
 
-              <img src={preview} style={{width:"200px"}}></img>
+              <img src={preview} style={{width:"300px", margin: "20px 20px 25px 0px"}}></img>
 
               <InputTagStyle>
                 <input
+                  value={content}
+                  onChange={ChangeConstent}
                   label="게시글 내용"
                   placeholder="게시글 작성"
                   type="text"
-                  ref={content}
                 />
               </InputTagStyle>
+
+              {is_edit ? (
               <Button
                 text="Post"
                 margin="25px 0px -30px 0px"
-                onClick={addPost}
-              ></Button>
+                _onClick={addPost}
+              >
+              </Button>
+              ) : (
+              <Button
+                text="Modify"
+                margin="25px 0px -30px 0px"
+                _onClick={editPost}
+              >
+              </Button>
+              )}
+
             </Grid>
           </Container>
         </Grid>

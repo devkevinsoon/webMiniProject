@@ -36,14 +36,18 @@ const PostList = (props) => {
 
 
 const Figure = styled.div`
+  // column-width: 350px;
+  // column-gap: 15px;
   display: inline-block;
-  border:1px solid rgba(0,0,0,0.2);
-  margin:0;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 0;
   margin-bottom: 15px;
-  padding:10px;
-  box-shadow: 2px 5px 5px rgba(0,0,0,0.5);
-  filter: grayscale(0.8); 
-  &:hover { filter: none; }
+  padding: 10px;
+  box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5);
+  filter: grayscale(0.8);
+  &:hover {
+    filter: none;
+  }
 `;
 
 const Img = styled.img`
