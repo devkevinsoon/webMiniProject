@@ -16,15 +16,21 @@ const Header = (props) => {
     return (
       <React.Fragment>
         <HeaderContainer>
-          <Logo {...props} />
-          <Button
-            bg="#efefef"
-            width="100%"
-            text="로그아웃"
-            _onClick={() => {
-              dispatch(userActions.logOutApi());
-            }}
-          />
+          <Positioner>
+            <WhiteBackground>
+              <HeaderContents>
+                <Logo {...props} />
+                <Button
+                  bg="#efefef"
+                  width="100%"
+                  text="로그아웃"
+                  _onClick={() => {
+                    dispatch(userActions.logOutApi());
+                  }}
+                />
+              </HeaderContents>
+            </WhiteBackground>
+          </Positioner>
         </HeaderContainer>
       </React.Fragment>
     );
@@ -62,7 +68,8 @@ const Header = (props) => {
 };
 
 const HeaderContainer = styled.div`
-  /* position: relative;  */
+  position: relative; 
+  z-index: 1000;
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -71,7 +78,7 @@ const HeaderContainer = styled.div`
   height: 50px;
   margin: 30px auto 30px auto;
   button {
-	width: 150px;
+    width: 150px;
     margin-left: 10px;
     border-radius: 100px;
     color: #797979;
