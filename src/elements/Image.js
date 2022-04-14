@@ -2,28 +2,21 @@ import styled from  'styled-components';
 import React from 'react';
 
 const Image = (props) => {
-    const { shape, src, size } = props;
+    const { src, size } = props;
 
     const styles = {
         src: src,
         size: size,
     }
 
-    if(shape === "circle") {
-        return (
-          <ImageCircle {...styles}></ImageCircle>
-        )
-    } else {
-        return (
-            <AspectOutter>
-                <AspectInner {...styles}></AspectInner>
-            </AspectOutter>
-        ) 
-    }  
+    return (
+        <AspectOutter>
+            <AspectInner {...styles}></AspectInner>
+        </AspectOutter>
+    ) 
 }
 
 Image.defaultProps = {
-    shape: "circle",
     src: "",
     size: 36,
 };
