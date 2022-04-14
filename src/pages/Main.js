@@ -12,7 +12,7 @@ const Main = (props) => {
   const user = useSelector((state) => state.user.user?.userId);
   
   useEffect(() => {
-    dispatch(postActions.getPostAx(user));
+    dispatch(postActions.getPostApi(user));
   }, [user]);
   
   return (

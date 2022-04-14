@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 // component & element
 import { Grid, Text, Button, Image, Input } from "../elements";
-//import ImageWrap from "../components/ImageWrap";
 
 import { history } from "../redux/configureStore";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -12,7 +11,7 @@ import { actionCreators as imageActions } from "../redux/modules/image";
 
 import moment from "moment";
 
-const PostWrite = (props) => {
+const Modify = (props) => {
   const dispatch = useDispatch();
   // 로그인 후에만 /write에 접근하기위한 로그인 체크
   const is_login = useSelector((state) => state.user.is_login);
@@ -23,43 +22,27 @@ const PostWrite = (props) => {
   
   //  console.log("post : ",post[0].postId);
   const postId = postList[0].postId;
+  const is_edit = postId ? true : false;
   
   // props에서 history 가지고 오기
   const { history } = props;
-  
-  const fileInput = React.useRef();
   
   // 게시글 작성 페이지에서 텍스트 내용 저장하기 
   const [content, setContent] = React.useState("");
   let targetFile;
   
-  
-  // e 이벤트 받아서 file 이미지 load 시켜서 preview 
-  const selectFile = (e) => {
-    const reader = new FileReader();
-    const file = fileInput.current.files[0];
-    targetFile = e.target.files[0]
-
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      // console.log(reader.result);
-      // preview 동작 메소드
-      dispatch(imageActions.setPreview({result: reader.result, targetFile:targetFile}));
-    };
-  };
-
+  let _post = is_edit ? postList.find((p) => p.id === postId) : null;
+  console.log("_post : ", _post);
+ 
+ 
   // e 이벤트 받아서 setContents 해주기 
   const ChangeConstent = (e) => {
     setContent(e.target.value);
   }
   
-  const addPost = () => {
-      const file = document.getElementById("uploadImage").files[0];
-      dispatch(postActions.addPostApi(content, file, user));
-    };
-
   const editPost = () => {
-    dispatch(postActions.editPostApi({content: content},postId));
+    console.log("1");
+    dispatch(postActions.editPostApi(content,postId));
   }
 
   return (
@@ -74,22 +57,10 @@ const PostWrite = (props) => {
               fontFamily="'Kaushan Script', cursive"
               textAlign="center"
             >
-              Image Upload
+              Image Modify
             </Text>
             <Grid padding="16px">
-              <ImageWrap>
-                <input
-                  id="uploadImage"
-                  type="file"
-                  onChange={selectFile}
-                  ref={fileInput}
-                />
-              </ImageWrap>
-
-              <img
-                src={preview ? preview : postList[0].imageUrl}
-                style={{ width: "300px", margin: "20px 20px 25px 0px" }}
-              ></img>
+              <img src={preview ? preview : postList[0].imageUrl} style={{width:"300px", margin: "20px 20px 25px 0px"}}></img>
 
               <InputTagStyle>
                 <input
@@ -102,10 +73,12 @@ const PostWrite = (props) => {
               </InputTagStyle>
 
               <Button
-                text="Post"
+                text="Modify"
                 margin="25px 0px -30px 0px"
-                _onClick={addPost}
-              ></Button>
+                _onClick={editPost}
+              >
+              </Button>
+          
             </Grid>
           </Container>
         </Grid>
@@ -114,7 +87,7 @@ const PostWrite = (props) => {
   );
 };
 
-PostWrite.defatulProps = {
+Modify.defatulProps = {
   postId: "",
   nickname: "spring",
   image_url: "",
@@ -205,4 +178,4 @@ const ImageWrap = styled.div`
   }
 `;
 
-export default PostWrite;
+export default Modify;
