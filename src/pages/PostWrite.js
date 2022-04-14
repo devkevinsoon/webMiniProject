@@ -22,8 +22,8 @@ const PostWrite = (props) => {
   const postId = props.user.user.postId;
   console.log("postId : ",postId);
   
-
   const is_edit = user ? true : false;
+
   // props에서 history 가지고 오기
   const { history } = props;
   
@@ -110,7 +110,6 @@ const PostWrite = (props) => {
               >
               </Button>
               )}
-
             </Grid>
           </Container>
         </Grid>
@@ -209,8 +208,5 @@ const ImageWrap = styled.div`
     }
   }
 `;
-
-
-
 
 export default PostWrite;

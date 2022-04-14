@@ -20,7 +20,7 @@ const Main = (props) => {
       <Container maxWidth="lg" >
         <Wrap >
           {postList.map((p, idx) => {
-            return <PostList key={idx} {...p}/>    // postId가 아직 없어서 index로 key 값으로 함
+            return <PostList key={p.postId} {...p}/>    // postId가 아직 없어서 index로 key 값으로 함
           })}
         </Wrap>
       </Container>

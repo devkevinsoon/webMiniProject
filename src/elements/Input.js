@@ -13,6 +13,7 @@ const Input = (props) => {
       multiLine, 
       id,
       width, 
+      disabled,
     } = props;
 
     const style = {
@@ -39,6 +40,8 @@ const Input = (props) => {
                 {...style}
                 id={id}
                 type= {type}
+                disabled={disabled}
+                value={value}
                 placeholder={placeholder}
                 onChange={_onChange}
               />
@@ -54,6 +57,7 @@ Input.defaultProps = {
     multiLine: false,
     id: null, 
     width: "100%",
+    disabled: false,
     _onChange: () => {},
 }
 

@@ -2,19 +2,19 @@ import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Header } from "../components/index";
 import { Grid, Button } from "../elements";
 import { Login, Signup, Main, Detail, PostWrite } from '../pages/index';
 import { actionCreators as userActions } from "../redux/modules/user";
 import Test from "../pages/Test";
 
-
 function App() {
     const dispatch = useDispatch();
-    const is_local = localStorage.getItem("token") ? true : false;
+    const token = localStorage.getItem("token");
+    
     useEffect(() => {
-        if(is_local){
+        if(token){
             dispatch(userActions.loginCheckApi());
         };
     },[]);
@@ -28,15 +28,15 @@ function App() {
                 <Route path="/login" exact component={Login} />
                 <Route path="/signup" exact component={Signup} />
                 <Route path="/write" exact component={PostWrite} />
+                <Route path="/detail/:id" exact component={Detail} />
                 <Route path="/write/:id" exact component={PostWrite} />
-                <Route path="/detail" exact component={Detail} />
                 <Route path="/test" exact component={Test} />
                 </ConnectedRouter>
             </Grid>
                 <Button is_float text="+" _onClick={() => {history.push('/write');}} />
         </React.Fragment>
     );
-}
+};
 
 export default App;
 

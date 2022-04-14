@@ -118,7 +118,7 @@ const Signup = (props) => {
     }
     
     return(
-        <Grid width="100vw" height="100vh" padding="70px 0 30px 0" is_flex>
+        <Grid width="100vw" height="(100vh-100px)" padding="100px 0 30px 0" is_flex>
             <Container>
                 <Grid height="20%" is_flex>
                     <Text size="52px" fontFamily="'Kaushan Script', cursive" textAlign="center">Signup</Text>
@@ -128,6 +128,7 @@ const Signup = (props) => {
                         <Grid width="80%" margin="50px 0px 30px 0px" is_flex>
                             <Input
                                 id="user_name"
+                                value={user_name}
                                 placeholder="이메일을 입력해주세요."
                                 _onChange={onChange}
                             />
@@ -143,6 +144,7 @@ const Signup = (props) => {
                         <Grid width="80%" margin="0px 0px 30px 0px" is_flex>
                             <Input
                                 id="nickname"
+                                value={nickname}
                                 placeholder="닉네임을 입력해주세요."
                                 _onChange={onChange}
                             />
@@ -160,6 +162,7 @@ const Signup = (props) => {
                                 id="pwd"
                                 width="80%"
                                 type="password"
+                                value={pwd}
                                 placeholder="패스워드를 입력해주세요."
                                 _onChange={onChange}
                             />
@@ -173,6 +176,7 @@ const Signup = (props) => {
                                 id="re_pwd"
                                 width="80%"
                                 type="password"
+                                value={re_pwd}
                                 placeholder="패스워드를 다시 한 번 입력해주세요."
                                 _onChange={onChange}
                             />
@@ -185,7 +189,7 @@ const Signup = (props) => {
                         }
                     </Grid>
                 </Grid>
-                <Grid height="20%" is_flex>
+                <Grid height="20%" margin="40px 0 0 0" is_flex>
                     <Button
                         width="80%"
                         border= "none"
@@ -209,7 +213,7 @@ const Container = styled.div`
     justify-content: center;
     width: 420px;
     height: 70%;
-    padding: 30px 0px 30px 0px;
+    padding: 60px 0px 60px 0px;
     border: none;
     border-radius: 25px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);

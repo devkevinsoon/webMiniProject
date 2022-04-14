@@ -6,26 +6,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, Image, Input, Text } from "../elements";
 import Comment from "../components/Comment"
 import { dateView } from "../shared/time";
-import { useParams } from "react-router-dom";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 const Detail = (props) => {
     const dispatch = useDispatch();
-    // const params = useParams(); post_id 값 반환
-    
-    const post = useSelector(state => state?.post?.list);
-    const userNickName = useSelector(state => state?.user?.user?.nickname);
-  
+
+    const post = useSelector(state => state.post?.list);
+    const user = useSelector(state => state.user.user);
+
     //댓글 작성
     const [ comment, setComment ] = useState("");
-    const wirteComment = (e) => {
+    const writeComment = (e) => {
         setComment(e.target.value);
     };
+  
     const clickBtn = () => {
-        // dispatch({
-        //     comment,
-        //     nickname: userNickName,
-        //     postId
-        // });
+        dispatch(postActions.setCommentApi(
+            post[0].postId, 
+            {
+                comment,
+                nickName: user.nickname,
+                postId: post[0].postId,
+            }
+        ));
+        setComment("");
     }
 
     // 좋아요 클릭
@@ -39,8 +43,7 @@ const Detail = (props) => {
         } 
     },[heartClick]);
 
-    const clickHeart = () => {
-        // if(is_login) 
+    const clickHeart = () => { 
         setHeartClick(!heartClick);
     }
     //
@@ -49,30 +52,30 @@ const Detail = (props) => {
         <Container>
             <Wrap>
                 <Grid padding="10px 20px" borderB="1px solid #eee" is_flex justify>
-                    <Text size="18px" bold width="auto">{post.nickname}</Text>
+                    <Text size="18px" bold width="auto">{post[0].nickName}</Text>
                     <Grid is_flex justify width="auto">
-                        {/* {each_post.userId === "유저리스트에 userId" ? (
-                            <EditBtn onClick={() => {history.push(`/revise/${post_id}`)}}>
+                        {post[0]?.userId === user?.userId ? (
+                            <EditBtn onClick={() => {props.history.push(`/write/${post[0].postId}`)}}>
                                 <svg viewBox="0 0 24 24">
                                     <path d="M20.719 7.031l-1.828 1.828-3.75-3.75 1.828-1.828q0.281-0.281 0.703-0.281t0.703 0.281l2.344 2.344q0.281 0.281 0.281 0.703t-0.281 0.703zM3 17.25l11.063-11.063 3.75 3.75-11.063 11.063h-3.75v-3.75z"></path>
                                 </svg>
                             </EditBtn>
                         ) : null
                         }
-                        {each_post.userId === "유저리스트에 userId" ? (
+                        {post[0]?.userId === user?.userId ? (
                             <EditBtn>
                                 <svg viewBox="0 0 24 24">
                                     <path d="M18.984 3.984v2.016h-13.969v-2.016h3.469l1.031-0.984h4.969l1.031 0.984h3.469zM6 18.984v-12h12v12q0 0.797-0.609 1.406t-1.406 0.609h-7.969q-0.797 0-1.406-0.609t-0.609-1.406z"></path>
                                 </svg>
                             </EditBtn>
                         ) : null
-                        } */}
-                        <Text color="gray" width="auto">{dateView(post.modifiedAt)}</Text>
+                        }
+                        <Text color="gray" width="auto">{dateView(post[0].modifiedAt)}</Text>
                     </Grid>
                 </Grid>
                 <Grid padding="20px 0 0 0" borderB="1px solid #eee">
                     <Grid margin="0 0 20px 0" padding="0px 20px">
-                        <Text>{post.content}</Text>
+                        <Text>{post[0].content}</Text>
                     </Grid>
                     <Grid position="relative">
                         { heartClick ? 
@@ -82,7 +85,7 @@ const Detail = (props) => {
                             </svg>
                         </HeartMiddle>
                         : "" }
-                        <Image src={post.imageUrl} shape="rectangle"/>
+                        <Image src={post[0].imageUrl} shape="rectangle"/>
                     </Grid>
                 </Grid>
                 <Grid padding="5px 10px 0 10px" borderB="1px solid #eee">
@@ -92,24 +95,32 @@ const Detail = (props) => {
                                 <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
                             </svg>
                         </HeartOuter>
-                        <Span>좋아요 {post.likeCount}개</Span>
+                        <Span>좋아요 {post[0].postLikeTotal}개</Span>
                     </Box>
                 </Grid>
             </Wrap>
             <Grid width="40%" minWidth="540px" padding="20px 5px 0 5px" is_flex justify>
-                <Input _onChange={wirteComment} width="85%" placeholder="댓글을 입력해주세요." />
-                <Button _onClick={clickBtn} width="10%" padding="5px 0" text="입력" border="none" hover></Button>
+                {user?.userId 
+                    ? <Input _onChange={writeComment} width="85%" placeholder="댓글을 입력해주세요." value={comment}/>
+                    : <Input _onChange={writeComment} width="85%" placeholder="로그인 후 이용해주세요." disabled/>
+                }
+                {user?.userId 
+                    ? <Button _onClick={clickBtn} width="10%" padding="5px 0" text="입력" border="none" hover></Button>
+                    : <Button _onClick={clickBtn} width="10%" padding="5px 0" text="입력" border="none" disabled></Button>
+                }
             </Grid>
             <Grid width="40%" minWidth="540px" padding="20px 0 0 0" is_flex column> 
-                {post.comments.map((v, i) => 
-                    <Comment 
-                        key={i}
-                        nickname={v.nickname}
-                        commentId={v.commentId}
-                        modifiedAt={v.modifiedAt}
-                        comment={v.comment}
-                    />
-                )}
+                {post[0].comments 
+                    ? post[0].comments.map((v, i) => 
+                        <Comment 
+                            key={i} //commentId
+                            nickName={v.nickName}
+                            // commentId={v.commentId}
+                            modifiedAt={v.modifiedAt}
+                            comment={v.comment} 
+                        />)
+                    : ""
+                }
             </Grid>
         </Container>
 

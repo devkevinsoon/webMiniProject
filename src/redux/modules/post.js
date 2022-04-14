@@ -2,30 +2,30 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import moment from "moment";
 import axios from "axios";
-import { actionCreators as imageActions } from "./image";
-
-
 
 // actions
-const GET_POST = "GET_POST";          // 정보 불러오기
-const ADD_POST = "ADD_POST";          // 정보 추가하기
+const GET_POST = "GET_POST"; // 정보 불러오기
+const ADD_POST = "ADD_POST"; // 정보 추가하기
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const SET_COMMENT = "SET_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 const SET_LIKE = "SET_LIKE";
 
-
 // action creators
 const getPost = createAction(GET_POST, (postList) => ({ postList }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-// const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}));
 const editPost = createAction(EDIT_POST, (post_id, content) => ({post_id, content}));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
-const setComment = createAction(SET_COMMENT, (post_id, comment) => ({post_id, comment}));
-const deleteComment = createAction(DELETE_COMMENT, (post_id, commentId) => ({post_id, commentId}));
-const setLike = createAction(SET_LIKE, (like) => ({like}));
-
+const setComment = createAction(SET_COMMENT, (post_id, comment) => ({
+  post_id,
+  comment,
+}));
+const deleteComment = createAction(DELETE_COMMENT, (post_id, commentId) => ({
+  post_id,
+  commentId,
+}));
+const setLike = createAction(SET_LIKE, (like) => ({ like }));
 
 // initialState
 const initialState = {
@@ -45,38 +45,42 @@ const initialState = {
 
 // Middleware - postList 가져오기
 const getPostAx = (userId) => {
-  return async function(dispatch, getState, {history}){
-    console.log(userId)
-    const _postList = []
+  return async function (dispatch, getState, { history }) {
+    const _postList = [];
     let response;
-    try{
-          if(userId)
+    try {
+      if (userId) {
+        response = await axios.post(
+          `http://54.180.96.119/api/posts/${userId}`,
+          {},
           {
-            response = await axios.post(`http://54.180.96.119/api/posts/${userId}`,{},{
-              headers: {
-                Authorization: `BEARER ${localStorage.getItem("token")}`,
-              },
-            });
-          }else
-          {
-            response = await axios.post(`http://54.180.96.119/api/posts/0`)
+            headers: {
+              Authorization: `BEARER ${localStorage.getItem("token")}`,
+            },
           }
-          response.data.forEach(g => { _postList.push(g)});
-          dispatch(getPost(_postList));
-    }catch(err){
-        alert("getPost fail");
-        console.log("getPost fail : " , err)
+        );
+      } else {
+        response = await axios.post(`http://54.180.96.119/api/posts/0`);
+      }
+      response.data.forEach((g) => {
+        _postList.push(g);
+      });
+      dispatch(getPost(_postList));
+    } catch (err) {
+      alert("getPost fail");
+      console.log("getPost fail : ", err);
     }
   };
 };
 
 // middleWares - post 추가하기 
 const addPostAx = (content, file, nickname) => {
+    console.log(nickname)
   const formData = new FormData();
   formData.append("content", content);
   formData.append("nickName", nickname);
   formData.append("file", file);
-  return async function (dispatch, getState, { history }){
+  return async function (dispatch, getState, { history }) {
     try {
       await axios.post("http://54.180.96.119/api/post", formData, {
         headers: {
@@ -113,83 +117,93 @@ const editPostAx = (content, postId) => {
 
 // Middleware 
 const getOnePostApi = (postId) => {
-	return async function (dispatch, getState, {history}){
-		// const resp = RESP.post;
-		// dispatch(getOnePost(resp));
-		// history.push('/detail')
-		try {
-			const onePost = await axios.get(`http://54.180.96.119/api/post/${postId}/comments`);
-			console.log(onePost);
-			dispatch(getPost([onePost]));
-		} catch(err){
-			console.log(err);
-            alert("게시글 조회에 실패하였습니다.");
-		}
-	};
+  console.log(postId);
+  return async function (dispatch, getState, { history }) {
+    try {
+      const onePost = await axios.get(
+        `http://54.180.96.119/api/postDetail/${postId}/comments`
+      );
+      console.log(onePost);
+      dispatch(getPost([onePost.data]));
+      history.push(`/detail/${postId}`);
+    } catch (err) {
+      console.log(err);
+      alert("게시글 조회에 실패하였습니다.");
+    }
+  };
 };
 
 const setCommentApi = (post_id, comment_info) => {
-	return async function (dispatch, getState, {history}){
-		try {
-            const comment = await axios.post(`http://54.180.96.119/api/comments/${post_id}`,{comment_info},{
-                headers: {
-                    Authorization: `BEARER ${localStorage.getItem('token')}`
-                }
-            });
-            console.log(comment);
-            const doc = {
-                ...comment_info,
-                modifiedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
-				commentId: comment.data // 넣기
-            };
-            dispatch(setComment(post_id, doc));
-        } catch(err){
-            console.log(err);
-            alert("댓글 작성에 실패하였습니다.");
-        };
-	};
+  console.log(post_id, comment_info)
+  return async function (dispatch, getState, { history }) {
+    try {
+      const comment = await axios.post(
+        `http://54.180.96.119/api/comments/${post_id}`,
+        comment_info,
+        {
+          headers: {
+            Authorization: `BEARER ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(comment);
+      const doc = {
+        ...comment_info,
+        modifiedAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+        // commentId: comment.data.commentId, 
+      };
+      dispatch(setComment(post_id, doc));
+    } catch (err) {
+      console.log(err);
+      alert("댓글 작성에 실패하였습니다.");
+    }
+  };
 };
 
 const deleteCommentApi = (post_id, commentId) => {
-	return async function (dispatch, getState, {history}){
-		try {
-			const _deleteComment = await axios.post(`http://54.180.96.119/api/comments/${commentId}`, {commentId},{
-				headers: {
-                    Authorization: `BEARER ${localStorage.getItem('token')}`
-                }
-			});
-			console.log(_deleteComment);
-			dispatch(deleteComment(post_id, commentId));
-		} catch(err){
-			console.log(err);
-            alert("댓글 삭제에 실패하였습니다.");
-		};
-	}
-}
+  return async function (dispatch, getState, { history }) {
+    try {
+      const _deleteComment = await axios.post(
+        `http://54.180.96.119/api/comments/${commentId}`,
+        { commentId },
+        {
+          headers: {
+            Authorization: `BEARER ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(_deleteComment);
+      dispatch(deleteComment(post_id, commentId));
+    } catch (err) {
+      console.log(err);
+      alert("댓글 삭제에 실패하였습니다.");
+    }
+  };
+};
 
 const setLikeCountApi = (userId, postId) => {
-	return async function (dispatch, getState, {history}){
-		try {
-			const like = await axios.post("http://54.180.96.119/api/likes", {},{
-				headers: {
-                    Authorization: `BEARER ${localStorage.getItem('token')}`
-                }
-			});
-			console.log(like);
-			dispatch(setLike(like));
-		} catch(err){
-
-		}
-	}
-}
-
+  return async function (dispatch, getState, { history }) {
+    try {
+      const like = await axios.post(
+        "http://54.180.96.119/api/likes",
+        {},
+        {
+          headers: {
+            Authorization: `BEARER ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(like);
+      dispatch(setLike(like));
+    } catch (err) {}
+  };
+};
 
 // reducer
 export default handleActions(
- 	{
-    // action.payload.post_list에 넘어온 값으로 dreft.list에 저장
+  {
     [GET_POST]: (state, action) =>
-		produce(state, (draft) => {
+      produce(state, (draft) => {
         draft.list = action.payload.postList;
     }),
     
@@ -232,7 +246,7 @@ const actionCreators = {
   addPostAx,
   getPostAx,
   setCommentApi,
-	deleteCommentApi,
+  deleteCommentApi,
 };
 
 export { actionCreators };
