@@ -15,10 +15,7 @@ const SET_LIKE = "SET_LIKE";
 // action creators
 const getPost = createAction(GET_POST, (postList) => ({ postList }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-const editPost = createAction(EDIT_POST, (post_id, post) => ({
-  post_id,
-  post,
-}));
+const editPost = createAction(EDIT_POST, (post_id, content) => ({post_id, content}));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 const setComment = createAction(SET_COMMENT, (post_id, comment) => ({
   post_id,
@@ -76,7 +73,7 @@ const getPostAx = (userId) => {
   };
 };
 
-// middleWares
+// middleWares - post 추가하기 
 const addPostAx = (content, file, nickname) => {
     console.log(nickname)
   const formData = new FormData();
@@ -98,7 +95,27 @@ const addPostAx = (content, file, nickname) => {
   };
 };
 
-// Middleware - post 추가하기
+// middleWares - post 수정하기 
+const editPostAx = (content, postId) => {
+  console.log("content, postID : ",content, postId);
+
+  return async function (dispatch, getState, { history }){
+    try {
+      await axios.post(`http://54.180.96.119/api/posts/${postId}`,{
+        headers: {
+          Authorization: `BEARER ${localStorage.getItem("token")}`,
+        },
+      });
+      history.replace("/");
+    } catch (err) {
+      alert("게시글 수정에 실패하였습니다.");
+      console.log("fail : ", err);
+    }
+  };
+};
+
+
+// Middleware 
 const getOnePostApi = (postId) => {
   console.log(postId);
   return async function (dispatch, getState, { history }) {
@@ -188,40 +205,35 @@ export default handleActions(
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.postList;
-      }),
-
-    [ADD_POST]: (state, action) =>
-      produce(state, (draft) => {
-        // unshift 는 배열 맨 앞에 데이터를 넣는다
-        draft.list.unshift(action.payload.post);
-      }),
-    [EDIT_POST]: (state, action) =>
-      produce(state, (draft) => {
-        let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
-        draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
-      }),
-    [DELETE_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.list = draft.list.filter((p) => p.id !== action.payload.post_id);
-      }),
-
-    [SET_COMMENT]: (state, action) =>
-      produce(state, (draft) => {
-        // 상세페이지에서는 포스트가 하나인데 인덱스를 찾을 필요가 있을까?
-        const idx = draft.list.findIndex(
-          (v) => v.postId === action.payload.post_id
-        );
-        draft.list[idx].comments.unshift(action.payload.comment);
-      }),
-
-    [DELETE_COMMENT]: (state, action) =>
-      produce(state, (draft) => {
-        draft.list[action.payload.post_id] = draft.list.comments.filter(
-          (v) => v.commentId !== action.payload.commentId
-        );
-      }),
-  },
-  initialState
+    }),
+    
+  [ADD_POST]: (state, action) =>
+    produce(state, (draft) => {
+      // unshift 는 배열 맨 앞에 데이터를 넣는다
+      draft.list.unshift(action.payload.post);
+    }),
+  [EDIT_POST]: (state, action) =>
+    produce(state, (draft) => {
+      let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+      draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
+    }),
+  [DELETE_POST]: (state, action) =>
+    produce(state, (draft) => {
+      draft.list = draft.list.filter((p) => p.id !== action.payload.post_id);
+    }),
+	[SET_COMMENT]: (state, action) => 
+		produce(state, (draft) => {
+			// 상세페이지에서는 포스트가 하나인데 인덱스를 찾을 필요가 있을까?
+			const idx = draft.list.findIndex(v => v.postId === action.payload.post_id);
+			draft.list[idx].comments.unshift(action.payload.comment);
+		}),
+	
+	[DELETE_COMMENT]: (state, action) => 
+		produce(state, (draft) => {
+			draft.list[action.payload.post_id] = draft.list.comments.filter(v => v.commentId !== action.payload.commentId);
+		}),
+  	},
+  	initialState
 );
 
 // action creator export
