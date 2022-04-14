@@ -15,6 +15,13 @@ const Detail = (props) => {
     const user = useSelector(state => state.user?.user);
     const is_login = useSelector(state => state.user.is_login);
 
+    useEffect(() => {
+        if(!post[0].userId){
+            props.history.goBack();
+            return;
+        }
+    }, [])
+    
     //댓글 작성
     const [ comment, setComment ] = useState("");
     const writeComment = (e) => {
@@ -32,10 +39,10 @@ const Detail = (props) => {
         ));
         setComment("");
     }
-
+    
     // 좋아요 클릭
     const btnRef = useRef();
-    const [ heartClick, setHeartClick ] = useState(false); // 조건 주기
+    const [ heartClick, setHeartClick ] = useState(post[0].postLike); // 조건 주기
     useEffect(() => {
         if(heartClick){
             btnRef.current.setAttribute('fill', '#ed4956');
@@ -54,7 +61,7 @@ const Detail = (props) => {
     const deletePost = () => {
         dispatch(postActions.deletePostApi(post[0].postId));
     }
-
+    console.log(post[0].postId)
     return(
         <Container>
             <Wrap>
@@ -131,31 +138,9 @@ const Detail = (props) => {
                 }
             </Grid>
         </Container>
-
-    )
+    )   
+          
 };
-
-// Detail.defaultProps ={
-//     list: [
-//     	{
-// 			postId: "",
-// 			content: "반갑습니다.",
-// 			modifiedAt: "2022-04-14 09:00:00",
-// 			likeCount: 0,
-// 			imageUrl:"",
-// 			userId : "",
-// 			nickname: "작성자",
-// 			comments: [
-// 				{
-// 					nickname: "닉네임",
-// 					commentId: "",
-// 					comment: "저도 반가워요:)",
-// 					modifiedAt: "2022-04-10"
-// 				},
-// 			]
-// 	  	}
-//   	]
-// }
 
 const Box = styled.div`
     user-select: none;

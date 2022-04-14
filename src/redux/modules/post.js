@@ -15,7 +15,7 @@ const SET_LIKE = "SET_LIKE";
 // action creators
 const getPost = createAction(GET_POST, (postList) => ({ postList }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-const setLike = createAction(SET_LIKE, (is_click) => ({ is_click }));
+const setLike = createAction(SET_LIKE, (post_id, is_click) => ({ post_id, is_click }));
 const editPost = createAction(EDIT_POST, (post_id, content) => ({post_id, content}));
 const setComment = createAction(SET_COMMENT, (post_id, comment) => ({post_id, comment}));
 const deleteComment = createAction(DELETE_COMMENT, (post_id, commentId) => ({post_id, commentId}));
@@ -39,7 +39,6 @@ const initialState = {
 // Middleware - postList 가져오기
 const getPostApi = (userId) => {
   return async function(dispatch, getState, {history}){
-    console.log(userId)
     const _postList = []
     let response;
     try{
@@ -95,7 +94,7 @@ const editPostApi = (content, postId) => {
         headers: {
           Authorization: `BEARER ${localStorage.getItem("token")}`,
         }      
-      );
+      });
       history.replace("/");
     } catch (err) {
       alert("게시글 수정에 실패하였습니다.");
@@ -125,13 +124,12 @@ const deletePostApi = (postId) => {
 }
 
 // Middleware
-const getOnePostApi = (postId) => {
+const getOnePostApi = (like, postId) => {
   return async function (dispatch, getState, { history }) {
     try {
       const onePost = await axios.get(
         `http://54.180.96.119/api/postDetail/${postId}/comments`
       );
-      console.log(onePost);
       dispatch(getPost([onePost.data]));
       history.push(`/detail/${postId}`);
     } catch (err) {
@@ -199,7 +197,7 @@ const setLikeCountApi = (postId, is_click) => {
           },
         }
       );
-      dispatch(setLike(is_click));
+      dispatch(setLike(postId, is_click));
     } catch (err) {
       console.log(err);
       alert("좋아요에 실패하였습니다.");
@@ -241,10 +239,11 @@ export default handleActions(
       }),
     [SET_LIKE]: (state, action) =>
       produce(state, (draft) => {
+        const idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
         if(action.payload.is_click){
-          draft.list[0].postLikeTotal -= 1;
+          draft.list[idx].postLikeTotal -= 1;
         } else {
-          draft.list[0].postLikeTotal += 1;
+          draft.list[idx].postLikeTotal += 1;
         }
       }),
   },

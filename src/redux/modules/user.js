@@ -76,7 +76,6 @@ const loginApi = (user) => {
 
 const loginCheckApi = () => {
     return async function(dispatch, getState, {history}){
-        console.log("실행")
         try {
             const check = await axios.post('http://54.180.96.119/api/login',{},{
                 headers: {
