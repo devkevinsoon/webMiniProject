@@ -1,29 +1,29 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-
+​
 // component & element
 import { Grid, Text, Button, Image, Input } from "../elements";
 //import ImageWrap from "../components/ImageWrap";
-
+​
 import { history } from "../redux/configureStore";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image";
-
+​
 import moment from "moment";
-
+​
 const PostWrite = (props) => {
   const dispatch = useDispatch();
   // 로그인 후에만 /write에 접근하기위한 로그인 체크
   const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image.preview);
   const user = useSelector((state) => state?.user?.user?.nickname);
-
-  const postId = props.user.user.postId;
-  console.log("postId : ",postId);
+  const postList = useSelector((state) => state.post.list);
+​
   
-  const is_edit = user ? true : false;
-
+  //  console.log("post : ",post[0].postId);
+  const postId = postList[0].postId;
+  
   // props에서 history 가지고 오기
   const { history } = props;
   
@@ -33,18 +33,21 @@ const PostWrite = (props) => {
   const [content, setContent] = React.useState("");
   let targetFile;
   
+  
+  // e 이벤트 받아서 file 이미지 load 시켜서 preview 
   const selectFile = (e) => {
     const reader = new FileReader();
     const file = fileInput.current.files[0];
     targetFile = e.target.files[0]
-
+​
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      console.log(reader.result);
+      // console.log(reader.result);
       // preview 동작 메소드
       dispatch(imageActions.setPreview({result: reader.result, targetFile:targetFile}));
     };
   };
+​
   // e 이벤트 받아서 setContents 해주기 
   const ChangeConstent = (e) => {
     setContent(e.target.value);
@@ -54,11 +57,11 @@ const PostWrite = (props) => {
       const file = document.getElementById("uploadImage").files[0];
       dispatch(postActions.addPostApi(content, file, user));
     };
-
+​
   const editPost = () => {
     dispatch(postActions.editPostApi({content: content},postId));
   }
-
+​
   return (
     <React.Fragment>
       <WriteStyle>
@@ -75,16 +78,19 @@ const PostWrite = (props) => {
             </Text>
             <Grid padding="16px">
               <ImageWrap>
-                  <input
-                    id="uploadImage"
-                    type="file"
-                    onChange={selectFile}
-                    ref={fileInput}
-                  />
+                <input
+                  id="uploadImage"
+                  type="file"
+                  onChange={selectFile}
+                  ref={fileInput}
+                />
               </ImageWrap>
-
-              <img src={preview} style={{width:"300px", margin: "20px 20px 25px 0px"}}></img>
-
+​
+              <img
+                src={preview ? preview : postList[0].imageUrl}
+                style={{ width: "300px", margin: "20px 20px 25px 0px" }}
+              ></img>
+​
               <InputTagStyle>
                 <input
                   value={content}
@@ -94,22 +100,12 @@ const PostWrite = (props) => {
                   type="text"
                 />
               </InputTagStyle>
-
-              {is_edit ? (
+​
               <Button
                 text="Post"
                 margin="25px 0px -30px 0px"
                 _onClick={addPost}
-              >
-              </Button>
-              ) : (
-              <Button
-                text="Modify"
-                margin="25px 0px -30px 0px"
-                _onClick={editPost}
-              >
-              </Button>
-              )}
+              ></Button>
             </Grid>
           </Container>
         </Grid>
@@ -117,23 +113,23 @@ const PostWrite = (props) => {
     </React.Fragment>
   );
 };
-
+​
 PostWrite.defatulProps = {
   postId: "",
   nickname: "spring",
   image_url: "",
   modifiedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
 };
-
+​
 const WriteStyle = styled.div`
   max-width: 600px;
   margin: 0 auto;
   padding: 40px;
-
+​
   input: focus {
     outline: none;
   }
-
+​
   input {
     border: solid 1px #ccc;
   }
@@ -155,7 +151,7 @@ const WriteStyle = styled.div`
     }
   }
 `;
-
+​
 const InputTagStyle = styled.div`
   display: inline-block;
   min-width: 300px;
@@ -171,7 +167,7 @@ const InputTagStyle = styled.div`
     border: solid 1px #ccc;
   }
 `;
-
+​
 const Container = styled.div`
   position: relative;
   display: flex;
@@ -185,7 +181,7 @@ const Container = styled.div`
   border-radius: 15px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);
 `;
-
+​
 const ImageWrap = styled.div`
   width: 100%;
   label {
@@ -208,5 +204,5 @@ const ImageWrap = styled.div`
     }
   }
 `;
-
+​
 export default PostWrite;

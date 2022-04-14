@@ -7,7 +7,6 @@ import { Header } from "../components/index";
 import { Grid, Button } from "../elements";
 import { Login, Signup, Main, Detail, PostWrite } from '../pages/index';
 import { actionCreators as userActions } from "../redux/modules/user";
-import Test from "../pages/Test";
 
 function App() {
     const dispatch = useDispatch();
@@ -30,7 +29,6 @@ function App() {
                 <Route path="/write" exact component={PostWrite} />
                 <Route path="/detail/:id" exact component={Detail} />
                 <Route path="/write/:id" exact component={PostWrite} />
-                <Route path="/test" exact component={Test} />
                 </ConnectedRouter>
             </Grid>
                 <Button is_float text="+" _onClick={() => {history.push('/write');}} />
