@@ -66,7 +66,7 @@ const Detail = (props) => {
     return(
         <Container>
             <Wrap>
-                <Grid padding="10px 20px" borderB="1px solid #eee"  is_flex justify>
+                <Grid padding="5px 20px" width="auto" borderB="1px solid #eee" is_flex justify>
                     <Text size="18px" bold width="auto">{post[0].nickName}</Text>
                     <Grid is_flex justify width="auto">
                         {post[0]?.userId === user?.userId ? (
@@ -103,7 +103,7 @@ const Detail = (props) => {
                         <Image src={post[0].imageUrl} shape="rectangle"/>
                     </Grid>
                 </Grid>
-                <Grid padding="5px 10px 0 10px" borderB="1px solid #eee">
+                <Grid width="auto" padding="5px 10px 0 10px" borderB="1px solid #eee">
                     <Box>
                         <HeartOuter onClick={clickHeart}>
                             <svg aria-label="좋아요 버튼" ref={btnRef} fill="black" height="24" role="img" viewBox="0 0 48 48" width="24">
@@ -162,7 +162,7 @@ const Container = styled.div`
 
 const Wrap = styled.div`
     width: 40%;
-    max-width: 800px;
+    min-width: 500px;
     display: flex;
     flex-direction: column;
     border: 1px solid #eee;
@@ -213,6 +213,7 @@ const EditBtn = styled.button`
     background: none;
     margin-right: 4px;
     cursor: pointer;
+
     svg {
         width: 20px;
         fill: #666;
