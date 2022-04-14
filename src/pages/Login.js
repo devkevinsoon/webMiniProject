@@ -26,7 +26,7 @@ const Login = (props) => {
         if(!user_name || !pwd){
             alert("빈칸을 모두 채워주세요.");
             return;
-        }
+        };
         dispatch(userActions.loginApi(formInput));
     };
 
@@ -85,8 +85,8 @@ const Login = (props) => {
                 </Grid>
             </Container>
         </Grid>
-    )
-}
+    );
+};
 
 const Container = styled.div`
     display: flex;

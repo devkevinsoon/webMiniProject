@@ -111,10 +111,10 @@ const Figure = styled.div`
 const Img = styled.img`
   width: 100%;
   cursor: pointer;
-  filter: grayscale(0.8);
+  /* filter: grayscale(0.8);
   &:hover {
     filter: none;
-  }
+  } */
 `;
 
 const Figcaption = styled.div`

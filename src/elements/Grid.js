@@ -64,7 +64,6 @@ const GridBox = styled.div`
         ? `display: flex; align-items: center; justify-content: center;`
         : "")};
     justify-content: ${(props) => (props.justify ? "space-between" : "")};
-    
     flex-direction: ${(props) => (props.column ? "column" : "row")};
     width: ${(props) => (props.width)};
     height: ${(props) => (props.height)};

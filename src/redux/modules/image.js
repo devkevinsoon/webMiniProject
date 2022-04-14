@@ -24,7 +24,9 @@ export default handleActions(
   },
   initialState
 );
+
 const actionCreators = {
   setPreview,
 };
+
 export { actionCreators };

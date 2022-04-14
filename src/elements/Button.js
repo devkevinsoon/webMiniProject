@@ -1,8 +1,7 @@
 import React from "react";
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Button = (props) => {
-
   const { 
     children, 
     _onClick, 

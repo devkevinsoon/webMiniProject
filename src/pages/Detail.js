@@ -20,7 +20,7 @@ const Detail = (props) => {
             props.history.goBack();
             return;
         }
-    }, [])
+    }, []);
     
     //댓글 작성
     const [ comment, setComment ] = useState("");
@@ -38,34 +38,35 @@ const Detail = (props) => {
             }
         ));
         setComment("");
-    }
+    };
     
     // 좋아요 클릭
     const btnRef = useRef();
-    const [ heartClick, setHeartClick ] = useState(post[0].postLike); // 조건 주기
+    const [ heartClick, setHeartClick ] = useState(post[0].postLike); 
     useEffect(() => {
         if(heartClick){
             btnRef.current.setAttribute('fill', '#ed4956');
         } else {
             btnRef.current.setAttribute('fill', 'lightgray');
-        } 
+        };
     },[heartClick]);
 
     const clickHeart = () => { 
         if(is_login){
             dispatch(postActions.setLikeCountApi(post[0].postId, heartClick));
             setHeartClick(!heartClick);
-        }
-    }
+        };
+    };
     //
+
     const deletePost = () => {
         dispatch(postActions.deletePostApi(post[0].postId));
-    }
-    console.log(post[0].postId)
+    };
+    
     return(
         <Container>
             <Wrap>
-                <Grid padding="10px 20px" borderB="1px solid #eee" is_flex justify>
+                <Grid padding="10px 20px" borderB="1px solid #eee"  is_flex justify>
                     <Text size="18px" bold width="auto">{post[0].nickName}</Text>
                     <Grid is_flex justify width="auto">
                         {post[0]?.userId === user?.userId ? (
@@ -138,8 +139,7 @@ const Detail = (props) => {
                 }
             </Grid>
         </Container>
-    )   
-          
+    );            
 };
 
 const Box = styled.div`
@@ -155,7 +155,6 @@ const Span = styled.div`
 const Container = styled.div`
     width: 100vw;
     height: 100%;
-    padding: 50px 0 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -163,7 +162,7 @@ const Container = styled.div`
 
 const Wrap = styled.div`
     width: 40%;
-    min-width: 540px;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
     border: 1px solid #eee;
@@ -200,7 +199,6 @@ const HeartMiddle = styled.div`
 
 const HeartOuter = styled.div`
     margin-right: 7px;
-
     svg {
         width: 30px;
         height: 30px;
@@ -215,7 +213,6 @@ const EditBtn = styled.button`
     background: none;
     margin-right: 4px;
     cursor: pointer;
-    
     svg {
         width: 20px;
         fill: #666;

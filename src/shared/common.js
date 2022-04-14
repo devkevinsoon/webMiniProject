@@ -5,7 +5,7 @@ const emailCheck = (email) => {
 };
     
 const pwdCheck = (pwd) => {
-    const pwdRegExp = /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+    const pwdRegExp = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/i;
     return pwdRegExp.test(pwd);
 };
 

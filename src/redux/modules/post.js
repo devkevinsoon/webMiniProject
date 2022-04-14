@@ -2,11 +2,10 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import moment from "moment";
 import axios from "axios";
-import { actionCreators as imageActions } from "./image";
 
 // actions
-const GET_POST = "GET_POST";          // 정보 불러오기
-const ADD_POST = "ADD_POST";          // 정보 추가하기
+const GET_POST = "GET_POST";
+const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const SET_COMMENT = "SET_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
@@ -14,11 +13,18 @@ const SET_LIKE = "SET_LIKE";
 
 // action creators
 const getPost = createAction(GET_POST, (postList) => ({ postList }));
-const addPost = createAction(ADD_POST, (post) => ({ post }));
-const setLike = createAction(SET_LIKE, (post_id, is_click) => ({ post_id, is_click }));
-const editPost = createAction(EDIT_POST, (post_id, content) => ({post_id, content}));
-const setComment = createAction(SET_COMMENT, (post_id, comment) => ({post_id, comment}));
-const deleteComment = createAction(DELETE_COMMENT, (post_id, commentId) => ({post_id, commentId}));
+const setLike = createAction(SET_LIKE, (post_id, is_click) => ({
+  post_id,
+  is_click,
+}));
+const setComment = createAction(SET_COMMENT, (post_id, comment) => ({
+  post_id,
+  comment,
+}));
+const deleteComment = createAction(DELETE_COMMENT, (post_id, commentId) => ({
+  post_id,
+  commentId,
+}));
 
 // initialState
 const initialState = {
@@ -30,45 +36,48 @@ const initialState = {
       postLikeTotal: 0,
       imageUrl: "",
       userId: "",
-      nickname: "작성자",
+      nickname: "",
       comments: [],
     },
   ],
 };
 
-// Middleware - postList 가져오기
+// middleWares
 const getPostApi = (userId) => {
-  return async function(dispatch, getState, {history}){
-    const _postList = []
+  return async function (dispatch, getState, { history }) {
+    const _postList = [];
     let response;
-    try{
-          if(userId)
+    try {
+      if (userId) {
+        response = await axios.post(
+          `http://54.180.96.119/api/posts/${userId}`,
+          {},
           {
-            response = await axios.post(`http://54.180.96.119/api/posts/${userId}`,{},{
-              headers: {
-                Authorization: `BEARER ${localStorage.getItem("token")}`,
-              },
-            });
-          }else
-          {
-            response = await axios.post(`http://54.180.96.119/api/posts/0`)
+            headers: {
+              Authorization: `BEARER ${localStorage.getItem("token")}`,
+            },
           }
-          response.data.forEach(g => { _postList.push(g)});
-          dispatch(getPost(_postList));
-    }catch(err){
-        alert("getPost fail");
-        console.log("getPost fail : " , err)
-    }
+        );
+      } else {
+        response = await axios.post(`http://54.180.96.119/api/posts/0`);
+      }
+      response.data.forEach((g) => {
+        _postList.push(g);
+      });
+      dispatch(getPost(_postList));
+    } catch (err) {
+      alert("getPost fail");
+      console.log("getPost fail : ", err);
+    };
   };
 };
 
-// middleWares - post 추가하기 
 const addPostApi = (content, file, nickname) => {
   const formData = new FormData();
   formData.append("content", content);
   formData.append("nickName", nickname);
   formData.append("file", file);
-  return async function (dispatch, getState, { history }){
+  return async function (dispatch, getState, { history }) {
     try {
       await axios.post("http://54.180.96.119/api/post", formData, {
         headers: {
@@ -79,32 +88,35 @@ const addPostApi = (content, file, nickname) => {
     } catch (err) {
       alert("게시글 생성에 실패하였습니다.");
       console.log("fail : ", err);
-    }
+    };
   };
 };
 
-// middleWares - post 수정하기 
 const editPostApi = (content, postId) => {
-  return async function (dispatch, getState, { history }){
+  return async function (dispatch, getState, { history }) {
     try {
-      await axios.put(`http://54.180.96.119/api/posts/${postId}`,{
-        content: content,
-        postId: postId
-      },{
-        headers: {
-          Authorization: `BEARER ${localStorage.getItem("token")}`,
-        }      
-      });
+      await axios.put(
+        `http://54.180.96.119/api/posts/${postId}`,
+        {
+          content: content,
+          postId: postId,
+        },
+        {
+          headers: {
+            Authorization: `BEARER ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       history.replace("/");
     } catch (err) {
       alert("게시글 수정에 실패하였습니다.");
       console.log("fail : ", err);
-    }
+    };
   };
 };
 
 const deletePostApi = (postId) => {
-  return async function (dispatch, getState, {history}){
+  return async function (dispatch, getState, { history }) {
     try {
       const deletePost = await axios.delete(
         `http://54.180.96.119/api/posts/${postId}`,
@@ -115,27 +127,26 @@ const deletePostApi = (postId) => {
         }
       );
       console.log(deletePost);
-      history.replace('/')
-    } catch(err){
+      history.replace("/");
+    } catch (err) {
       console.log(err);
       alert("게시글 삭제에 실패하였습니다.");
-    }
-  }
-}
+    };
+  };
+};
 
-// Middleware
 const getOnePostApi = (like, postId) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const onePost = await axios.get(
-        `http://54.180.96.119/api/postDetail/${postId}/comments`
-      );
+      const onePost = await axios.get(`http://54.180.96.119/api/postDetail/${postId}/comments`);
       dispatch(getPost([onePost.data]));
+      
       history.push(`/detail/${postId}`);
+    
     } catch (err) {
       console.log(err);
       alert("게시글 조회에 실패하였습니다.");
-    }
+    };
   };
 };
 
@@ -161,14 +172,14 @@ const setCommentApi = (post_id, comment_info) => {
     } catch (err) {
       console.log(err);
       alert("댓글 작성에 실패하였습니다.");
-    }
+    };
   };
 };
 
 const deleteCommentApi = (post_id, commentId) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const _deleteComment = await axios.delete(
+      await axios.delete(
         `http://54.180.96.119/api/comments/${commentId}`,
         {
           headers: {
@@ -176,7 +187,6 @@ const deleteCommentApi = (post_id, commentId) => {
           },
         }
       );
-      console.log(_deleteComment);
       dispatch(deleteComment(post_id, commentId));
     } catch (err) {
       console.log(err);
@@ -188,9 +198,9 @@ const deleteCommentApi = (post_id, commentId) => {
 const setLikeCountApi = (postId, is_click) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const like = await axios.post(
+        await axios.post(
         `http://54.180.96.119/api/like/${postId}`,
-        {postId},
+        { postId },
         {
           headers: {
             Authorization: `BEARER ${localStorage.getItem("token")}`,
@@ -208,14 +218,12 @@ const setLikeCountApi = (postId, is_click) => {
 // reducer
 export default handleActions(
   {
-    // action.payload.post_list에 넘어온 값으로 dreft.list에 저장
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.postList;
       }),
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
-        // unshift 는 배열 맨 앞에 데이터를 넣는다
         draft.list.unshift(action.payload.post);
       }),
     [EDIT_POST]: (state, action) =>
@@ -225,7 +233,6 @@ export default handleActions(
       }),
     [SET_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        // 상세페이지에서는 포스트가 하나인데 인덱스를 찾을 필요가 있을까?
         const idx = draft.list.findIndex(
           (v) => v.postId === action.payload.post_id
         );
@@ -239,8 +246,10 @@ export default handleActions(
       }),
     [SET_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        const idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
-        if(action.payload.is_click){
+        const idx = draft.list.findIndex(
+          (p) => p.postId === action.payload.post_id
+        );
+        if (action.payload.is_click) {
           draft.list[idx].postLikeTotal -= 1;
         } else {
           draft.list[idx].postLikeTotal += 1;
@@ -263,4 +272,3 @@ const actionCreators = {
 };
 
 export { actionCreators };
-
