@@ -1,14 +1,21 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { Grid, Text } from "../elements";
 import { dateView } from "../shared/time";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 const Comment = (props) => {
-    const { nickName, comment, modifiedAt } = props;
+    const { nickName, comment, modifiedAt, postId, commentId } = props;
+    const dispatch = useDispatch();
+
     const user = useSelector(state => state.user?.user);
-    
+
+    const deleteComment = () => {
+        dispatch(postActions.deleteCommentApi(postId, commentId))
+    }
+
     return(
         <Wrap>
             <Grid width="20%">
@@ -18,11 +25,11 @@ const Comment = (props) => {
                 <Text>{comment}</Text>
             </Grid>
             { nickName === user?.nickname ? (
-                <EditBtn>
+                <EditBtn onClick={deleteComment}>
                     <svg viewBox="0 0 24 24">
                         <path d="M18.984 3.984v2.016h-13.969v-2.016h3.469l1.031-0.984h4.969l1.031 0.984h3.469zM6 18.984v-12h12v12q0 0.797-0.609 1.406t-1.406 0.609h-7.969q-0.797 0-1.406-0.609t-0.609-1.406z"></path>
                     </svg>
-                 </EditBtn>
+                </EditBtn>
             ) : null}
             <Grid width="auto">
                 <Text color="gray" width="max-content" size="12px" textAlign="right">{dateView(modifiedAt)}</Text>
@@ -59,6 +66,5 @@ const EditBtn = styled.button`
         }
     }
 `;
-
 
 export default Comment;

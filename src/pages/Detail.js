@@ -12,7 +12,8 @@ const Detail = (props) => {
     const dispatch = useDispatch();
 
     const post = useSelector(state => state.post?.list);
-    const user = useSelector(state => state.user.user);
+    const user = useSelector(state => state.user?.user);
+    const is_login = useSelector(state => state.user.is_login);
 
     //댓글 작성
     const [ comment, setComment ] = useState("");
@@ -44,9 +45,15 @@ const Detail = (props) => {
     },[heartClick]);
 
     const clickHeart = () => { 
-        setHeartClick(!heartClick);
+        if(is_login){
+            dispatch(postActions.setLikeCountApi(post[0].postId, heartClick));
+            setHeartClick(!heartClick);
+        }
     }
     //
+    const deletePost = () => {
+        dispatch(postActions.deletePostApi(post[0].postId));
+    }
 
     return(
         <Container>
@@ -63,7 +70,7 @@ const Detail = (props) => {
                         ) : null
                         }
                         {post[0]?.userId === user?.userId ? (
-                            <EditBtn>
+                            <EditBtn onClick={deletePost}>
                                 <svg viewBox="0 0 24 24">
                                     <path d="M18.984 3.984v2.016h-13.969v-2.016h3.469l1.031-0.984h4.969l1.031 0.984h3.469zM6 18.984v-12h12v12q0 0.797-0.609 1.406t-1.406 0.609h-7.969q-0.797 0-1.406-0.609t-0.609-1.406z"></path>
                                 </svg>
@@ -113,10 +120,11 @@ const Detail = (props) => {
                 {post[0].comments 
                     ? post[0].comments.map((v, i) => 
                         <Comment 
-                            key={i} //commentId
+                            key={v.commentId}
                             nickName={v.nickName}
-                            // commentId={v.commentId}
+                            commentId={v.commentId}
                             modifiedAt={v.modifiedAt}
+                            postId={v.postId}
                             comment={v.comment} 
                         />)
                     : ""

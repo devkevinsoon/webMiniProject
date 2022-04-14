@@ -1,15 +1,19 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import "moment";
+
 // actions
 const SET_PREVIEW = "SET_PREVIEW";
+
 // action creators
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
+
 // initial state
 const initialState = {
   uploading: false,
   preview: null,
 };
+
 // reducer
 export default handleActions(
   {

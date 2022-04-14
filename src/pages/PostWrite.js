@@ -2,14 +2,10 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
-// component & element
 import { Grid, Text, Button, Image, Input } from "../elements";
-//import ImageWrap from "../components/ImageWrap";
-
 import { history } from "../redux/configureStore";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image";
-
 import moment from "moment";
 
 const PostWrite = (props) => {
@@ -19,9 +15,6 @@ const PostWrite = (props) => {
   const preview = useSelector((state) => state.image.preview);
   const user = useSelector((state) => state?.user?.user?.nickname);
   const postList = useSelector((state) => state.post.list);
-
-  
-  //  console.log("post : ",post[0].postId);
   const postId = postList[0].postId;
   
   // props에서 history 가지고 오기
@@ -39,7 +32,6 @@ const PostWrite = (props) => {
     const reader = new FileReader();
     const file = fileInput.current.files[0];
     targetFile = e.target.files[0]
-
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       // console.log(reader.result);
@@ -57,7 +49,7 @@ const PostWrite = (props) => {
       const file = document.getElementById("uploadImage").files[0];
       dispatch(postActions.addPostApi(content, file, user));
     };
-
+  
   const editPost = () => {
     dispatch(postActions.editPostApi({content: content},postId));
   }
@@ -125,11 +117,9 @@ const WriteStyle = styled.div`
   max-width: 600px;
   margin: 0 auto;
   padding: 40px;
-
   input: focus {
     outline: none;
   }
-
   input {
     border: solid 1px #ccc;
   }
