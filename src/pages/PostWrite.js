@@ -27,13 +27,9 @@ const PostWrite = (props) => {
 
   const content = React.useRef();
 
-  console.log(preview);
   // props에서 history 가지고 오기
   const { history } = props;
-  console.log(is_login);
-
-
-
+  
   const fileInput = React.useRef();
   //const is_uploading = useSelector((state) => state.image.uploading);
   
@@ -99,7 +95,7 @@ const PostWrite = (props) => {
               <Button
                 text="Post"
                 margin="25px 0px -30px 0px"
-                onClick={addPost}
+                _onClick={addPost}
               ></Button>
             </Grid>
           </Container>

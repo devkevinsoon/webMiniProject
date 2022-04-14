@@ -76,7 +76,7 @@ const HeartMiddle = styled.div`
 const HeartOuter = styled.div`
     position: absolute;
     z-index: 2;
-    bottom: 0px;
+    bottom: 5px;
     left: 5px;
 
     svg {

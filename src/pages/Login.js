@@ -51,6 +51,7 @@ const Login = (props) => {
                             id="user_name"
                             width="80%"
                             placeholder="이메일을 입력해주세요."
+                            value={user_name}
                             _onChange={onChange}
                         />
                     </Grid>
@@ -59,6 +60,7 @@ const Login = (props) => {
                             id="pwd"
                             width="80%"
                             type="password"
+                            value={pwd}
                             placeholder="패스워드를 입력해주세요."
                             _onChange={onChange}
                         />
@@ -87,7 +89,6 @@ const Login = (props) => {
 }
 
 const Container = styled.div`
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;

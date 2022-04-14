@@ -51,8 +51,11 @@ const loginApi = (user) => {
             console.log(login);
             if(!login.data){
                 alert(`로그인 성공`);
+                history.replace('/');
+                
                 const token = login.headers.authorization.split('BEARER ');
                 localStorage.setItem('token', token[1]);
+              
                 dispatch(
                     setUser({
                         nickname: "",
@@ -60,7 +63,7 @@ const loginApi = (user) => {
                         userId: "",
                     })
                 );
-                history.replace('/');
+                
             } else {
                 alert('이메일과 패스워드를 다시 확인해주세요.');
             };
@@ -73,6 +76,7 @@ const loginApi = (user) => {
 
 const loginCheckApi = () => {
     return async function(dispatch, getState, {history}){
+        console.log("실행")
         try {
             const check = await axios.post('http://54.180.96.119/api/login',{},{
                 headers: {
