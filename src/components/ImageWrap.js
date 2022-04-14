@@ -4,7 +4,6 @@ import styled from "styled-components";
 const DEFAULT_IMG =
   "https://pbs.twimg.com/media/DennlYdV4AAkkQo?format=jpg&name=medium";
 const ImageWrap = ({ imageUrl }) => {
-  // console.log(image_url);
   return (
     <ImageStyle>
       <img src={imageUrl ? imageUrl : DEFAULT_IMG} alt="이미지" />

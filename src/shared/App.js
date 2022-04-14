@@ -32,7 +32,7 @@ function App() {
                 <Route path="/modify/:id" exact component={Modify} />
                 </ConnectedRouter>
             </Grid>
-                <Button is_float text="+" _onClick={() => {history.push('/write');}} />
+                {is_login ? <Button is_float text="+" _onClick={() => {history.push('/write');}}/> : ""}
         </React.Fragment>
     );
 };

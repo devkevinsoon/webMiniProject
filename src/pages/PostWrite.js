@@ -1,55 +1,51 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Grid, Text, Button, Image, Input } from "../elements";
-import { history } from "../redux/configureStore";
+import { Grid, Text, Button } from "../elements";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image";
-import moment from "moment";
+
 const PostWrite = (props) => {
   const dispatch = useDispatch();
-  // 로그인 후에만 /write에 접근하기위한 로그인 체크
-  const is_login = useSelector((state) => state.user.is_login);
+
   const preview = useSelector((state) => state.image.preview);
   const user = useSelector((state) => state?.user?.user?.nickname);
   const postList = useSelector((state) => state.post.list);
   const postId = postList[0].postId;
-  
-  // props에서 history 가지고 오기
-  const { history } = props;
-  
+
   const fileInput = React.useRef();
-  
-  // 게시글 작성 페이지에서 텍스트 내용 저장하기 
+
+  // 게시글 작성 페이지에서 텍스트 내용 저장하기
   const [content, setContent] = React.useState("");
   let targetFile;
-  
-  
-  // e 이벤트 받아서 file 이미지 load 시켜서 preview 
+
+  // e 이벤트 받아서 file 이미지 load 시켜서 preview
   const selectFile = (e) => {
     const reader = new FileReader();
     const file = fileInput.current.files[0];
-    targetFile = e.target.files[0]
+    targetFile = e.target.files[0];
     reader.readAsDataURL(file);
+
     reader.onloadend = () => {
-      // console.log(reader.result);
-      // preview 동작 메소드
-      dispatch(imageActions.setPreview({result: reader.result, targetFile:targetFile}));
+      dispatch(
+        imageActions.setPreview({
+          result: reader.result,
+          targetFile: targetFile,
+        })
+      );
     };
   };
-  // e 이벤트 받아서 setContents 해주기 
+
+  // e 이벤트 받아서 setContents 해주기
   const ChangeConstent = (e) => {
     setContent(e.target.value);
-  }
-  
+  };
+
   const addPost = () => {
-      const file = document.getElementById("uploadImage").files[0];
-      dispatch(postActions.addPostApi(content, file, user));
-    };
-  
-  const editPost = () => {
-    dispatch(postActions.editPostApi({content: content},postId));
-  }
+    const file = document.getElementById("uploadImage").files[0];
+    dispatch(postActions.addPostApi(content, file, user));
+  };
+
   return (
     <React.Fragment>
       <WriteStyle>
@@ -74,11 +70,15 @@ const PostWrite = (props) => {
                 />
               </ImageWrap>
               <Grid>
-              <img
-                src={preview}
-                style={{ width: "300px", margin: "20px 10px 25px 10px", alignItems: "center"}}
-              />
-              </Grid>  
+                <img
+                  src={preview}
+                  style={{
+                    width: "300px",
+                    margin: "20px 10px 25px 10px",
+                    alignItems: "center",
+                  }}
+                />
+              </Grid>
               <InputTagStyle>
                 <input
                   value={content}
@@ -111,7 +111,7 @@ const WriteStyle = styled.div`
   input {
     border: solid 1px #ccc;
   }
-  
+
   button {
     font-size: 16px;
     padding: 6px 10px;
@@ -135,7 +135,6 @@ const InputTagStyle = styled.div`
     border-radius: 20px;
     border: solid 1px #ccc;
   }
-  
 `;
 const Container = styled.div`
   // position: relative;
@@ -172,4 +171,5 @@ const ImageWrap = styled.div`
     }
   }
 `;
+
 export default PostWrite;

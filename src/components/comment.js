@@ -40,6 +40,7 @@ const Comment = (props) => {
 
 const Wrap = styled.div`
     width: 100%;
+    max-width: 800px;
     padding: 15px 10px;
     display: flex;
     align-items: center;
