@@ -11,12 +11,13 @@ import { actionCreators as userActions } from "../redux/modules/user";
 function App() {
     const dispatch = useDispatch();
     const token = localStorage.getItem("token");
+    const is_login = useSelector(state => state.user.is_login);
     
     useEffect(() => {
-        if(token){
+        if(is_login || token){
             dispatch(userActions.loginCheckApi());
         };
-    },[]);
+    },[is_login]);
 
     return (
         <React.Fragment>

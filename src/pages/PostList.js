@@ -6,32 +6,28 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { keyframes } from "styled-components";
 import { Grid } from "../elements";
 
-const PostList = ({ imageUrl, content, postId }) => {
+const PostList = ({ imageUrl, content, postId, postLike }) => {
   const dispatch = useDispatch();
-  const post_list = useSelector((state) => state.post.list);
   const is_login = useSelector((state) => state.user.is_login);
+  
+  const btnRef = useRef();
+  const [ heartClick, setHeartClick ] = useState(postLike);
 
   const goDetail = () => {
-    dispatch(postActions.getOnePostApi(postId));
+    dispatch(postActions.getOnePostApi(heartClick, postId));
   };
 
-  const btnRef = useRef();
-  const thisPost = post_list.filter(v => v.postId === postId);
-  const is_click = thisPost[0].postLike
-  const [heartClick, setHeartClick] = useState(is_click);
-  // setHeartClick(is_click)
-
   useEffect(() => {
-    if (heartClick || is_click) {
+    if (heartClick) {
       btnRef.current.setAttribute("fill", "#ed4956");
     } else {
       btnRef.current.setAttribute("fill", "#bdbdbd");
     }
-  }, [is_click, heartClick]);
+  }, [heartClick, postLike]);
 
   const clickHeart = () => {
     if (is_login) {
-      dispatch(postActions.setLikeCountApi(thisPost[0].postId, heartClick));
+      dispatch(postActions.setLikeCountApi(postId, postLike));
       setHeartClick(!heartClick);
     }
   };

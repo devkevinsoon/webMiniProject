@@ -1,13 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-
 import { Grid, Text, Button, Image, Input } from "../elements";
 import { history } from "../redux/configureStore";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image";
 import moment from "moment";
-
 const PostWrite = (props) => {
   const dispatch = useDispatch();
   // 로그인 후에만 /write에 접근하기위한 로그인 체크
@@ -39,7 +37,6 @@ const PostWrite = (props) => {
       dispatch(imageActions.setPreview({result: reader.result, targetFile:targetFile}));
     };
   };
-
   // e 이벤트 받아서 setContents 해주기 
   const ChangeConstent = (e) => {
     setContent(e.target.value);
@@ -53,7 +50,6 @@ const PostWrite = (props) => {
   const editPost = () => {
     dispatch(postActions.editPostApi({content: content},postId));
   }
-
   return (
     <React.Fragment>
       <WriteStyle>
@@ -77,14 +73,12 @@ const PostWrite = (props) => {
                   ref={fileInput}
                 />
               </ImageWrap>
-
               <Grid>
               <img
                 src={preview}
                 style={{ width: "300px", margin: "20px 10px 25px 10px", alignItems: "center"}}
               />
               </Grid>  
-
               <InputTagStyle>
                 <input
                   value={content}
@@ -94,7 +88,6 @@ const PostWrite = (props) => {
                   type="text"
                 />
               </InputTagStyle>
-
               <Button
                 text="Post"
                 margin="25px 0px -30px 0px"
@@ -107,7 +100,6 @@ const PostWrite = (props) => {
     </React.Fragment>
   );
 };
-
 
 const WriteStyle = styled.div`
   max-width: 600px;
@@ -134,7 +126,6 @@ const WriteStyle = styled.div`
     }
   }
 `;
-
 const InputTagStyle = styled.div`
   display: inline-block;
   min-width: 300px;
@@ -146,7 +137,6 @@ const InputTagStyle = styled.div`
   }
   
 `;
-
 const Container = styled.div`
   // position: relative;
   display: flex;
@@ -160,7 +150,6 @@ const Container = styled.div`
   border-radius: 15px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
-
 const ImageWrap = styled.div`
   width: 100%;
   label {
@@ -183,5 +172,4 @@ const ImageWrap = styled.div`
     }
   }
 `;
-
 export default PostWrite;
