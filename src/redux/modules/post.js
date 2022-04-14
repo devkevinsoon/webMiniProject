@@ -2,10 +2,11 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import moment from "moment";
 import axios from "axios";
+import { actionCreators as imageActions } from "./image";
 
 // actions
-const GET_POST = "GET_POST"; // 정보 불러오기
-const ADD_POST = "ADD_POST"; // 정보 추가하기
+const GET_POST = "GET_POST";          // 정보 불러오기
+const ADD_POST = "ADD_POST";          // 정보 추가하기
 const EDIT_POST = "EDIT_POST";
 const SET_COMMENT = "SET_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
@@ -14,20 +15,10 @@ const SET_LIKE = "SET_LIKE";
 // action creators
 const getPost = createAction(GET_POST, (postList) => ({ postList }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-// const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}));
-const editPost = createAction(EDIT_POST, (post_id, content) => ({
-  post_id,
-  content,
-}));
-const setComment = createAction(SET_COMMENT, (post_id, comment) => ({
-  post_id,
-  comment,
-}));
-const deleteComment = createAction(DELETE_COMMENT, (post_id, commentId) => ({
-  post_id,
-  commentId,
-}));
 const setLike = createAction(SET_LIKE, (is_click) => ({ is_click }));
+const editPost = createAction(EDIT_POST, (post_id, content) => ({post_id, content}));
+const setComment = createAction(SET_COMMENT, (post_id, comment) => ({post_id, comment}));
+const deleteComment = createAction(DELETE_COMMENT, (post_id, commentId) => ({post_id, commentId}));
 
 // initialState
 const initialState = {
@@ -44,43 +35,41 @@ const initialState = {
     },
   ],
 };
+
 // Middleware - postList 가져오기
 const getPostApi = (userId) => {
-  return async function (dispatch, getState, { history }) {
-    console.log(userId);
-    const _postList = [];
+  return async function(dispatch, getState, {history}){
+    console.log(userId)
+    const _postList = []
     let response;
-    try {
-      if (userId) {
-        response = await axios.post(
-          `http://54.180.96.119/api/posts/${userId}`,
-          {},
+    try{
+          if(userId)
           {
-            headers: {
-              Authorization: `BEARER ${localStorage.getItem("token")}`,
-            },
+            response = await axios.post(`http://54.180.96.119/api/posts/${userId}`,{},{
+              headers: {
+                Authorization: `BEARER ${localStorage.getItem("token")}`,
+              },
+            });
+          }else
+          {
+            response = await axios.post(`http://54.180.96.119/api/posts/0`)
           }
-        );
-      } else {
-        response = await axios.post(`http://54.180.96.119/api/posts/0`);
-      }
-      response.data.forEach((g) => {
-        _postList.push(g);
-      });
-      dispatch(getPost(_postList));
-    } catch (err) {
-      alert("getPost fail");
-      console.log("getPost fail : ", err);
+          response.data.forEach(g => { _postList.push(g)});
+          dispatch(getPost(_postList));
+    }catch(err){
+        alert("getPost fail");
+        console.log("getPost fail : " , err)
     }
   };
 };
-// middleWares - post 추가하기
+
+// middleWares - post 추가하기 
 const addPostApi = (content, file, nickname) => {
   const formData = new FormData();
   formData.append("content", content);
   formData.append("nickName", nickname);
   formData.append("file", file);
-  return async function (dispatch, getState, { history }) {
+  return async function (dispatch, getState, { history }){
     try {
       await axios.post("http://54.180.96.119/api/post", formData, {
         headers: {
@@ -94,22 +83,18 @@ const addPostApi = (content, file, nickname) => {
     }
   };
 };
-// middleWares - post 수정하기
+
+// middleWares - post 수정하기 
 const editPostApi = (content, postId) => {
-  console.log("content, postID : ", content, postId);
-  return async function (dispatch, getState, { history }) {
+  return async function (dispatch, getState, { history }){
     try {
-      await axios.put(
-        `http://54.180.96.119/api/posts/${postId}`,
-        {
-          content: content,
-          postId: postId,
-        },
-        {
-          headers: {
-            Authorization: `BEARER ${localStorage.getItem("token")}`,
-          },
-        }
+      await axios.put(`http://54.180.96.119/api/posts/${postId}`,{
+        content: content,
+        postId: postId
+      },{
+        headers: {
+          Authorization: `BEARER ${localStorage.getItem("token")}`,
+        }      
       );
       history.replace("/");
     } catch (err) {
@@ -120,7 +105,6 @@ const editPostApi = (content, postId) => {
 };
 
 const deletePostApi = (postId) => {
-  console.log(postId)
   return async function (dispatch, getState, {history}){
     try {
       const deletePost = await axios.delete(
@@ -142,7 +126,6 @@ const deletePostApi = (postId) => {
 
 // Middleware
 const getOnePostApi = (postId) => {
-  console.log(postId);
   return async function (dispatch, getState, { history }) {
     try {
       const onePost = await axios.get(
@@ -174,7 +157,7 @@ const setCommentApi = (post_id, comment_info) => {
       const doc = {
         ...comment_info,
         modifiedAt: moment().format("YYYY-MM-DD HH:mm:ss"),
-        commentId: comment.data.commentId, 
+        commentId: comment.data.commentId,
       };
       dispatch(setComment(post_id, doc));
     } catch (err) {
@@ -203,8 +186,8 @@ const deleteCommentApi = (post_id, commentId) => {
     }
   };
 };
+
 const setLikeCountApi = (postId, is_click) => {
-  console.log(postId, is_click)
   return async function (dispatch, getState, { history }) {
     try {
       const like = await axios.post(
@@ -223,6 +206,7 @@ const setLikeCountApi = (postId, is_click) => {
     }
   };
 };
+
 // reducer
 export default handleActions(
   {
@@ -262,10 +246,11 @@ export default handleActions(
         } else {
           draft.list[0].postLikeTotal += 1;
         }
-      })
+      }),
   },
   initialState
 );
+
 // action creator export
 const actionCreators = {
   getOnePostApi,
@@ -277,4 +262,6 @@ const actionCreators = {
   setLikeCountApi,
   deletePostApi,
 };
+
 export { actionCreators };
+
