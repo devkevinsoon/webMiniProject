@@ -4,12 +4,17 @@ import  { actionCreators as postActions } from "../redux/modules/post"
 import styled from "styled-components";
 import PostList from "./PostList";
 import Container from "@material-ui/core/Container";
-
+import { history } from "../redux/configureStore";
+import { Button } from "../elements";
 
 const Main = (props) => {
   const dispatch = useDispatch();
   const postList = useSelector((state) => state.post.list);
   const user = useSelector((state) => state.user.user?.userId);
+  
+  
+  // const loginStatus = useSelector((state) => state.user.user.is_login);
+  // console.log(loginStatus);
   
   useEffect(() => {
     dispatch(postActions.getPostApi(user));

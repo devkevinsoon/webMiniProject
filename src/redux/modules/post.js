@@ -95,7 +95,7 @@ const editPostApi = (content, postId) => {
         headers: {
           Authorization: `BEARER ${localStorage.getItem("token")}`,
         }      
-      );
+      });
       history.replace("/");
     } catch (err) {
       alert("게시글 수정에 실패하였습니다.");

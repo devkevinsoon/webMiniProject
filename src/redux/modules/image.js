@@ -11,7 +11,7 @@ const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 // initial state
 const initialState = {
   uploading: false,
-  preview: null,
+  preview: "https://pbs.twimg.com/media/DennlYdV4AAkkQo?format=jpg&name=medium",
 };
 
 // reducer
