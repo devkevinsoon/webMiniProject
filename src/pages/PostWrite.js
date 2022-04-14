@@ -78,10 +78,12 @@ const PostWrite = (props) => {
                 />
               </ImageWrap>
 
+              <Grid>
               <img
-                src={preview ? preview : postList[0].imageUrl}
-                style={{ width: "300px", margin: "20px 20px 25px 0px" }}
-              ></img>
+                src={preview}
+                style={{ width: "300px", margin: "20px 10px 25px 10px", alignItems: "center"}}
+              />
+              </Grid>  
 
               <InputTagStyle>
                 <input
@@ -106,12 +108,6 @@ const PostWrite = (props) => {
   );
 };
 
-PostWrite.defatulProps = {
-  postId: "",
-  nickname: "spring",
-  image_url: "",
-  modifiedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-};
 
 const WriteStyle = styled.div`
   max-width: 600px;
@@ -123,10 +119,7 @@ const WriteStyle = styled.div`
   input {
     border: solid 1px #ccc;
   }
-  .input_tag {
-    margin: 10px;
-    margin-left: -6px;
-  }
+  
   button {
     font-size: 16px;
     padding: 6px 10px;
@@ -146,30 +139,26 @@ const InputTagStyle = styled.div`
   display: inline-block;
   min-width: 300px;
   input {
-    width: 100%;
+    width: 328px;
     padding: 6px 10px;
     border-radius: 20px;
     border: solid 1px #ccc;
   }
-  .tag {
-    padding: 4px 6px;
-    margin-right: 6px;
-    border: solid 1px #ccc;
-  }
+  
 `;
 
 const Container = styled.div`
-  position: relative;
+  // position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 400px;
   height: 40%;
-  padding: 20px 0px 20px 0px;
+  padding: 20px 20px 20px 20px;
   border: none;
   border-radius: 15px;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const ImageWrap = styled.div`
